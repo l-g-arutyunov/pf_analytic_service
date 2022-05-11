@@ -1,0 +1,40 @@
+package com.devlife.pf_sql_controller.controller.v1;
+
+import com.devlife.pf_sql_controller.dto.UserGroupDto;
+import com.devlife.pf_sql_controller.mapper.UserGroupMapper;
+import com.devlife.pf_sql_controller.service.UserGroupService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("api/v1/")
+public class UserGroupController {
+
+    private final UserGroupService service;
+    private final UserGroupMapper mapper;
+
+    @PutMapping("userGroup")
+    Long addUserGroup(@RequestBody UserGroupDto userGroupDto) {
+        return service.addUserGroup(mapper.convertToEntity(userGroupDto));
+    }
+
+    @GetMapping("userGroup/{id}")
+    UserGroupDto getUserGroup(@PathVariable("id") Long id) {
+        return mapper.convertToDto(service.getUserGroup(id));
+    }
+
+    @GetMapping("userGroup")
+    List<UserGroupDto> getAllUserGroups() {
+        return service.getAllUserGroups();
+    }
+
+    @DeleteMapping("userGroup/{id}")
+    Boolean deleteUserGroupById(@PathVariable("id") Long id) {
+        return service.deleteUserGroupById(id);
+    }
+
+}
