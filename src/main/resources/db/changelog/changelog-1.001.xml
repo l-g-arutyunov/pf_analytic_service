@@ -207,6 +207,10 @@
         <column name="id" type="bigint" autoIncrement="true">
             <constraints primaryKey="true" nullable="false"/>
         </column>
+        <column name="user_id" type="bigint">
+            <constraints foreignKeyName="fk_project_role_user_id" referencedTableName="user" referencedColumnNames="id"
+                         nullable="false"/>
+        </column>
         <column name="role_id" type="bigint">
             <constraints foreignKeyName="fk_project_role_role_id" referencedTableName="role" referencedColumnNames="id"
                          nullable="false"/>
