@@ -15,21 +15,21 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService service;
-    private final UserMapper mapper;
+
 
     @PutMapping("user")
     Long addUser(@RequestBody UserDto userDto) {
-        return service.addUser(mapper.convertToEntity(userDto));
+        return service.addUser(userDto);
     }
 
     @GetMapping("user/{id}")
     UserDto getUser(@PathVariable("id") Long id) {
-        return mapper.convertToDto(service.getUser(id));
+        return service.getUser(id);
     }
 
     @GetMapping("user")
     List<UserDto> getAllUser() {
-        return service.getAllUsers().stream().map(mapper::convertToDto).collect(Collectors.toList());
+        return service.getAllUsers();
     }
 
     @DeleteMapping("user/{id}")

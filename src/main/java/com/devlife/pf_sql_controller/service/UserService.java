@@ -2,33 +2,36 @@ package com.devlife.pf_sql_controller.service;
 
 import com.devlife.pf_sql_controller.dto.UserDto;
 import com.devlife.pf_sql_controller.entity.User;
+import com.devlife.pf_sql_controller.mapper.UserMapper;
 import com.devlife.pf_sql_controller.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final UserMapper mapper;
 
-    public Long addUser(User user) {
-        User saveUser = userRepository.save(user);
+    public Long addUser(UserDto user) {
+        User saveUser = userRepository.save(mapper.convertToEntity(user));
         if (saveUser != null) {
             return saveUser.getId();
         }
         return null;
     }
 
-    public User getUser(Long id) {
+    public UserDto getUser(Long id) {
         User user = userRepository.getById(id);
-        return user;
+        return mapper.convertToDto(user);
     }
 
-    public List<User> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         List<User> usersList = userRepository.findAll();
-        return usersList;
+        return usersList.stream().map(mapper::convertToDto).collect(Collectors.toList());
     }
 
     public Boolean deleteUserById(Long id) {

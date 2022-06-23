@@ -15,21 +15,21 @@ import java.util.stream.Collectors;
 public class EmployerController {
 
     private final EmployerService service;
-    private final EmployerMapper mapper;
+
 
     @PutMapping("employer")
     Long addEmployer(@RequestBody EmployerDto employerDto) {
-        return service.addEmployer(mapper.convertToEntity(employerDto));
+        return service.addEmployer(employerDto);
     }
 
     @GetMapping("employer/{id}")
     EmployerDto getEmployer(@PathVariable("id") Long id) {
-        return mapper.convertToDto(service.getEmployer(id));
+        return (service.getEmployer(id));
     }
 
     @GetMapping("employer")
     List<EmployerDto> getAllEmployers() {
-        return service.getAllEmployers().stream().map(mapper::convertToDto).collect(Collectors.toList());
+        return service.getAllEmployers();
     }
 
     @DeleteMapping("employer/{id}")
