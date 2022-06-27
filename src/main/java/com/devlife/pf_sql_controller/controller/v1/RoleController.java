@@ -18,21 +18,21 @@ import java.util.stream.Collectors;
 public class RoleController {
 
     private final RoleService service;
-    private final RoleMapper mapper;
+
 
     @PutMapping("role")
     Long addRole(@RequestBody RoleDto roleDto) {
-        return service.addRole(mapper.convertToEntity(roleDto));
+        return service.addRole((roleDto));
     }
 
     @GetMapping("role/{id}")
     RoleDto getRole(@PathVariable("id") Long id) {
-        return mapper.convertToDto(service.getRole(id));
+        return service.getRole(id);
     }
 
     @GetMapping("role")
     List<RoleDto> getAllRoles() {
-        return service.getAllRoles().stream().map(mapper::convertToDto).collect(Collectors.toList());
+        return service.getAllRoles();
     }
 
     @DeleteMapping("role/{id}")

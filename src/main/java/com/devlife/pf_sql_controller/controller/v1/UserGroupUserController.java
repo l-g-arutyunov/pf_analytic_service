@@ -15,21 +15,21 @@ import java.util.stream.Collectors;
 public class UserGroupUserController {
 
     private final UserGroupUserService service;
-    private final UserGroupUserMapper mapper;
+
 
     @PostMapping("addUserToGroup")
     void addUserGroupUser(@RequestBody UserGroupUserDto userGroupUserDto) {
-        service.addUserGroupUser(mapper.convertToEntity(userGroupUserDto));
+        service.addUserGroupUser(userGroupUserDto);
     }
 
     @GetMapping("userGroupUser/{id}")
     UserGroupUserDto getUserGroupUser(@PathVariable("id") Long id) {
-        return mapper.convertToDto(service.getUserGroupUser(id));
+        return service.getUserGroupUser(id);
     }
 
     @GetMapping("userGroupUser")
     List<UserGroupUserDto> getAllUserGroupUsers() {
-        return service.getAllUsersInGroups().stream().map(mapper::convertToDto).collect(Collectors.toList());
+        return service.getAllUsersInGroups();
     }
 
     @DeleteMapping("userGroupUser/{id}")

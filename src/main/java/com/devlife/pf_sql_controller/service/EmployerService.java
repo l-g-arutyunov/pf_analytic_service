@@ -1,33 +1,37 @@
 package com.devlife.pf_sql_controller.service;
 
+import com.devlife.pf_sql_controller.dto.EmployerDto;
 import com.devlife.pf_sql_controller.entity.Employer;
+import com.devlife.pf_sql_controller.mapper.EmployerMapper;
 import com.devlife.pf_sql_controller.repository.EmployerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class EmployerService {
     private final EmployerRepository employerRepository;
+    private final EmployerMapper mapper;
 
-    public Long addEmployer(Employer employer) {
-        Employer saveEmployer = employerRepository.save(employer);
+    public Long addEmployer(EmployerDto employer) {
+        Employer saveEmployer = employerRepository.save(mapper.convertToEntity(employer));
         if (saveEmployer != null) {
             return saveEmployer.getId();
         }
         return null;
     }
 
-    public Employer getEmployer(Long id) {
+    public EmployerDto getEmployer(Long id) {
         Employer employer = employerRepository.getById(id);
-        return employer;
+        return mapper.convertToDto(employer);
     }
 
-    public List<Employer> getAllEmployers() {
+    public List<EmployerDto> getAllEmployers() {
         List<Employer> employersList = employerRepository.findAll();
-        return employersList;
+        return employersList.stream().map(mapper::convertToDto).collect(Collectors.toList());
     }
 
     public Boolean deleteEmployerById(Long id) {

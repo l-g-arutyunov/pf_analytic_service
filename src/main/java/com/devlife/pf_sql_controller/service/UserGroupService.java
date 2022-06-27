@@ -16,17 +16,17 @@ public class UserGroupService {
     private final UserGroupRepository userGroupRepository;
     private final UserGroupMapper mapper;
 
-    public Long addUserGroup(UserGroup userGroup) {
-        UserGroup saveUserGroup = userGroupRepository.save(userGroup);
+    public Long addUserGroup(UserGroupDto userGroup) {
+        UserGroup saveUserGroup = userGroupRepository.save(mapper.convertToEntity(userGroup));
         if (saveUserGroup != null) {
             return saveUserGroup.getId();
         }
         return null;
     }
 
-    public UserGroup getUserGroup(Long id) {
+    public UserGroupDto getUserGroup(Long id) {
         UserGroup userGroup = userGroupRepository.getById(id);
-        return userGroup;
+        return mapper.convertToDto(userGroup);
     }
 
     public List<UserGroupDto> getAllUserGroups() {
