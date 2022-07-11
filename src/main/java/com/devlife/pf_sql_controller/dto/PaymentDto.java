@@ -15,9 +15,9 @@ import java.time.LocalDate;
 @Builder
 public class PaymentDto implements Serializable {
     private Long id;
-    private Long project_id;
+    private ProjectDto projectId;
     private LocalDate date;
-    private Long user_id;
-    private Long pay_category_id;
+    private UserDto userId;
+    private PaymentCategoryDto paymentCategoryId;
     private BigDecimal qty;
 }

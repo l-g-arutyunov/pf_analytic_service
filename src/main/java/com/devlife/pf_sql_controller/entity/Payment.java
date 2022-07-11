@@ -2,11 +2,9 @@ package com.devlife.pf_sql_controller.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "payment")
@@ -14,19 +12,23 @@ import java.math.BigDecimal;
 public class Payment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "project_id")
-    private Long projectId;
+    @ManyToOne(targetEntity = Project.class)
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     @Column(name = "date")
-    private Long date;
+    private LocalDate date;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "pay_category_id")
-    private Long payCategoryId;
+    @ManyToOne(targetEntity = PaymentCategory.class)
+    @JoinColumn(name = "payment_category_id")
+    private PaymentCategory paymentCategoryId;
 
     @Column(name = "qty")
     private BigDecimal qty;

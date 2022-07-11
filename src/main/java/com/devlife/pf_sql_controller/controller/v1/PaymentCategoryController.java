@@ -25,7 +25,7 @@ public class PaymentCategoryController {
         return service.getPaymentCategory(id);
     }
 
-    @GetMapping("paymentCategories")
+    @GetMapping("paymentCategory")
     List<PaymentCategoryDto> getAllPaymentCategories() {
         return service.getAllPaymentCategories();
     }

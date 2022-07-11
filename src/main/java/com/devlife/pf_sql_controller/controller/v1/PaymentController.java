@@ -1,7 +1,6 @@
 package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.PaymentDto;
-import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ public class PaymentController {
         return service.getPayment(id);
     }
 
-    @GetMapping("payments")
+    @GetMapping("payment")
     List<PaymentDto> getAllPayments() {
         return service.getAllPayments();
     }
