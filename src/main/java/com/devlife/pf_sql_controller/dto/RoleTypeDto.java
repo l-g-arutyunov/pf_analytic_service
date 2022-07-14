@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 
 public class RoleTypeDto implements Serializable {
-    private long id;
+    private Long id;
     private String name;
     private String description;
 

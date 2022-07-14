@@ -3,7 +3,6 @@ package com.devlife.pf_sql_controller.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Builder
@@ -26,5 +25,11 @@ public class Role {
 
     @Column(name = "user_group_id")
     private Long userGroupId;
+
+    @ManyToOne
+    @JoinColumn(name = "role_type_id")
+    private RoleType roleType;
+
+
 
 }

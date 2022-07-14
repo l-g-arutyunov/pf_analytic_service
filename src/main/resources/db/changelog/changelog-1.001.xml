@@ -18,7 +18,25 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="2" author="larutyunov" failOnError="true">
+    <changeSet id="2" author="sthoomy" failOnError="true">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="role_type"/>
+            </not>
+        </preConditions>
+        <createTable tableName="role_type" schemaName="public">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="project_type"/>
@@ -34,7 +52,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="3" author="larutyunov" failOnError="true">
+    <changeSet id="4" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="user_group"/>
@@ -51,7 +69,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="4" author="larutyunov" failOnError="true">
+    <changeSet id="5" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="employer"/>
@@ -71,7 +89,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="5" author="larutyunov" failOnError="true">
+    <changeSet id="6" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="user_group_user"/>
@@ -98,7 +116,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="6" author="larutyunov" failOnError="true">
+    <changeSet id="7" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="project"/>
@@ -131,7 +149,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="7" author="larutyunov" failOnError="true">
+    <changeSet id="8" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="role"/>
@@ -149,10 +167,14 @@
                 <constraints foreignKeyName="fk_role_group_id" referencedTableName="user_group" referencedColumnNames="id"
                              nullable="false"/>
             </column>
+            <column name="role_type_id" type="bigint">
+                <constraints foreignKeyName="fk_role_type_id" referencedTableName="role_type" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
         </createTable>
     </changeSet>
 
-    <changeSet id="8" author="larutyunov" failOnError="true">
+    <changeSet id="9" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="payment_category"/>
@@ -168,7 +190,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="9" author="larutyunov" failOnError="true">
+    <changeSet id="10" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="payment"/>
@@ -197,7 +219,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="10" author="larutyunov" failOnError="true">
+    <changeSet id="11" author="larutyunov" failOnError="true">
     <preConditions onFail="CONTINUE">
         <not>
             <tableExists tableName="project_role"/>
@@ -224,5 +246,9 @@
         </column>
     </createTable>
     </changeSet>
+
+
+
+
 
 </databaseChangeLog>
