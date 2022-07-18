@@ -29,7 +29,4 @@ public class Role {
     @ManyToOne
     @JoinColumn(name = "role_type_id")
     private RoleType roleType;
-
-
-
 }
