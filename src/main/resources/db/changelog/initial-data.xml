@@ -285,8 +285,11 @@
             <column header="project_id"
                     name="project_id"
                     type="bigint"/>
-            <column header="date"
-                    name="date"
+            <column header="start_date"
+                    name="start_date"
+                    type="date"/>
+            <column header="end_date"
+                    name="end_date"
                     type="date"/>
         </loadData>
     </changeSet>

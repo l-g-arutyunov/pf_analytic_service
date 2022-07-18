@@ -13,15 +13,6 @@ public class ProjectRole {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "role_id")
-//    private Long roleId;
-//
-//    @Column(name = "user_id")
-//    private Long userId;
-//
-//    @Column(name = "project_id")
-//    private Long projectId;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -34,7 +25,10 @@ public class ProjectRole {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @Column(name = "date", columnDefinition = "DATE")
-    private LocalDate date;
+    @Column(name = "start_date", columnDefinition = "DATE")
+    private LocalDate startDate;
+
+    @Column(name = "end_date", columnDefinition = "DATE")
+    private LocalDate endDate;
 
 }

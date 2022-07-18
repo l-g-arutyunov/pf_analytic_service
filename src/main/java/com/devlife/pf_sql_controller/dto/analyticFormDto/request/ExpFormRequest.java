@@ -1,4 +1,4 @@
-package com.devlife.pf_sql_controller.dto;
+package com.devlife.pf_sql_controller.dto.analyticFormDto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,11 +12,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ProjectRoleDto implements Serializable {
-    private Long id;
-    private Long userId;
+public class ExpFormRequest implements Serializable {
     private Long roleId;
     private Long projectId;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Long employerId;
+    private Long userId;
+    private LocalDate date;
 }

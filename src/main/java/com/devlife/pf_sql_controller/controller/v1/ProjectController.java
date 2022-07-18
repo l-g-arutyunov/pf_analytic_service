@@ -1,13 +1,11 @@
 package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.ProjectDto;
-import com.devlife.pf_sql_controller.mapper.ProjectMapper;
 import com.devlife.pf_sql_controller.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
