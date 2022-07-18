@@ -25,15 +25,15 @@ public class ProjectRole {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    User user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "project_id")
-    Project project;
+    private Project project;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
-    Role role;
+    private Role role;
 
     @Column(name = "date", columnDefinition = "DATE")
     private LocalDate date;
