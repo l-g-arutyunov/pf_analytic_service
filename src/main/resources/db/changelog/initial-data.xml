@@ -21,8 +21,31 @@
                     type="varchar(30)"/>
         </loadData>
     </changeSet>
+    <changeSet author="sthoomy" id="102">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/role_types.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator=";"
+                  tableName="role_type"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+            <column header="description"
+                    name="description"
+                    type="varchar(255)"/>
 
-    <changeSet author="RoSeV" id="102">
+        </loadData>
+    </changeSet>
+
+    <changeSet author="RoSeV" id="103">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -42,7 +65,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet author="RoSeV" id="103">
+    <changeSet author="RoSeV" id="104">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -65,7 +88,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet author="RoSeV" id="104">
+    <changeSet author="RoSeV" id="105">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -88,7 +111,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet author="RoSeV" id="105">
+    <changeSet author="RoSeV" id="106">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -117,7 +140,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet author="RoSeV" id="106">
+    <changeSet author="RoSeV" id="107">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -155,7 +178,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet author="RoSeV" id="107">
+    <changeSet author="RoSeV" id="108">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -178,10 +201,13 @@
             <column header="user_group_id"
                     name="user_group_id"
                     type="varchar(255)"/>
+            <column header="role_type_id"
+                    name="role_type_id"
+                    type="bigint"/>
         </loadData>
     </changeSet>
 
-    <changeSet author="RoSeV" id="108">
+    <changeSet author="RoSeV" id="109">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -201,7 +227,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet author="RoSeV" id="109">
+    <changeSet author="RoSeV" id="110">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -236,7 +262,7 @@
         </loadData>
     </changeSet>
 
-    <changeSet author="RoSeV" id="110">
+    <changeSet author="RoSeV" id="111">
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
@@ -264,5 +290,7 @@
                     type="date"/>
         </loadData>
     </changeSet>
+
+
 
 </databaseChangeLog>

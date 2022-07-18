@@ -1,4 +1,4 @@
-package com.devlife.pf_sql_controller.dto.embeddable;
+package com.devlife.pf_sql_controller.entity.embeddable;
 
 import lombok.Data;
 

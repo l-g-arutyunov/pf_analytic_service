@@ -1,9 +1,10 @@
 package com.devlife.pf_sql_controller.entity;
 
-import com.devlife.pf_sql_controller.dto.embeddable.UserGroupUserId;
+import com.devlife.pf_sql_controller.entity.embeddable.UserGroupUserId;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
