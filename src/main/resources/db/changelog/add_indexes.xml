@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="RoSeV" id="201">
+        <createIndex indexName="user_index_0" tableName="user" clustered="true">
+            <column name="id"/>
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="202">
+        <createIndex indexName="role_type_index_0" tableName="role_type" clustered="true">
+            <column name="id"/>
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="203">
+        <createIndex indexName="project_type_index_0" tableName="project_type" clustered="true">
+            <column name="id"/>
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="204">
+        <createIndex indexName="user_group_index_0" tableName="user_group" clustered="true">
+            <column name="id"/>
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="205">
+        <createIndex indexName="employer_index_0" tableName="employer" clustered="true">
+            <column name="id"/>
+            <column name="name"/>
+            <column name="user_group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="206">
+        <createIndex indexName="user_group_user_index_0" tableName="user_group_user" clustered="true">
+            <column name="user_id"/>
+            <column name="user_group_id"/>
+            <column name="is_active"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="207">
+        <createIndex indexName="project_index_0" tableName="project" clustered="true">
+            <column name="id"/>
+            <column name="name"/>
+            <column name="user_group_id"/>
+            <column name="employer_id"/>
+            <column name="project_type_id"/>
+            <column name="start_date"/>
+            <column name="end_date"/>
+            <column name="description"/>
+        </createIndex>
+        <createIndex indexName="project_index_1" tableName="project" clustered="false">
+            <column name="id"/>
+            <column name="name"/>
+            <column name="employer_id"/>
+            <column name="project_type_id"/>
+            <column name="user_group_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="208">
+        <createIndex indexName="role_index_0" tableName="role" clustered="true">
+            <column name="id"/>
+            <column name="user_group_id"/>
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="209">
+        <createIndex indexName="payment_category_index_0" tableName="payment_category" clustered="true">
+            <column name="id"/>
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="210">
+        <createIndex indexName="payment_index_0" tableName="payment" clustered="true">
+            <column name="id"/>
+            <column name="user_id"/>
+            <column name="payment_category_id"/>
+            <column name="project_id"/>
+            <column name="date"/>
+            <column name="qty"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="RoSeV" id="211">
+        <createIndex indexName="project_role_index_0" tableName="project_role" clustered="true">
+            <column name="id"/>
+            <column name="start_date"/>
+            <column name="role_id"/>
+            <column name="project_id"/>
+            </createIndex>
+    </changeSet>
+</databaseChangeLog>
