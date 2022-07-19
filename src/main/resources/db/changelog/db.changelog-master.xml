@@ -7,4 +7,5 @@
     <include  file="db/changelog/changelog-1.001.xml"/>
     <includeAll path="db/changelog/data"/>
     <include file="db/changelog/initial-data.xml"/>
+    <include file="db/changelog/add_indexes.xml"/>
 </databaseChangeLog>
