@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-
 public class RoleTypeService {
     private final RoleTypeRepository roleTypeRepository;
     private final RoleTypeMapper mapper;

@@ -284,4 +284,48 @@
                     type="date"/>
         </loadData>
     </changeSet>
+    <changeSet author="sthoomy" id="112">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/skills.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator=";"
+                  tableName="skill"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+            <column header="description"
+                    name="description"
+                    type="varchar(255)"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sthoomy" id="113">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/project_role_skills.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="public"
+                  separator=";"
+                  tableName="project_role_skill"
+                  usePreparedStatements="true">
+            <column header="skill_id"
+                    name="skill_id"
+                    type="bigint"/>
+            <column header="project_role_id"
+                    name="project_role_id"
+                    type="bigint"/>
+
+        </loadData>
+    </changeSet>
+
+
 </databaseChangeLog>

@@ -17,8 +17,24 @@
             </column>
         </createTable>
     </changeSet>
-
     <changeSet id="2" author="sthoomy" failOnError="true">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="skill"/>
+            </not>
+        </preConditions>
+        <createTable tableName="skill" schemaName="public">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="sthoomy" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="role_type"/>
@@ -36,7 +52,8 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="3" author="larutyunov" failOnError="true">
+
+    <changeSet id="4" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="project_type"/>
@@ -52,7 +69,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="4" author="larutyunov" failOnError="true">
+    <changeSet id="5" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="user_group"/>
@@ -69,7 +86,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="5" author="larutyunov" failOnError="true">
+    <changeSet id="6" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="employer"/>
@@ -89,7 +106,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="6" author="larutyunov" failOnError="true">
+    <changeSet id="7" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="user_group_user"/>
@@ -116,7 +133,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="7" author="larutyunov" failOnError="true">
+    <changeSet id="8" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="project"/>
@@ -149,7 +166,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="8" author="larutyunov" failOnError="true">
+    <changeSet id="9" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="role"/>
@@ -174,7 +191,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="9" author="larutyunov" failOnError="true">
+    <changeSet id="10" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="payment_category"/>
@@ -190,7 +207,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="10" author="larutyunov" failOnError="true">
+    <changeSet id="11" author="larutyunov" failOnError="true">
         <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="payment"/>
@@ -219,7 +236,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="11" author="larutyunov" failOnError="true">
+    <changeSet id="12" author="larutyunov" failOnError="true">
     <preConditions onFail="CONTINUE">
         <not>
             <tableExists tableName="project_role"/>
@@ -248,6 +265,23 @@
             <constraints nullable="false"/>
         </column>
     </createTable>
+    </changeSet>
+    <changeSet id="13" author="sthoomy" failOnError="true">
+        <preConditions onFail="CONTINUE">
+            <not>
+                <tableExists tableName="project_role_skill"/>
+            </not>
+        </preConditions>
+        <createTable tableName="project_role_skill" schemaName="public">
+            <column name="skill_id" type="bigint">
+                <constraints foreignKeyName="fk_project_role_skill_skill_id" referencedTableName="skill" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+            <column name="project_role_id" type="bigint">
+                <constraints foreignKeyName="fk_project_role_skill_project_role_id" referencedTableName="project_role" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 
 
