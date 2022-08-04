@@ -48,7 +48,7 @@
         <loadData catalogName="data"
                   commentLineStartsWith="#"
                   encoding="UTF-8"
-                  file="data/project_typies.csv"
+                  file="data/project_types.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
                   schemaName="public"
@@ -194,7 +194,7 @@
                     type="varchar(255)"/>
             <column header="user_group_id"
                     name="user_group_id"
-                    type="varchar(255)"/>
+                    type="bigint"/>
             <column header="role_type_id"
                     name="role_type_id"
                     type="bigint"/>
@@ -282,6 +282,10 @@
             <column header="end_date"
                     name="end_date"
                     type="date"/>
+            <column header="role_level"
+                    name="role_level"
+                    type="varchar(30)"/>
+
         </loadData>
     </changeSet>
     <changeSet author="sthoomy" id="112">
@@ -304,6 +308,9 @@
             <column header="description"
                     name="description"
                     type="varchar(255)"/>
+            <column header="external_id"
+                    name="external_id"
+                    type="bigint"/>
         </loadData>
     </changeSet>
     <changeSet author="sthoomy" id="113">

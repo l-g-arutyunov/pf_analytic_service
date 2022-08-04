@@ -1,6 +1,5 @@
 package com.devlife.pf_sql_controller.dto;
 
-import com.devlife.pf_sql_controller.entity.UserGroup;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

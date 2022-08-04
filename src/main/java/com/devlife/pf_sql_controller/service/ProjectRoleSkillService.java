@@ -31,5 +31,4 @@ public class ProjectRoleSkillService {
         projectRoleSkillRepository.deleteById(id);
         return !projectRoleSkillRepository.existsById(id);
     }
-
 }

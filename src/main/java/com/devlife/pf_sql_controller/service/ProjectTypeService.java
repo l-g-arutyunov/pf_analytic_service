@@ -38,5 +38,4 @@ public class ProjectTypeService {
         projectTypeRepository.deleteById(id);
         return !projectTypeRepository.existsById(id);
     }
-
 }

@@ -1,11 +1,9 @@
 package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.PaymentCategoryDto;
-import com.devlife.pf_sql_controller.dto.PaymentDto;
 import com.devlife.pf_sql_controller.service.PaymentCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RequiredArgsConstructor

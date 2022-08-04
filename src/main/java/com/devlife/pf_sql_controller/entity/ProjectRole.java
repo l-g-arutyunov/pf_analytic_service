@@ -31,4 +31,6 @@ public class ProjectRole {
     @Column(name = "end_date", columnDefinition = "DATE")
     private LocalDate endDate;
 
+    @Column(name = "role_level")
+    private String roleLevel;
 }

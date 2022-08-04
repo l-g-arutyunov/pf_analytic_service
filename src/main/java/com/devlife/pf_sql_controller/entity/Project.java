@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 @Table(name = "project")
@@ -25,15 +24,6 @@ public class Project {
 
     @Column(name = "end_date", columnDefinition = "DATE")
     private LocalDate endDate;
-
-//    @Column(name = "employer_id")
-//    private Long employerId;
-//
-//    @Column(name = "project_type_id")
-//    private Long projectTypeId;
-//
-//    @Column(name = "user_group_id")
-//    private Long userGroupId;
 
     @ManyToOne(targetEntity = Employer.class)
     @JoinColumn(name = "employer_id")

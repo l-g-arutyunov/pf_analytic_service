@@ -27,5 +27,4 @@ public class UserGroup {
 
     @OneToMany(targetEntity = Role.class, mappedBy = "userGroupId")
     private Set<Role> roles;
-
 }

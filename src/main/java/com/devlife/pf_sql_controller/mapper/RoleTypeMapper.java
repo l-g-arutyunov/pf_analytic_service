@@ -1,7 +1,6 @@
 package com.devlife.pf_sql_controller.mapper;
 
 
-
 import com.devlife.pf_sql_controller.dto.RoleTypeDto;
 import com.devlife.pf_sql_controller.entity.RoleType;
 import lombok.RequiredArgsConstructor;

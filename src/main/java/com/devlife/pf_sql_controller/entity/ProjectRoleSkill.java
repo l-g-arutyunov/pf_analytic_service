@@ -13,5 +13,4 @@ import javax.persistence.Table;
 public class ProjectRoleSkill {
     @EmbeddedId
     private ProjectRoleSkillId projectRoleSkillId;
-
 }
