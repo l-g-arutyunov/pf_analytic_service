@@ -28,7 +28,7 @@ public class Payment {
 
     @ManyToOne(targetEntity = PaymentCategory.class)
     @JoinColumn(name = "payment_category_id")
-    private PaymentCategory paymentCategoryId;
+    private PaymentCategory paymentCategory;
 
     @Column(name = "qty")
     private BigDecimal qty;
