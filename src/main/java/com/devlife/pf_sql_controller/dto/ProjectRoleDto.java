@@ -19,4 +19,5 @@ public class ProjectRoleDto implements Serializable {
     private Long projectId;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String roleLevel;
 }

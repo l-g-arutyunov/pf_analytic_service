@@ -1,13 +1,12 @@
 package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
-import com.devlife.pf_sql_controller.mapper.UserGroupMapper;
 import com.devlife.pf_sql_controller.service.UserGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
 public class UserGroupController {
 
     private final UserGroupService service;
-
 
     @PutMapping("userGroup")
     Long addUserGroup(@RequestBody UserGroupDto userGroupDto) {

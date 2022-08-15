@@ -38,5 +38,4 @@ public class EmployerService {
         employerRepository.deleteById(id);
         return !employerRepository.existsById(id);
     }
-
 }

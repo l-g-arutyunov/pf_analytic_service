@@ -1,14 +1,8 @@
 package com.devlife.pf_sql_controller.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
 import lombok.Data;
-import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 @Table(name = "employer")

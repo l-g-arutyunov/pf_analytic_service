@@ -15,7 +15,6 @@ public class RoleTypeController {
 
     private final RoleTypeService service;
 
-
     @PutMapping("roletype")
     Long addRoleType(@RequestBody RoleTypeDto roleTypeDto ) {
         return service.addRoleType(roleTypeDto);

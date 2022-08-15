@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/v1/analytics")
 public class ExperienceAnalyticsController {
-    private final ExperienceAnalyticService experienceAnalyticService;
+
+    private final ExperienceAnalyticService service;
 
     @PostMapping("getExp")
     public ExpFormResponse getExp(@RequestBody ExpFormRequest expForm) {
-        return experienceAnalyticService.getExp(expForm);
+        return service.getExp(expForm);
     }
 }
