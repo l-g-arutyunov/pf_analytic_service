@@ -1,5 +1,6 @@
-package com.devlife.pf_sql_controller.dto;
+package com.devlife.pf_sql_controller.dto.analyticFormDto.response;
 
+import com.devlife.pf_sql_controller.dto.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,11 +14,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaymentDto implements Serializable {
-    private Long id;
+public class PaymentsFormResponse implements Serializable {
+    private RoleDto role;
     private ProjectDto project;
-    private LocalDate date;
+    private EmployerDto employer;
     private UserDto user;
+    private UserGroupDto userGroup;
     private PaymentCategoryDto paymentCategory;
+    private LocalDate paymentDate;
     private BigDecimal qty;
 }

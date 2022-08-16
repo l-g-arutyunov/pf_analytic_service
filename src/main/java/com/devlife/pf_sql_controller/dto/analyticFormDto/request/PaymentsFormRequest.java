@@ -6,14 +6,19 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ExpFormRequest implements Serializable {
+public class PaymentsFormRequest implements Serializable {
     private Long roleId;
     private Long projectId;
     private Long employerId;
     private Long userId;
+    private Long userGroupId;
+    private Long paymentCategoryId;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }

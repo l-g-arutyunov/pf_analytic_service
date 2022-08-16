@@ -290,8 +290,28 @@
             </column>
         </createTable>
     </changeSet>
-
-
+    
+    <changeSet id="14" author="larutyunov" failOnError="true">
+        <createView viewName="v_payments_report" replaceIfExists="true" fullDefinition="false">
+            select
+                pay.id,
+                pay.project_id,
+                pay.date,
+                pay.user_id,
+                pay.payment_category_id,
+                p.employer_id,
+                p.user_group_id,
+                pr.role_id,
+                pay.qty
+            from payment pay
+                inner join project p
+                    on pay.project_id = p.id
+                inner join project_role pr
+                    on pay.project_id = pr.project_id
+                    and pay.user_id = pr.user_id
+                    and pay.date between pr.start_date and pr.end_date
+        </createView>
+    </changeSet>
 
 
 
