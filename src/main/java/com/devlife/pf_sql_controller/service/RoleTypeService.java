@@ -40,12 +40,4 @@ public class RoleTypeService {
         roleTypeRepository.deleteById(id);
         return !roleTypeRepository.existsById(id);
     }
-
-
-
-
-
-
-
-
 }

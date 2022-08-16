@@ -1,13 +1,11 @@
 package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.UserDto;
-import com.devlife.pf_sql_controller.mapper.UserMapper;
 import com.devlife.pf_sql_controller.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -15,7 +13,6 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService service;
-
 
     @PutMapping("user")
     Long addUser(@RequestBody UserDto userDto) {

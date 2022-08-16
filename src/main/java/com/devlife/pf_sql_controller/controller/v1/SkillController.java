@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/")
 public class SkillController {
+
     private final SkillService service;
 
     @PutMapping("skill")
@@ -22,10 +23,12 @@ public class SkillController {
     SkillDto getSkill(@PathVariable("id") Long id){
         return service.getSkill(id);
     }
+
     @GetMapping("skill")
     List<SkillDto> getAllSkills(){
         return service.getAllSkills();
     }
+
     @DeleteMapping("skill/{id}")
     Boolean deleteSkillById(@PathVariable("id") Long id){
         return service.deleteSkillById(id);

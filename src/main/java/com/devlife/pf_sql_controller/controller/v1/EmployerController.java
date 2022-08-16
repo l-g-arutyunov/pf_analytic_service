@@ -1,13 +1,11 @@
 package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.EmployerDto;
-import com.devlife.pf_sql_controller.mapper.EmployerMapper;
 import com.devlife.pf_sql_controller.service.EmployerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -15,7 +13,6 @@ import java.util.stream.Collectors;
 public class EmployerController {
 
     private final EmployerService service;
-
 
     @PutMapping("employer")
     Long addEmployer(@RequestBody EmployerDto employerDto) {

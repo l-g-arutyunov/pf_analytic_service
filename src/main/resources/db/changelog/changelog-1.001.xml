@@ -31,6 +31,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="description" type="varchar(255)"/>
+            <column name="external_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
         </createTable>
     </changeSet>
 
@@ -264,6 +267,10 @@
         <column name="end_date" type="date">
             <constraints nullable="false"/>
         </column>
+        <column name="role_level" type="varchar(30)">
+            <constraints nullable="false"/>
+        </column>
+
     </createTable>
     </changeSet>
     <changeSet id="13" author="sthoomy" failOnError="true">

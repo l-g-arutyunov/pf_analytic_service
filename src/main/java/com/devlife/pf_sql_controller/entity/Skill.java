@@ -24,4 +24,7 @@ public class Skill {
             joinColumns = @JoinColumn(name = "skill_id"),
             inverseJoinColumns = @JoinColumn(name = "project_role_id"))
     private Set<ProjectRole> projectRoles;
+
+    @Column(name = "external_id")
+    private Long externalId;
 }
