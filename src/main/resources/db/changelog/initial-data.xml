@@ -9,7 +9,7 @@
                   file="data/users.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="user"
                   usePreparedStatements="true">
@@ -28,7 +28,7 @@
                   file="data/role_types.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="role_type"
                   usePreparedStatements="true">
@@ -51,7 +51,7 @@
                   file="data/project_types.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="project_type"
                   usePreparedStatements="true">
@@ -70,7 +70,7 @@
                   file="data/user_groups.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="user_group"
                   usePreparedStatements="true">
@@ -92,7 +92,7 @@
                   file="data/employers.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="employer"
                   usePreparedStatements="true">
@@ -114,7 +114,7 @@
                   file="data/user_group_users.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="user_group_user"
                   usePreparedStatements="true">
@@ -142,7 +142,7 @@
                   file="data/projects.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="project"
                   usePreparedStatements="true">
@@ -179,7 +179,7 @@
                   file="data/roles.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="role"
                   usePreparedStatements="true">
@@ -207,7 +207,7 @@
                   file="data/payment_categories.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="payment_category"
                   usePreparedStatements="true">
@@ -226,7 +226,7 @@
                   file="data/payments.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="payment"
                   usePreparedStatements="true">
@@ -260,7 +260,7 @@
                   file="data/project_roles.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="project_role"
                   usePreparedStatements="true">
@@ -295,7 +295,7 @@
                   file="data/skills.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="skill"
                   usePreparedStatements="true">
@@ -320,7 +320,7 @@
                   file="data/project_role_skills.csv"
                   quotchar="'"
                   relativeToChangelogFile="true"
-                  schemaName="public"
+                  schemaName="pf"
                   separator=";"
                   tableName="project_role_skill"
                   usePreparedStatements="true">

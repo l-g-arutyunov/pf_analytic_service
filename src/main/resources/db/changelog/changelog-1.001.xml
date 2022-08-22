@@ -2,316 +2,316 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet id="1" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="user"/>
-            </not>
-        </preConditions>
-        <createTable tableName="user" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet id="2" author="sthoomy" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="skill"/>
-            </not>
-        </preConditions>
-        <createTable tableName="skill" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="varchar(255)"/>
-            <column name="external_id" type="bigint">
-                <constraints nullable="true"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="1" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="user"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="user" schemaName="public">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+<!--    <changeSet id="2" author="sthoomy" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="skill"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="skill" schemaName="public">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="description" type="varchar(255)"/>-->
+<!--            <column name="external_id" type="bigint">-->
+<!--                <constraints nullable="true"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="3" author="sthoomy" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="role_type"/>
-            </not>
-        </preConditions>
-        <createTable tableName="role_type" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="varchar(255)"/>
+<!--    <changeSet id="3" author="sthoomy" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="role_type"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="role_type" schemaName="public">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="description" type="varchar(255)"/>-->
 
-        </createTable>
-    </changeSet>
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
 
-    <changeSet id="4" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="project_type"/>
-            </not>
-        </preConditions>
-        <createTable tableName="project_type" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="4" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="project_type"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="project_type" schemaName="public">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="5" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="user_group"/>
-            </not>
-        </preConditions>
-        <createTable tableName="user_group" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="varchar(255)"/>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="5" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="user_group"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="user_group" schemaName="pf">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="description" type="varchar(255)"/>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="6" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="employer"/>
-            </not>
-        </preConditions>
-        <createTable tableName="employer" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_group_id" type="bigint">
-                <constraints foreignKeyName="fk_employer_user_group_id" referencedTableName="user_group" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="6" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="employer"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="employer" schemaName="pf">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="user_group_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_employer_user_group_id" referencedTableName="user_group" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="7" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="user_group_user"/>
-            </not>
-        </preConditions>
-        <createTable tableName="user_group_user" schemaName="public">
-            <column name="user_id" type="bigint">
-                <constraints foreignKeyName="fk_user_group_user_user_id" referencedTableName="user" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-            <column name="user_group_id" type="bigint">
-                <constraints foreignKeyName="fk_user_group_user_group_user_id" referencedTableName="user_group" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-            <column name="is_owner" type="bool">
-                <constraints nullable="false"/>
-            </column>
-            <column name="is_active" type="bool">
-                <constraints nullable="false"/>
-            </column>
-            <column name="date" type="date">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="7" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="user_group_user"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="user_group_user" schemaName="public">-->
+<!--            <column name="user_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_user_group_user_user_id" referencedTableName="user" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="user_group_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_user_group_user_group_user_id" referencedTableName="user_group" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="is_owner" type="bool">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="is_active" type="bool">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="date" type="date">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="8" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="project"/>
-            </not>
-        </preConditions>
-        <createTable tableName="project" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="varchar(255)"/>
-            <column name="start_date" type="date">
-                <constraints nullable="false"/>
-            </column>
-            <column name="end_date" type="date"/>
-            <column name="employer_id" type="bigint">
-                <constraints foreignKeyName="fk_employer_id" referencedTableName="employer" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-            <column name="user_group_id" type="bigint">
-                <constraints foreignKeyName="fk_project_user_group_id" referencedTableName="user_group" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-            <column name="project_type_id" type="bigint">
-                <constraints foreignKeyName="fk_project_type_id" referencedTableName="project_type"
-                             referencedColumnNames="id"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="8" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="project"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="project" schemaName="public">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="description" type="varchar(255)"/>-->
+<!--            <column name="start_date" type="date">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="end_date" type="date"/>-->
+<!--            <column name="employer_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_employer_id" referencedTableName="employer" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="user_group_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_project_user_group_id" referencedTableName="user_group" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="project_type_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_project_type_id" referencedTableName="project_type"-->
+<!--                             referencedColumnNames="id"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="9" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="role"/>
-            </not>
-        </preConditions>
-        <createTable tableName="role" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="description" type="varchar(255)"/>
-            <column name="user_group_id" type="bigint">
-                <constraints foreignKeyName="fk_role_group_id" referencedTableName="user_group" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-            <column name="role_type_id" type="bigint">
-                <constraints foreignKeyName="fk_role_type_id" referencedTableName="role_type" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="9" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="role"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="role" schemaName="public">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="description" type="varchar(255)"/>-->
+<!--            <column name="user_group_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_role_group_id" referencedTableName="user_group" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="role_type_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_role_type_id" referencedTableName="role_type" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="10" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="payment_category"/>
-            </not>
-        </preConditions>
-        <createTable tableName="payment_category" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(30)">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="10" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="payment_category"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="payment_category" schemaName="public">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(30)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="11" author="larutyunov" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="payment"/>
-            </not>
-        </preConditions>
-        <createTable tableName="payment" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="project_id" type="bigint">
-                <constraints foreignKeyName="fk_project_id" referencedTableName="project" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-            <column name="date" type="date"/>
-            <column name="user_id" type="bigint">
-                <constraints foreignKeyName="fk_payment_user_id" referencedTableName="user" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-            <column name="payment_category_id" type="bigint">
-                <constraints foreignKeyName="fk_payment_payment_category_id" referencedTableName="payment_category" referencedColumnNames="id"/>
-            </column>
-            <column name="description" type="varchar(255)"/>
-            <column name="qty" type="decimal">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
+<!--    <changeSet id="11" author="larutyunov" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="payment"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="payment" schemaName="public">-->
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="project_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_project_id" referencedTableName="project" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="date" type="date"/>-->
+<!--            <column name="user_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_payment_user_id" referencedTableName="user" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="payment_category_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_payment_payment_category_id" referencedTableName="payment_category" referencedColumnNames="id"/>-->
+<!--            </column>-->
+<!--            <column name="description" type="varchar(255)"/>-->
+<!--            <column name="qty" type="decimal">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
 
-    <changeSet id="12" author="larutyunov" failOnError="true">
-    <preConditions onFail="CONTINUE">
-        <not>
-            <tableExists tableName="project_role"/>
-        </not>
-    </preConditions>
-    <createTable tableName="project_role" schemaName="public">
-        <column name="id" type="bigint" autoIncrement="true">
-            <constraints primaryKey="true" nullable="false"/>
-        </column>
-        <column name="user_id" type="bigint">
-            <constraints foreignKeyName="fk_project_role_user_id" referencedTableName="user" referencedColumnNames="id"
-                         nullable="false"/>
-        </column>
-        <column name="role_id" type="bigint">
-            <constraints foreignKeyName="fk_project_role_role_id" referencedTableName="role" referencedColumnNames="id"
-                         nullable="false"/>
-        </column>
-        <column name="project_id" type="bigint">
-            <constraints foreignKeyName="fk_project_role_project_id" referencedTableName="project" referencedColumnNames="id"
-                         nullable="false"/>
-        </column>
-        <column name="start_date" type="date">
-            <constraints nullable="false"/>
-        </column>
-        <column name="end_date" type="date">
-            <constraints nullable="false"/>
-        </column>
-        <column name="role_level" type="varchar(30)">
-            <constraints nullable="false"/>
-        </column>
+<!--    <changeSet id="12" author="larutyunov" failOnError="true">-->
+<!--    <preConditions onFail="CONTINUE">-->
+<!--        <not>-->
+<!--            <tableExists tableName="project_role"/>-->
+<!--        </not>-->
+<!--    </preConditions>-->
+<!--    <createTable tableName="project_role" schemaName="public">-->
+<!--        <column name="id" type="bigint" autoIncrement="true">-->
+<!--            <constraints primaryKey="true" nullable="false"/>-->
+<!--        </column>-->
+<!--        <column name="user_id" type="bigint">-->
+<!--            <constraints foreignKeyName="fk_project_role_user_id" referencedTableName="user" referencedColumnNames="id"-->
+<!--                         nullable="false"/>-->
+<!--        </column>-->
+<!--        <column name="role_id" type="bigint">-->
+<!--            <constraints foreignKeyName="fk_project_role_role_id" referencedTableName="role" referencedColumnNames="id"-->
+<!--                         nullable="false"/>-->
+<!--        </column>-->
+<!--        <column name="project_id" type="bigint">-->
+<!--            <constraints foreignKeyName="fk_project_role_project_id" referencedTableName="project" referencedColumnNames="id"-->
+<!--                         nullable="false"/>-->
+<!--        </column>-->
+<!--        <column name="start_date" type="date">-->
+<!--            <constraints nullable="false"/>-->
+<!--        </column>-->
+<!--        <column name="end_date" type="date">-->
+<!--            <constraints nullable="false"/>-->
+<!--        </column>-->
+<!--        <column name="role_level" type="varchar(30)">-->
+<!--            <constraints nullable="false"/>-->
+<!--        </column>-->
 
-    </createTable>
-    </changeSet>
-    <changeSet id="13" author="sthoomy" failOnError="true">
-        <preConditions onFail="CONTINUE">
-            <not>
-                <tableExists tableName="project_role_skill"/>
-            </not>
-        </preConditions>
-        <createTable tableName="project_role_skill" schemaName="public">
-            <column name="skill_id" type="bigint">
-                <constraints foreignKeyName="fk_project_role_skill_skill_id" referencedTableName="skill" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-            <column name="project_role_id" type="bigint">
-                <constraints foreignKeyName="fk_project_role_skill_project_role_id" referencedTableName="project_role" referencedColumnNames="id"
-                             nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-    
-    <changeSet id="14" author="larutyunov" failOnError="true">
-        <createView viewName="v_payments_report" replaceIfExists="true" fullDefinition="false">
-            select
-                pay.id,
-                pay.project_id,
-                pay.date,
-                pay.user_id,
-                pay.payment_category_id,
-                p.employer_id,
-                p.user_group_id,
-                pr.role_id,
-                pay.qty
-            from payment pay
-                inner join project p
-                    on pay.project_id = p.id
-                inner join project_role pr
-                    on pay.project_id = pr.project_id
-                    and pay.user_id = pr.user_id
-                    and pay.date between pr.start_date and pr.end_date
-        </createView>
-    </changeSet>
+<!--    </createTable>-->
+<!--    </changeSet>-->
+<!--    <changeSet id="13" author="sthoomy" failOnError="true">-->
+<!--        <preConditions onFail="CONTINUE">-->
+<!--            <not>-->
+<!--                <tableExists tableName="project_role_skill"/>-->
+<!--            </not>-->
+<!--        </preConditions>-->
+<!--        <createTable tableName="project_role_skill" schemaName="public">-->
+<!--            <column name="skill_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_project_role_skill_skill_id" referencedTableName="skill" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="project_role_id" type="bigint">-->
+<!--                <constraints foreignKeyName="fk_project_role_skill_project_role_id" referencedTableName="project_role" referencedColumnNames="id"-->
+<!--                             nullable="false"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+<!--    </changeSet>-->
+<!--    -->
+<!--    <changeSet id="14" author="larutyunov" failOnError="true">-->
+<!--        <createView viewName="v_payments_report" replaceIfExists="true" fullDefinition="false">-->
+<!--            select-->
+<!--                pay.id,-->
+<!--                pay.project_id,-->
+<!--                pay.date,-->
+<!--                pay.user_id,-->
+<!--                pay.payment_category_id,-->
+<!--                p.employer_id,-->
+<!--                p.user_group_id,-->
+<!--                pr.role_id,-->
+<!--                pay.qty-->
+<!--            from payment pay-->
+<!--                inner join project p-->
+<!--                    on pay.project_id = p.id-->
+<!--                inner join project_role pr-->
+<!--                    on pay.project_id = pr.project_id-->
+<!--                    and pay.user_id = pr.user_id-->
+<!--                    and pay.date between pr.start_date and pr.end_date-->
+<!--        </createView>-->
+<!--    </changeSet>-->
 
 
 
