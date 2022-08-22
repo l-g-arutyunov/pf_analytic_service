@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ${SERVICE_NAME:pf_analytic_service}
+  cloud:
+    config:
+      enabled: false
+
+#Не знаю, нужно или нет
+#mdp.discovery:
+#  discoveryClientName: ${DISCOVERY_CLIENT_NAME:eureka}
