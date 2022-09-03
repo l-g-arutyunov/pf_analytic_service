@@ -8,20 +8,20 @@
     <changeSet id="1.00.01-skill-0001" author="sthoomy" runInTransaction="false">
         <preConditions onFail="MARK_RAN">
             <not>
-                <sequenceExists sequenceName="skill_id_seq"/>
+                <sequenceExists sequenceName="skill_id_seq" schemaName="pf"/>
             </not>
         </preConditions>
-        <createSequence sequenceName="skill_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="skill_id_seq" schemaName="pf" startValue="1" incrementBy="1"/>
     </changeSet>
 
     <changeSet id="1.00.01-skill-0002" author="sthoomy" failOnError="true">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="skill"/>
+                <tableExists tableName="pf_skill" schemaName="pf"/>
             </not>
         </preConditions>
-        <createTable tableName="skill" schemaName="pf">
-            <column name="id" type="bigint" defaultValueSequenceNext="skill_id_seq" autoIncrement="${autoIncrement}">
+        <createTable tableName="pf_skill" schemaName="pf">
+            <column name="id" type="bigint" defaultValueSequenceNext="skill_id_seq">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(30)">
@@ -37,13 +37,13 @@
     <changeSet author="sthoomy" id="1.00.01-skill-0003">
         <preConditions onFail="MARK_RAN">
             <and>
-                <tableExists tableName="skill"/>
+                <tableExists tableName="pf_skill" schemaName="pf"/>
                 <not>
-                    <indexExists indexName="skill_index_0"/>
+                    <indexExists indexName="skill_index_0" schemaName="pf"/>
                 </not>
             </and>
         </preConditions>
-        <createIndex indexName="skill_index_0" tableName="skill" clustered="true">
+        <createIndex indexName="skill_index_0" tableName="pf_skill" schemaName="pf" clustered="true">
             <column name="id"/>
             <column name="name"/>
             <column name="description"/>

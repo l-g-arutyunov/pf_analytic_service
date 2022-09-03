@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "skill")
+@Table(name = "pf_skill")
 @Data
 public class Skill {
     @Id
@@ -20,7 +20,7 @@ public class Skill {
     private String description;
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "project_role_skill",
+    @JoinTable(name = "pf_project_role_skill",
             joinColumns = @JoinColumn(name = "skill_id"),
             inverseJoinColumns = @JoinColumn(name = "project_role_id"))
     private Set<ProjectRole> projectRoles;

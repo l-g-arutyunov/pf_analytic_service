@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role_type")
+@Table(name = "pf_role_type")
 @Data
 public class RoleType {
     @Id

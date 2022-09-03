@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "user_group_user")
+@Table(name = "pf_user_group_user")
 @Data
 public class UserGroupUser {
 

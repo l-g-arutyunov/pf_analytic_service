@@ -8,20 +8,20 @@
     <changeSet id="1.00.01-role_type-0001" author="sthoomy" runInTransaction="false">
         <preConditions onFail="MARK_RAN">
             <not>
-                <sequenceExists sequenceName="role_type_id_seq"/>
+                <sequenceExists sequenceName="role_type_id_seq" schemaName="pf"/>
             </not>
         </preConditions>
-        <createSequence sequenceName="role_type_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="role_type_id_seq" schemaName="pf" startValue="1" incrementBy="1"/>
     </changeSet>
 
     <changeSet id="1.00.01-role_type-0002" author="sthoomy" failOnError="true">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="role_type"/>
+                <tableExists tableName="pf_role_type" schemaName="pf"/>
             </not>
         </preConditions>
-        <createTable tableName="role_type" schemaName="pf">
-            <column name="id" type="bigint" defaultValueSequenceNext="role_type_id_seq" autoIncrement="${autoIncrement}">
+        <createTable tableName="pf_role_type" schemaName="pf">
+            <column name="id" type="bigint" defaultValueSequenceNext="role_type_id_seq">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(30)">
@@ -34,13 +34,13 @@
     <changeSet author="RoSeV" id="1.00.01-role_type-0003">
         <preConditions onFail="MARK_RAN">
             <and>
-                <tableExists tableName="role_type"/>
+                <tableExists tableName="pf_role_type"/>
                 <not>
                     <indexExists indexName="role_type_index_0"/>
                 </not>
             </and>
         </preConditions>
-        <createIndex indexName="role_type_index_0" tableName="role_type" clustered="true">
+        <createIndex indexName="role_type_index_0" tableName="pf_role_type" schemaName="pf" clustered="true">
             <column name="id"/>
             <column name="name"/>
         </createIndex>

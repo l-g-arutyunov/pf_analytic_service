@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "payment_category")
+@Table(name = "pf_payment_category")
 @Data
 public class PaymentCategory {
 

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "project_role")
+@Table(name = "pf_project_role")
 @Data
 public class ProjectRole {
     @Id

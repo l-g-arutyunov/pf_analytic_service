@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="project_role_skill")
+@Table(name="pf_project_role_skill")
 @Data
 public class ProjectRoleSkill {
     @EmbeddedId

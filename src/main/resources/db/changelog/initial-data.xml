@@ -11,7 +11,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="user"
+                  tableName="pf_user"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -30,7 +30,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="role_type"
+                  tableName="pf_role_type"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -53,7 +53,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="project_type"
+                  tableName="pf_project_type"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -72,7 +72,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="user_group"
+                  tableName="pf_user_group"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -94,7 +94,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="employer"
+                  tableName="pf_employer"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -116,7 +116,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="user_group_user"
+                  tableName="pf_user_group_user"
                   usePreparedStatements="true">
             <column header="user_id"
                     name="user_id"
@@ -144,7 +144,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="project"
+                  tableName="pf_project"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -181,7 +181,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="role"
+                  tableName="pf_role"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -209,7 +209,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="payment_category"
+                  tableName="pf_payment_category"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -228,7 +228,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="payment"
+                  tableName="pf_payment"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -262,7 +262,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="project_role"
+                  tableName="pf_project_role"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -297,7 +297,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="skill"
+                  tableName="pf_skill"
                   usePreparedStatements="true">
             <column header="id"
                     name="id"
@@ -322,7 +322,7 @@
                   relativeToChangelogFile="true"
                   schemaName="pf"
                   separator=";"
-                  tableName="project_role_skill"
+                  tableName="pf_project_role_skill"
                   usePreparedStatements="true">
             <column header="skill_id"
                     name="skill_id"
