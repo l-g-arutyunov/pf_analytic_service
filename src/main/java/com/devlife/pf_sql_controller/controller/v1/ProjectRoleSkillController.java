@@ -15,7 +15,7 @@ public class ProjectRoleSkillController {
     private final ProjectRoleSkillService service;
 
     @PostMapping("addProjectRoleSkill")
-    void addUserGroupUser(@RequestBody ProjectRoleSkillDto projectRoleSkillDto) {
+    void addProjectRoleSkill(@RequestBody ProjectRoleSkillDto projectRoleSkillDto) {
         service.addProjectRoleSkill(projectRoleSkillDto);
     }
     @GetMapping("projectRoleSkill/{id}")

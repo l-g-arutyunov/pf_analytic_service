@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user_group")
+@Table(name = "pf_user_group")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

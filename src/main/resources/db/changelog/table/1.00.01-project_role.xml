@@ -8,32 +8,32 @@
     <changeSet id="1.00.01-project_role-0001" author="sthoomy" runInTransaction="false">
         <preConditions onFail="MARK_RAN">
             <not>
-                <sequenceExists sequenceName="project_role_id_seq"/>
+                <sequenceExists sequenceName="project_role_id_seq" schemaName="pf"/>
             </not>
         </preConditions>
-        <createSequence sequenceName="project_role_id_seq" startValue="1" incrementBy="1"/>
+        <createSequence sequenceName="project_role_id_seq" schemaName="pf" startValue="1" incrementBy="1"/>
     </changeSet>
 
     <changeSet id="1.00.01-project_role-0002" author="larutyunov" failOnError="true">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="project_role"/>
+                <tableExists tableName="pf_project_role" schemaName="pf" />
             </not>
         </preConditions>
-        <createTable tableName="project_role" schemaName="pf">
-            <column name="id" type="bigint" defaultValueSequenceNext="project_role_id_seq" autoIncrement="${autoIncrement}">
+        <createTable tableName="pf_project_role" schemaName="pf">
+            <column name="id" type="bigint" defaultValueSequenceNext="project_role_id_seq">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="user_id" type="bigint">
-                <constraints foreignKeyName="fk_project_role_user_id" referencedTableName="user" referencedTableSchemaName="pf" referencedColumnNames="id"
+                <constraints foreignKeyName="fk_project_role_user_id" referencedTableName="pf_user" referencedTableSchemaName="pf" referencedColumnNames="id"
                              nullable="false"/>
             </column>
             <column name="role_id" type="bigint">
-                <constraints foreignKeyName="fk_project_role_role_id" referencedTableName="role" referencedTableSchemaName="pf" referencedColumnNames="id"
+                <constraints foreignKeyName="fk_project_role_role_id" referencedTableName="pf_role" referencedTableSchemaName="pf" referencedColumnNames="id"
                              nullable="false"/>
             </column>
             <column name="project_id" type="bigint">
-                <constraints foreignKeyName="fk_project_role_project_id" referencedTableName="project" referencedTableSchemaName="pf" referencedColumnNames="id"
+                <constraints foreignKeyName="fk_project_role_project_id" referencedTableName="pf_project" referencedTableSchemaName="pf" referencedColumnNames="id"
                              nullable="false"/>
             </column>
             <column name="start_date" type="date">
@@ -51,13 +51,13 @@
     <changeSet author="RoSeV" id="1.00.01-project_role-0003">
         <preConditions onFail="MARK_RAN">
             <and>
-                <tableExists tableName="project_role"/>
+                <tableExists tableName="pf_project_role" schemaName="pf"/>
                 <not>
-                    <indexExists indexName="project_role_index_0"/>
+                    <indexExists indexName="project_role_index_0" schemaName="pf"/>
                 </not>
             </and>
         </preConditions>
-        <createIndex indexName="project_role_index_0" tableName="project_role" clustered="true">
+        <createIndex indexName="project_role_index_0" tableName="pf_project_role" schemaName="pf" clustered="true">
             <column name="id"/>
             <column name="start_date"/>
             <column name="role_id"/>
