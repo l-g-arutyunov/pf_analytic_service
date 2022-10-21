@@ -1,38 +1,54 @@
 package com.devlife.pf_sql_controller.mapper;
 
-import com.devlife.pf_sql_controller.dto.RoleDto;
 import com.devlife.pf_sql_controller.dto.UserDto;
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
-import com.devlife.pf_sql_controller.entity.Role;
-import com.devlife.pf_sql_controller.entity.User;
-import com.devlife.pf_sql_controller.entity.UserGroup;
-import com.devlife.pf_sql_controller.entity.UserGroupUser;
+import com.devlife.pf_sql_controller.entity.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import org.springframework.test.context.ActiveProfiles;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
+@ActiveProfiles("dev")
+@DisplayName("User mapper tests")
 class UserMapperTest {
-
     @Autowired
     UserMapper mapper;
 
     @Test
-    void convertToEntity() {
+    @DisplayName("Конвертируем ДТО User в Entity")
+    void convertToEntityTest_OK() {
+        User referenceUserEntity = new User();
+        referenceUserEntity.setId(1L);
+        referenceUserEntity.setName("Test");
+        referenceUserEntity.setUserGroups(Set.of(UserGroup.builder()
+                .id(1L)
+                .name("name")
+                .roles(null)
+                .description("description")
+                .build()));
+        UserDto userDto = UserDto.builder()
+                .id(1L)
+                .name("Test")
+                .userGroups(Set.of(UserGroupDto.builder()
+                        .id(1L)
+                        .name("name")
+                        .roles(null)
+                        .description("description")
+                        .build()))
+                .build();
+        User user = mapper.convertToEntity(userDto);
+        assertEquals(referenceUserEntity,user);
     }
 
     @Test
-    void convertToDto() {
+    @DisplayName("Конвертируем Entity User в ДТО")
+    void convertToDtoTest_OK() {
         UserDto referenceUserDto = UserDto.builder()
                 .id(1L)
                 .name("Test")
@@ -43,7 +59,6 @@ class UserMapperTest {
                         .description("description")
                         .build()))
                 .build();
-
         User userEntity = new User();
         userEntity.setId(1L);
         userEntity.setName("Test");

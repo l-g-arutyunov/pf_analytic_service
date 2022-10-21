@@ -1,6 +1,9 @@
 package com.devlife.pf_sql_controller.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -8,6 +11,10 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "pf_project")
 @Data
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -14,9 +14,9 @@ import java.time.LocalDate;
 @Builder
 public class ProjectRoleDto implements Serializable {
     private Long id;
-    private Long userId;
-    private Long roleId;
-    private Long projectId;
+    private Long user;
+    private Long role;
+    private Long project;
     private LocalDate startDate;
     private LocalDate endDate;
     private String roleLevel;
