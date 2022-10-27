@@ -5,12 +5,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Builder
 @Table(name = "pf_role")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class Role {
 
     @Id

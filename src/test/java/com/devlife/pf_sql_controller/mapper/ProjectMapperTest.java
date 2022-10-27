@@ -31,17 +31,11 @@ class ProjectMapperTest {
         referenceProject.setStartDate(LocalDate.EPOCH);
         referenceProject.setEndDate(LocalDate.EPOCH);
         referenceProject.setEmployer(null);
-//        projectEntity.setEmployer(Employer.builder().id(1L).name("name").userGroup(null).build());
         referenceProject.setProjectType(null);
-//        projectEntity.setProjectType(ProjectType.builder().id(1L).name("name").build());
         referenceProject.setUserGroup(null);
-//        projectEntity.setUserGroup(UserGroup.builder().id(1L).name("name")
-//                .roles(null).description("description").build());
-
         ProjectDto projectDto = ProjectDto.builder().id(1L).name("name").description("description")
                 .startDate(LocalDate.EPOCH).endDate(LocalDate.EPOCH).employer(null)
                 .projectType(null).userGroup(null).build();
-
         Project project = mapper.convertToEntity(projectDto);
         assertEquals(referenceProject,project);
     }

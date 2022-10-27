@@ -22,7 +22,6 @@ class PaymentCategoryMapperTest {
         PaymentCategory referencePaymentCategoryEntity = new PaymentCategory();
         referencePaymentCategoryEntity.setId(1L);
         referencePaymentCategoryEntity.setName("Test");
-
         PaymentCategoryDto paymentCategoryDto = PaymentCategoryDto.builder()
                 .id(1L)
                 .name("Test")
@@ -39,11 +38,9 @@ class PaymentCategoryMapperTest {
                 .id(1L)
                 .name("Test")
                 .build();
-
         PaymentCategory paymentCategoryEntity = new PaymentCategory();
         paymentCategoryEntity.setId(1L);
         paymentCategoryEntity.setName("Test");
-
         PaymentCategoryDto paymentCategoryDto = mapper.convertToDto(paymentCategoryEntity);
         assertEquals(referencePaymentCategoryDto,paymentCategoryDto);
     }

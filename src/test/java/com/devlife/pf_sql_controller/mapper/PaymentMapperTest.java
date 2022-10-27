@@ -34,7 +34,6 @@ class PaymentMapperTest {
                 .build());
         referencePayment.setUser(User.builder().id(1L).build());
         referencePayment.setPaymentCategory(PaymentCategory.builder().id(1L).build());
-
         PaymentDto paymentDto = PaymentDto.builder()
                 .id(1L)
                 .paymentCategory(PaymentCategoryDto.builder().id(1L).build())

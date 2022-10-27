@@ -26,16 +26,16 @@ class EmployerMapperTest {
     @Test
     @DisplayName("Конвертируем ДТО Employer в Entity")
     void convertToEntityTest_OK() {
-        Employer employerEntity = new Employer();
-        employerEntity.setId(1L);
-        employerEntity.setName("Test");
-        employerEntity.setUserGroup(UserGroup.builder()
+        Employer referenceEmployerEntity = new Employer();
+        referenceEmployerEntity.setId(1L);
+        referenceEmployerEntity.setName("Test");
+        referenceEmployerEntity.setUserGroup(UserGroup.builder()
                 .id(1L)
                 .name("name")
                 .roles(null)
                 .description("description")
                 .build());
-        EmployerDto referenceEmployerDto = EmployerDto.builder()
+        EmployerDto employerDto = EmployerDto.builder()
                 .id(1L)
                 .name("Test")
                 .userGroup(UserGroupDto.builder()
@@ -45,8 +45,8 @@ class EmployerMapperTest {
                         .description("description")
                         .build())
                 .build();
-        Employer employer = mapper.convertToEntity(referenceEmployerDto);
-        assertEquals(employerEntity,employer);
+        Employer employer = mapper.convertToEntity(employerDto);
+        assertEquals(referenceEmployerEntity,employer);
     }
 
     @Test

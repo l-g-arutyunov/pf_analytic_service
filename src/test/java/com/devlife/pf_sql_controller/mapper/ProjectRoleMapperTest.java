@@ -26,18 +26,17 @@ class ProjectRoleMapperTest {
     // TODO: 19.10.2022
     @Test
     void convertToEntity() {
-        ProjectRole referenceProjectRole = ProjectRole.builder().id(1L).user(null).role(null).
-                project(null).startDate(LocalDate.EPOCH).endDate(LocalDate.EPOCH).roleLevel("roleLevel").build();
-//        referenceProjectRole.setId(1L);
-//        referenceProjectRole.setProject(Project.builder().id(1L).build());
-//        referenceProjectRole.setRole(Role.builder().id(1L).build());
-//        referenceProjectRole.setUser(User.builder().id(1L).build());
-//        referenceProjectRole.setRoleLevel("roleLevel");
-//        referenceProjectRole.setStartDate(LocalDate.EPOCH);
-//        referenceProjectRole.setEndDate(LocalDate.EPOCH);
+        ProjectRole referenceProjectRole = new ProjectRole();
+        referenceProjectRole.setId(1L);
+        referenceProjectRole.setProject(null);
+        referenceProjectRole.setRole(null);
+        referenceProjectRole.setUser(null);
+        referenceProjectRole.setRoleLevel("roleLevel");
+        referenceProjectRole.setStartDate(null);
+        referenceProjectRole.setEndDate(null);
 
         ProjectRoleDto projectRoleDto = ProjectRoleDto.builder().id(1L).user(null).role(null).
-                project(null).startDate(LocalDate.EPOCH).endDate(LocalDate.EPOCH).roleLevel("roleLevel").build();
+        project(null).startDate(null).endDate(null).roleLevel("roleLevel").build();
 
         ProjectRole projectRole= mapper.convertToEntity(projectRoleDto);
         assertEquals(referenceProjectRole,projectRole);

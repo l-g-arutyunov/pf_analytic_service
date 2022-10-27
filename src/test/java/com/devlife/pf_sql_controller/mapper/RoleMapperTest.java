@@ -19,7 +19,7 @@ class RoleMapperTest {
 
     @Test
     @DisplayName("Конвертируем Дто Role в Энтити")
-    void convertToEntityTest_Failed() {
+    void convertToEntityTest_TestOK() {
         Role referenceRole = new Role();
         referenceRole.setId(1L);
         referenceRole.setName("name");
