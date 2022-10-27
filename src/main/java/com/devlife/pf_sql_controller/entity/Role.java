@@ -6,7 +6,10 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "pf_role")
+@Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Role {
 
     @Id

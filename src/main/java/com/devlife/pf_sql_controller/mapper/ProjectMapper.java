@@ -11,6 +11,7 @@ public class ProjectMapper {
 
     public ProjectMapper(ModelMapper mapper) {
         this.mapper = mapper;
+        //TODO Зачем?
 //        mapper.createTypeMap(Project.class, ProjectDto.class)
 //                .addMappings(p -> p.skip(Cup))
     }
