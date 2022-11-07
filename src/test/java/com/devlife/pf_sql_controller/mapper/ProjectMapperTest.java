@@ -1,6 +1,9 @@
 package com.devlife.pf_sql_controller.mapper;
 
+import com.devlife.pf_sql_controller.dto.EmployerDto;
 import com.devlife.pf_sql_controller.dto.ProjectDto;
+import com.devlife.pf_sql_controller.dto.ProjectTypeDto;
+import com.devlife.pf_sql_controller.dto.UserGroupDto;
 import com.devlife.pf_sql_controller.entity.Employer;
 import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.ProjectType;
@@ -30,12 +33,16 @@ class ProjectMapperTest {
         referenceProject.setDescription("description");
         referenceProject.setStartDate(LocalDate.EPOCH);
         referenceProject.setEndDate(LocalDate.EPOCH);
-        referenceProject.setEmployer(null);
-        referenceProject.setProjectType(null);
-        referenceProject.setUserGroup(null);
+        referenceProject.setEmployer(Employer.builder().id(1L).build());
+        referenceProject.setProjectType(ProjectType.builder().id(1L).build());
+        referenceProject.setUserGroup(UserGroup.builder().id(1L).build());
         ProjectDto projectDto = ProjectDto.builder().id(1L).name("name").description("description")
-                .startDate(LocalDate.EPOCH).endDate(LocalDate.EPOCH).employer(null)
-                .projectType(null).userGroup(null).build();
+                .startDate(LocalDate.EPOCH)
+                .endDate(LocalDate.EPOCH)
+                .employer(EmployerDto.builder().id(1L).build())
+                .projectType(ProjectTypeDto.builder().id(1L).build())
+                .userGroup(UserGroupDto.builder().id(1L).build())
+                .build();
         Project project = mapper.convertToEntity(projectDto);
         assertEquals(referenceProject,project);
     }
@@ -44,11 +51,14 @@ class ProjectMapperTest {
     @DisplayName("Конвертируем Энтити в ДТО")
     void convertToDtoTest_OK() {
         ProjectDto referenceProjectDto = ProjectDto.builder().id(1L).name("name").description("description")
-                .startDate(LocalDate.EPOCH).endDate(LocalDate.EPOCH).employer(null)
-                .projectType(null).userGroup(null).build();
+                .startDate(LocalDate.EPOCH).endDate(LocalDate.EPOCH)
+                .employer(EmployerDto.builder().id(1L).build())
+                .projectType(ProjectTypeDto.builder().id(1L).build())
+                .userGroup(UserGroupDto.builder().id(1L).build())
+                .build();
 
         Project projectEntity = new Project(1L,"name","description",LocalDate.EPOCH,LocalDate.EPOCH,
-                null,null,null);
+                Employer.builder().id(1L).build(),ProjectType.builder().id(1L).build(),UserGroup.builder().id(1L).build());
 
         ProjectDto projectDto = mapper.convertToDto(projectEntity);
         assertEquals(referenceProjectDto,projectDto);

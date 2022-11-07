@@ -1,5 +1,6 @@
 package com.devlife.pf_sql_controller.entity;
 
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,8 +23,9 @@ public class Role {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "user_group_id")
-    private Long userGroupId;
+    @ManyToOne
+    @JoinColumn(name = "user_group_id")
+    private UserGroup userGroupId;
 
     @ManyToOne
     @JoinColumn(name = "role_type_id")

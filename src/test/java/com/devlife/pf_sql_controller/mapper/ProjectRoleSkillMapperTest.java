@@ -22,10 +22,8 @@ class ProjectRoleSkillMapperTest {
     void convertToEntityTest_OK() {
         ProjectRoleSkill referenceProjectRoleSkill = new ProjectRoleSkill();
         referenceProjectRoleSkill.setProjectRoleSkillId(null);
-
         ProjectRoleSkillDto projectRoleSkillDto = ProjectRoleSkillDto.builder()
                 .skillId(null).projectRoleId(null).build();
-
         ProjectRoleSkill projectRoleSkill = mapper.convertToEntity(projectRoleSkillDto);
         assertEquals(referenceProjectRoleSkill,projectRoleSkill);
 
@@ -36,10 +34,8 @@ class ProjectRoleSkillMapperTest {
     void convertToDtoTest_OK() {
         ProjectRoleSkillDto referenceProjectRoleSkillDto = ProjectRoleSkillDto.builder()
                 .skillId(null).projectRoleId(null).build();
-
         ProjectRoleSkill projectRoleSkill= new ProjectRoleSkill();
         projectRoleSkill.setProjectRoleSkillId(null);
-
         ProjectRoleSkillDto projectRoleSkillDto = mapper.convertToDto(projectRoleSkill);
         assertEquals(referenceProjectRoleSkillDto,projectRoleSkillDto);
     }

@@ -1,12 +1,15 @@
 package com.devlife.pf_sql_controller.mapper;
 
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
+import com.devlife.pf_sql_controller.entity.Role;
 import com.devlife.pf_sql_controller.entity.UserGroup;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -24,9 +27,10 @@ class UserGroupMapperTest {
         referenceUserGroup.setName("name");
         referenceUserGroup.setDescription("description");
         referenceUserGroup.setRoles(null);
-
         UserGroupDto userGroupDto = UserGroupDto.builder().id(1L).name("name")
-                .description("description").build();
+                .description("description")
+                .roles(null)
+                .build();
         UserGroup userGroup = mapper.convertToEntity(userGroupDto);
         assertEquals(referenceUserGroup,userGroup);
     }

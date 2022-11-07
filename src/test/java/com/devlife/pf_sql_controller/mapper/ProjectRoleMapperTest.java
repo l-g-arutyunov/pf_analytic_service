@@ -29,7 +29,8 @@ class ProjectRoleMapperTest {
     ProjectRoleMapper mapper;
 
     @Test
-    void convertToEntity() {
+    @DisplayName("Конвертируем ДТО ProjectRole в Entity")
+    void convertToEntityTest_OK() {
         User refUser = User.builder()
                 .id(1L)
                 .build();
@@ -64,15 +65,26 @@ class ProjectRoleMapperTest {
     }
 
     @Test
-    void convertToDto() {
-        ProjectRoleDto referenceProjectRoleDto = ProjectRoleDto.builder().id(1L).startDate(LocalDate.EPOCH)
-                .endDate(LocalDate.EPOCH).roleLevel("roleLevel").build();
+    @DisplayName("Конвертируем Entity ProjectRole в ДТО")
+    void convertToDtoTest_OK() {
+        ProjectRoleDto referenceProjectRoleDto = ProjectRoleDto.builder()
+                .id(1L)
+                .user(UserDto.builder().id(3L).build())
+                .role(RoleDto.builder().id(2L).build())
+                .project(ProjectDto.builder().id(1L).build())
+                .startDate(LocalDate.EPOCH)
+                .endDate(LocalDate.MAX)
+                .roleLevel("roleLevel")
+                .build();
 
         ProjectRole projectRole = new ProjectRole();
         projectRole.setId(1L);
+        projectRole.setProject(Project.builder().id(1L).build());
+        projectRole.setRole(Role.builder().id(2L).build());
+        projectRole.setUser(User.builder().id(3L).build());
         projectRole.setRoleLevel("roleLevel");
         projectRole.setStartDate(LocalDate.EPOCH);
-        projectRole.setEndDate(LocalDate.EPOCH);
+        projectRole.setEndDate(LocalDate.MAX);
 
         ProjectRoleDto projectRoleDto = mapper.convertToDto(projectRole);
         assertEquals(referenceProjectRoleDto, projectRoleDto);
