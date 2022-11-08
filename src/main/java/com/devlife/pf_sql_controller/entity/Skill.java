@@ -10,7 +10,8 @@ import java.util.Set;
 @Data
 public class Skill {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "skill_id_seq")
+    @SequenceGenerator(name = "skill_id_seq", sequenceName = "skill_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "name")
