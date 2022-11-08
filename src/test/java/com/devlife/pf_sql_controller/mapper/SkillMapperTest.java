@@ -21,11 +21,11 @@ class SkillMapperTest {
     @Test
     @DisplayName("Конвертируем ДТО Скилла в Entity")
     void convertDtoToEntityTest_OK() {
-        Skill skillEntity= new Skill();
-        skillEntity.setId(1L);
-        skillEntity.setName("Test");
-        skillEntity.setExternalId(1L);
-        skillEntity.setDescription("Описание");
+        Skill referenceSkillEntity= new Skill();
+        referenceSkillEntity.setId(1L);
+        referenceSkillEntity.setName("Test");
+        referenceSkillEntity.setExternalId(1L);
+        referenceSkillEntity.setDescription("Описание");
 
         SkillDto skillDto = SkillDto.builder()
                 .id(1L)
@@ -35,7 +35,7 @@ class SkillMapperTest {
                 .build();
 
         Skill skill = mapper.convertToEntity(skillDto);
-        assertEquals(skillEntity,skill);
+        assertEquals(referenceSkillEntity,skill);
     }
 
     @Test

@@ -23,7 +23,9 @@ class ProjectRoleSkillMapperTest {
         ProjectRoleSkill referenceProjectRoleSkill = new ProjectRoleSkill();
         referenceProjectRoleSkill.setProjectRoleSkillId(null);
         ProjectRoleSkillDto projectRoleSkillDto = ProjectRoleSkillDto.builder()
-                .skillId(null).projectRoleId(null).build();
+                .skillId(null)
+                .projectRoleId(null)
+                .build();
         ProjectRoleSkill projectRoleSkill = mapper.convertToEntity(projectRoleSkillDto);
         assertEquals(referenceProjectRoleSkill,projectRoleSkill);
 
@@ -33,7 +35,9 @@ class ProjectRoleSkillMapperTest {
     @DisplayName("Конвертируем Entity ProjectRoleSkill в ДТО")
     void convertToDtoTest_OK() {
         ProjectRoleSkillDto referenceProjectRoleSkillDto = ProjectRoleSkillDto.builder()
-                .skillId(null).projectRoleId(null).build();
+                .skillId(null)
+                .projectRoleId(null)
+                .build();
         ProjectRoleSkill projectRoleSkill= new ProjectRoleSkill();
         projectRoleSkill.setProjectRoleSkillId(null);
         ProjectRoleSkillDto projectRoleSkillDto = mapper.convertToDto(projectRoleSkill);

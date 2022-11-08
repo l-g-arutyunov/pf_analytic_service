@@ -23,8 +23,11 @@ class RoleTypeMapperTest {
         referenceRoleType.setId(1L);
         referenceRoleType.setName("name");
         referenceRoleType.setDescription("description");
-        RoleTypeDto roleTypeDto = RoleTypeDto.builder().id(1L).name("name")
-                .description("description").build();
+        RoleTypeDto roleTypeDto = RoleTypeDto.builder()
+                .id(1L)
+                .name("name")
+                .description("description")
+                .build();
         RoleType roleType = mapper.convertToEntity(roleTypeDto);
         assertEquals(referenceRoleType,roleType);
     }
@@ -32,8 +35,11 @@ class RoleTypeMapperTest {
     @Test
     @DisplayName("Конвертируем Entity RoleType в ДТО")
     void convertToDtoTest_OK() {
-        RoleTypeDto referenceRoleTypeDto = RoleTypeDto.builder().id(1L).name("name")
-                .description("description").build();
+        RoleTypeDto referenceRoleTypeDto = RoleTypeDto.builder()
+                .id(1L)
+                .name("name")
+                .description("description")
+                .build();
         RoleType roleType = new RoleType();
         roleType.setId(1L);
         roleType.setName("name");

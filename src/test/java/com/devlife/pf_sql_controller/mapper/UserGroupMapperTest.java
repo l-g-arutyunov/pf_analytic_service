@@ -27,7 +27,9 @@ class UserGroupMapperTest {
         referenceUserGroup.setName("name");
         referenceUserGroup.setDescription("description");
         referenceUserGroup.setRoles(null);
-        UserGroupDto userGroupDto = UserGroupDto.builder().id(1L).name("name")
+        UserGroupDto userGroupDto = UserGroupDto.builder()
+                .id(1L)
+                .name("name")
                 .description("description")
                 .roles(null)
                 .build();
@@ -38,8 +40,11 @@ class UserGroupMapperTest {
     @Test
     @DisplayName("Конвертируем Entity UserGroup в ДТО")
     void convertToDtoTest_OK() {
-        UserGroupDto referenceUserGroupDto = UserGroupDto.builder().id(1L).name("name")
-                .description("description").build();
+        UserGroupDto referenceUserGroupDto = UserGroupDto.builder()
+                .id(1L)
+                .name("name")
+                .description("description")
+                .build();
         UserGroup userGroup = new UserGroup();
         userGroup.setId(1L);
         userGroup.setName("name");

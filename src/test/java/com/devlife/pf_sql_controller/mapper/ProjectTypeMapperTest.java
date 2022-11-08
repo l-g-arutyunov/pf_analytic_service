@@ -20,8 +20,14 @@ class ProjectTypeMapperTest {
     @Test
     @DisplayName("Конвертируем ДТО ProjectType в Entity")
     void convertToEntityTest_OK() {
-        ProjectType referenceProjectType = ProjectType.builder().id(1L).name("name").build();
-        ProjectTypeDto projectTypeDto = ProjectTypeDto.builder().id(1L).name("name").build();
+        ProjectType referenceProjectType = ProjectType.builder()
+                .id(1L)
+                .name("name")
+                .build();
+        ProjectTypeDto projectTypeDto = ProjectTypeDto.builder()
+                .id(1L)
+                .name("name")
+                .build();
         ProjectType projectType= mapper.convertToEntity(projectTypeDto);
         assertEquals(referenceProjectType,projectType);
     }
@@ -29,8 +35,14 @@ class ProjectTypeMapperTest {
     @Test
     @DisplayName("Конвертируем Entity ProjectType в ДТО")
     void convertToDtoTest_OK() {
-        ProjectTypeDto referenceProjectTypeDto = ProjectTypeDto.builder().id(1L).name("name").build();
-        ProjectType projectType = ProjectType.builder().id(1L).name("name").build();
+        ProjectTypeDto referenceProjectTypeDto = ProjectTypeDto.builder()
+                .id(1L)
+                .name("name")
+                .build();
+        ProjectType projectType = ProjectType.builder()
+                .id(1L)
+                .name("name")
+                .build();
         ProjectTypeDto projectTypeDto = mapper.convertToDto(projectType);
         assertEquals(referenceProjectTypeDto,projectTypeDto);
     }

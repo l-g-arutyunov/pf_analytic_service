@@ -32,7 +32,8 @@ class UserGroupUserMapperTest {
                 .isActive(true).isOwner(true)
                 .date(LocalDate.EPOCH)
                 .groupId(null)
-                .userId(null).build();
+                .userId(null)
+                .build();
         UserGroupUser userGroupUser = mapper.convertToEntity(userGroupUserDto);
         assertEquals(referenceUserGroupUser,userGroupUser);
     }
@@ -42,7 +43,10 @@ class UserGroupUserMapperTest {
     void convertToDtoTest_OK() {
         UserGroupUserDto referenceUserGroupUserDto = UserGroupUserDto.builder()
                 .isActive(true).isOwner(true)
-                .date(LocalDate.EPOCH).groupId(null).userId(null).build();
+                .date(LocalDate.EPOCH)
+                .groupId(null)
+                .userId(null)
+                .build();
         UserGroupUser userGroupUser = new UserGroupUser();
         userGroupUser.setUserGroupUserId(null);
         userGroupUser.setIsOwner(true);

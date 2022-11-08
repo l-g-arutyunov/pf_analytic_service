@@ -1,10 +1,8 @@
 package com.devlife.pf_sql_controller.mapper;
 
 import com.devlife.pf_sql_controller.dto.EmployerDto;
-import com.devlife.pf_sql_controller.dto.UserDto;
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
 import com.devlife.pf_sql_controller.entity.Employer;
-import com.devlife.pf_sql_controller.entity.User;
 import com.devlife.pf_sql_controller.entity.UserGroup;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
