@@ -1,7 +1,7 @@
 package com.devlife.pf_sql_controller.entity;
 
-import lombok.Data;
 
+import lombok.Data;
 import javax.persistence.*;
 import java.util.Set;
 

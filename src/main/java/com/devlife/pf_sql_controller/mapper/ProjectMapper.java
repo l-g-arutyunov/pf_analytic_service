@@ -11,8 +11,6 @@ public class ProjectMapper {
 
     public ProjectMapper(ModelMapper mapper) {
         this.mapper = mapper;
-//        mapper.createTypeMap(Project.class, ProjectDto.class)
-//                .addMappings(p -> p.skip(Cup))
     }
 
     public Project convertToEntity(ProjectDto projectDto) {

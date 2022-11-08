@@ -1,6 +1,9 @@
 package com.devlife.pf_sql_controller.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -8,6 +11,9 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "pf_project_role")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectRole {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_role_id_seq")
