@@ -2,22 +2,26 @@ package com.devlife.pf_sql_controller.mapper;
 
 import com.devlife.pf_sql_controller.dto.UserDto;
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
-import com.devlife.pf_sql_controller.entity.*;
+import com.devlife.pf_sql_controller.entity.User;
+import com.devlife.pf_sql_controller.entity.UserGroup;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import java.util.Set;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@ActiveProfiles("dev")
+@ExtendWith(MockitoExtension.class)
 @DisplayName("User mapper tests")
 class UserMapperTest {
-    @Autowired
+    @Spy
+    ModelMapper modelMapper;
+    @InjectMocks
     UserMapper mapper;
 
     @Test

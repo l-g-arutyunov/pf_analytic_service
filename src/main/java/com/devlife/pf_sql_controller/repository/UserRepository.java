@@ -11,4 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Boolean existsByExternalId(Long externalId);
 
     Optional<User> getByExternalId(Long externalId);
+
 }
