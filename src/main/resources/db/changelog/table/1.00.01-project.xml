@@ -34,7 +34,7 @@
             <column name="end_date" type="date"/>
             <column name="employer_id" type="bigint">
                 <constraints foreignKeyName="fk_employer_id" referencedTableName="pf_employer" referencedTableSchemaName="pf" referencedColumnNames="id"
-                             nullable="false"/>
+                             nullable="true"/>
             </column>
             <column name="user_group_id" type="bigint">
                 <constraints foreignKeyName="fk_project_user_group_id" referencedTableName="pf_user_group" referencedTableSchemaName="pf" referencedColumnNames="id"

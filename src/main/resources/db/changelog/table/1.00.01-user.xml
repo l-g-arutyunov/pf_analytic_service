@@ -44,4 +44,18 @@
         </createIndex>
     </changeSet>
 
+    <changeSet id="1.00.01-user-0004" author="larutyunov" failOnError="true" runInTransaction="false">
+        <preConditions>
+            <tableExists tableName="pf_user" schemaName="pf"/>
+            <not>
+                <columnExists tableName="pf_user" columnName="external_id"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="pf_user">
+            <column name="external_id" type="bigint" remarks="External key of user in master system">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

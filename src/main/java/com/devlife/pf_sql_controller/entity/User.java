@@ -22,6 +22,9 @@ public class User {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "external_id")
+    private Long externalId;
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "pf_user_group_user",
             joinColumns = @JoinColumn(name = "user_id"),
