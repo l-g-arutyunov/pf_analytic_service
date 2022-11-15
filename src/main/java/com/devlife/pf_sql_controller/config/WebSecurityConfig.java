@@ -48,11 +48,11 @@ public class WebSecurityConfig {
                     //.antMatchers("/api/v1/auth/**").permitAll()
                     .anyRequest().authenticated();
         } else {
-            http.authorizeRequests().antMatchers("/**").permitAll();
+            http
+                    .csrf().disable()
+                    .authorizeRequests().antMatchers("/**").permitAll();
         }
-
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 }

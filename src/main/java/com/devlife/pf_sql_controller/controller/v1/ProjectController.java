@@ -2,6 +2,12 @@ package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.service.ProjectService;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,17 +31,27 @@ public class ProjectController {
     }
 
     @GetMapping("project/{externalUserId}")
-    ResponseEntity<Page<Set<ProjectDto>>> getProjectsByUser(
+    @Parameters({
+            @Parameter(in = ParameterIn.QUERY
+                    , description = "Page you want to retrieve (0..N)"
+                    , name = "page"
+                    , content = @Content(schema = @Schema(type = "integer", defaultValue = "0"))),
+            @Parameter(in = ParameterIn.QUERY
+                    , description = "Number of records per page."
+                    , name = "size"
+                    , content = @Content(schema = @Schema(type = "integer", defaultValue = "20"))),
+            @Parameter(in = ParameterIn.QUERY
+                    , description = "Sorting criteria in the format: property(,asc|desc). "
+                    + "Default sort order is ascending. Multiple sort criteria are supported."
+                    , name = "sort"
+                    , content = @Content(array = @ArraySchema(schema = @Schema(type = "string"))))
+    })
+    ResponseEntity<Page<ProjectDto>> getProjectsByUser(
             @PathVariable Long externalUserId,
+            @Parameter(hidden = true, description = "Параметры сортировки определены в блоке @Parameters")
             Pageable pageable
     ) {
         return ResponseEntity.ok(service.getProjectsByUser(externalUserId, pageable));
-    }
-
-    @PreAuthorize("hasAuthority('ROOT')")
-    @GetMapping("project/{id}")
-    ProjectDto getProject(@PathVariable("id") Long id) {
-        return service.getProject(id);
     }
 
     @PreAuthorize("hasAuthority('ROOT')")
