@@ -3,11 +3,14 @@ package com.devlife.pf_sql_controller.controller.v1;
 import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
@@ -20,6 +23,14 @@ public class ProjectController {
             @PathVariable Long externalUserId,
             @RequestBody ProjectDto projectDto) {
         return ResponseEntity.ok(service.addProject(projectDto, externalUserId));
+    }
+
+    @GetMapping("project/{externalUserId}")
+    ResponseEntity<Page<Set<ProjectDto>>> getProjectsByUser(
+            @PathVariable Long externalUserId,
+            Pageable pageable
+    ) {
+        return ResponseEntity.ok(service.getProjectsByUser(externalUserId, pageable));
     }
 
     @PreAuthorize("hasAuthority('ROOT')")

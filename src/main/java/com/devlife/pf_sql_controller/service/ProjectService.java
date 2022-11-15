@@ -10,11 +10,14 @@ import com.devlife.pf_sql_controller.repository.ProjectRepository;
 import com.devlife.pf_sql_controller.repository.UserGroupRepository;
 import com.devlife.pf_sql_controller.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,6 +49,12 @@ public class ProjectService {
         }
         Project saveProject = projectRepository.save(project);
         return mapper.convertToDto(saveProject);
+    }
+
+    public Page<Set<ProjectDto>> getProjectsByUser(Long userExternalId, Pageable pageable) {
+        User user = userRepository.getByExternalId(userExternalId).orElseThrow(UserNotFoundException::new);
+        Set<Project> projects = projectRepository.getProjectsByUserId(user.getId(), pageable);
+        return projects.stream().map(mapper::convertToDto).collect(Collectors.toSet());
     }
 
     public ProjectDto getProject(Long id) {
