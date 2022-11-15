@@ -50,6 +50,7 @@ public class ProjectController {
                     , content = @Content(array = @ArraySchema(schema = @Schema(type = "string"))))
     })
     ResponseEntity<Page<ProjectDto>> getProjectsByUser(
+            @Parameter(description = "external user id", required = true, name = "externalUserId")
             @PathVariable Long externalUserId,
             @Parameter(hidden = true, description = "Параметры сортировки определены в блоке @Parameters")
             Pageable pageable
