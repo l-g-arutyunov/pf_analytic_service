@@ -1,6 +1,8 @@
 package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.ProjectDto;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
@@ -56,6 +59,18 @@ public class ProjectController {
             Pageable pageable
     ) {
         return ResponseEntity.ok(service.getProjectsByUser(externalUserId, pageable));
+    }
+
+    @PutMapping("project/{projectId}/members")
+    @Operation(summary = "Add members to the project", tags = {"project", "member"})
+    ResponseEntity<Set<AddProjectMemberRes>> addProjectMember(
+            @Parameter(description = "external user id", required = true, name = "projectId")
+            @PathVariable Long projectId,
+            @Parameter(description = "userId and projectRoleId to set", required = true, name = "addProjectMemberReqList")
+            @RequestBody Set<AddProjectMemberReq> addProjectMemberReqSet
+    ) {
+        service.addUserToProject(projectId, addProjectMemberReqSet);
+        return null;
     }
 
     @PreAuthorize("hasAuthority('ROOT')")

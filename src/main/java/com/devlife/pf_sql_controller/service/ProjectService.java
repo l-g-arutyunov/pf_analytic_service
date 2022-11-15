@@ -1,6 +1,7 @@
 package com.devlife.pf_sql_controller.service;
 
 import com.devlife.pf_sql_controller.dto.ProjectDto;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
 import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.User;
 import com.devlife.pf_sql_controller.entity.UserGroup;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,4 +75,11 @@ public class ProjectService {
         return !projectRepository.existsById(id);
     }
 
+    public void addUserToProject(Long projectId, Set<AddProjectMemberReq> addProjectMemberReqSet) {
+        final Set<User> user = userRepository.getUsersByExternalIdIn(
+                addProjectMemberReqSet.stream()
+                        .map(AddProjectMemberReq::getUserExternalId)
+                        .collect(Collectors.toSet())
+        );
+    }
 }
