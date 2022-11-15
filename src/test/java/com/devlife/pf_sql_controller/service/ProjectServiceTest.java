@@ -125,7 +125,6 @@ class ProjectServiceTest {
                 .startDate(LocalDate.EPOCH)
                 .build();
 
-
         doReturn(Optional.of(user)).when(userRepository).getByExternalId(userExternalId);
         doReturn(userGroup).when(userGroupRepository).save(any(UserGroup.class));
         doReturn(project).when(projectRepository).save(project);
