@@ -2,6 +2,7 @@ package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.service.ProjectService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -24,6 +25,7 @@ public class ProjectController {
     private final ProjectService service;
 
     @PutMapping("project/{externalUserId}")
+    @Operation(summary = "Add projects by userId", tags = {"project"})
     ResponseEntity<ProjectDto> addProject(
             @PathVariable Long externalUserId,
             @RequestBody ProjectDto projectDto) {
@@ -31,6 +33,7 @@ public class ProjectController {
     }
 
     @GetMapping("project/{externalUserId}")
+    @Operation(summary = "Get projects by userId", tags = {"project"})
     @Parameters({
             @Parameter(in = ParameterIn.QUERY
                     , description = "Page you want to retrieve (0..N)"

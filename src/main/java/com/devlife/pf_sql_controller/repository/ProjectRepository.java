@@ -28,5 +28,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("select count(project) from Project project " +
             "inner join UserGroupUser ugu on project.userGroup.id = ugu.userGroupUserId.userGroupId " +
             "where ugu.userGroupUserId.userId = :userId")
-    Long getCountByUser(@Param("userId") Long userId);
+    Long getCountByUserId(@Param("userId") Long userId);
 }

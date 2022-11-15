@@ -55,7 +55,7 @@ public class ProjectService {
         final User user = userRepository.getByExternalId(userExternalId).orElseThrow(UserNotFoundException::new);
         final Page<Project> projects = projectRepository.getProjectsByUserId(user.getId(), pageable);
         final List<ProjectDto> projectDtoList = projects.getContent().stream().map(mapper::convertToDto).collect(Collectors.toList());
-        final Long countProjects = projectRepository.getCountByUser(user.getId());
+        final Long countProjects = projectRepository.getCountByUserId(user.getId());
         return new PageImpl<>(
                 projectDtoList, pageable, countProjects
         );
