@@ -5,11 +5,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class AddProjectMemberReq {
     Long userExternalId;
-    Long projectRoleId;
+    Set<Long> projectRoleId;
 }

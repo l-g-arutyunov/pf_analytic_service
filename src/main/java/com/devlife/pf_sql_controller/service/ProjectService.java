@@ -18,8 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,11 +78,36 @@ public class ProjectService {
         return !projectRepository.existsById(id);
     }
 
+    @Transactional
     public void addUserToProject(Long projectId, Set<AddProjectMemberReq> addProjectMemberReqSet) {
-        final Set<User> user = userRepository.getUsersByExternalIdIn(
+        final Map<Long, AddProjectMemberReq> helpMapOfExternalId = addProjectMemberReqSet.stream().collect(
+                Collectors.toMap(AddProjectMemberReq::getUserExternalId, UnaryOperator.identity())
+        );
+
+        final Set<User> users = userRepository.getUsersByExternalIdIn(
                 addProjectMemberReqSet.stream()
                         .map(AddProjectMemberReq::getUserExternalId)
                         .collect(Collectors.toSet())
         );
+
+        Map<User, AddProjectMemberReq> userInputDataMap = users.stream().collect(Collectors.toMap(UnaryOperator.identity(),
+                user -> helpMapOfExternalId.getOrDefault(user.getExternalId(), null)));
+
+        final Set<User> notFoundUsers = new HashSet<>();
+        final Map<User, AddProjectMemberReq> filteredUsersInputDataMap = userInputDataMap.entrySet().stream()
+                .filter(entry -> {
+                    if(entry.getValue() == null) {
+                        notFoundUsers.add(entry.getKey());
+                        return false;
+                    }
+                    return true;
+                }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+
+        if (!notFoundUsers.isEmpty()) {
+
+        }
+
+
+
     }
 }
