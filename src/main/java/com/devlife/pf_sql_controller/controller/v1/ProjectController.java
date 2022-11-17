@@ -3,6 +3,8 @@ package com.devlife.pf_sql_controller.controller.v1;
 import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,27 +13,32 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/")
 public class ProjectController {
-
     private final ProjectService service;
 
-    @PutMapping("project")
-    Long addProject(@RequestBody ProjectDto projectDto) {
-        return service.addProject(projectDto);
+    @PutMapping("project/{externalUserId}")
+    ResponseEntity<ProjectDto> addProject(
+            @PathVariable Long externalUserId,
+            @RequestBody ProjectDto projectDto) {
+        return ResponseEntity.ok(service.addProject(projectDto, externalUserId));
     }
 
+    @PreAuthorize("hasAuthority('ROOT')")
     @GetMapping("project/{id}")
     ProjectDto getProject(@PathVariable("id") Long id) {
         return service.getProject(id);
     }
 
+    @PreAuthorize("hasAuthority('ROOT')")
     @GetMapping("project")
     List<ProjectDto> getAllProject() {
         return service.getAllProjects();
     }
 
+    @PreAuthorize("hasAuthority('ROOT')")
     @DeleteMapping("project/{id}")
     Boolean deleteProjectById(@PathVariable("id") Long id) {
         return service.deleteProjectById(id);
     }
+
 
 }
