@@ -45,7 +45,7 @@ public class WebSecurityConfig {
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authorizeRequests()
-                    //.antMatchers("/api/v1/auth/**").permitAll()
+                    .antMatchers("swagger-ui/**").permitAll()
                     .anyRequest().authenticated();
         } else {
             http
