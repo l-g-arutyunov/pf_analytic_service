@@ -18,9 +18,5 @@
     <include file="db/changelog/table/1.00.01-payment.xml"/>
     <include file="db/changelog/table/1.00.01-project_role.xml"/>
     <include file="db/changelog/table/1.00.01-project_role_skill.xml"/>
-    <include file="db/changelog/changelog-1.001.xml"/>
-<!--    <includeAll path="db/changelog/data"/>-->
-<!--    <include file="db/changelog/initial-data.xml"/>-->
-    <include file="db/changelog/add_indexes.xml"/>
 
 </databaseChangeLog>

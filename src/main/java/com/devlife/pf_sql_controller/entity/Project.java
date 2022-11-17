@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_id_seq")
@@ -44,5 +43,4 @@ public class Project {
     @ManyToOne(targetEntity = UserGroup.class)
     @JoinColumn(name = "user_group_id")
     private UserGroup userGroup;
-
 }

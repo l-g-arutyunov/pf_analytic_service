@@ -1,20 +1,22 @@
 package com.devlife.pf_sql_controller.mapper;
 
 import com.devlife.pf_sql_controller.dto.ProjectTypeDto;
-import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.ProjectType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 
-import static org.junit.jupiter.api.Assertions.*;
-@SpringBootTest
-@ActiveProfiles("dev")
+import static org.junit.jupiter.api.Assertions.assertEquals;
+@ExtendWith(MockitoExtension.class)
 @DisplayName("ProjectType Mapper Tests")
 class ProjectTypeMapperTest {
-    @Autowired
+    @Spy
+    ModelMapper modelMapper;
+    @InjectMocks
     ProjectTypeMapper mapper;
 
     @Test

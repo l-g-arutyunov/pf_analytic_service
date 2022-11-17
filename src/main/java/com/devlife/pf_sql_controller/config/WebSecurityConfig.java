@@ -3,6 +3,7 @@ package com.devlife.pf_sql_controller.config;
 import com.devlife.pf_sql_controller.security.jwt.AuthTokenFilter;
 import com.devlife.pf_sql_controller.security.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +21,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class WebSecurityConfig {
+
+    @Value("${security.enabled:true}")
+    private boolean securityEnabled;
     private final TokenProvider tokenProvider;
 
     @Bean
@@ -34,18 +38,21 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http
-                .csrf().disable()
-                .cors().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                //.antMatchers("/api/v1/auth/**").permitAll()
-                .anyRequest().authenticated();
-
+        if (securityEnabled) {
+            http
+                    .csrf().disable()
+                    .cors().disable()
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                    .authorizeRequests()
+                    //.antMatchers("/api/v1/auth/**").permitAll()
+                    .anyRequest().authenticated();
+        } else {
+            http
+                    .csrf().disable()
+                    .authorizeRequests().antMatchers("/**").permitAll();
+        }
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 }

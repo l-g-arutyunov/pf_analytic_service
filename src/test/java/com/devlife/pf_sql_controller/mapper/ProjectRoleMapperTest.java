@@ -10,22 +10,22 @@ import com.devlife.pf_sql_controller.entity.Role;
 import com.devlife.pf_sql_controller.entity.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-@ActiveProfiles("dev")
+@ExtendWith(MockitoExtension.class)
 @DisplayName("ProjectRole Mapper Tests")
 class ProjectRoleMapperTest {
-
-    @Autowired
+    @Spy
+    ModelMapper modelMapper;
+    @InjectMocks
     ProjectRoleMapper mapper;
 
     @Test
