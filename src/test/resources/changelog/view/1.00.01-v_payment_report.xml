@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="1.00.01-v_payment_report-0001" author="larutyunov" failOnError="true">
+        <createView viewName="v_payments_report" replaceIfExists="true" fullDefinition="false">
+            select
+                pay.id,
+                pay.project_id,
+                pay.date,
+                pay.user_id,
+                pay.payment_category_id,
+                p.employer_id,
+                p.user_group_id,
+                pr.role_id,
+                pay.qty
+            from payment pay
+                     inner join project p
+                                on pay.project_id = p.id
+                     inner join project_role pr
+                                on pay.project_id = pr.project_id
+                                    and pay.user_id = pr.user_id
+                                    and pay.date between pr.start_date and pr.end_date
+        </createView>
+    </changeSet>
+
+</databaseChangeLog>

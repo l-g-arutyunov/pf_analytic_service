@@ -147,6 +147,7 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>pf_analytic_service</finalName>
     </build>
 
 </project>

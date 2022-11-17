@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <include file="db/changelog/create_schema.sql"/>
+    <include file="db/changelog/table/1.00.01-user.xml"/>
+    <include file="db/changelog/table/1.00.01-skill.xml"/>
+    <include file="db/changelog/table/1.00.01-role_type.xml"/>
+    <include file="db/changelog/table/1.00.01-project_type.xml"/>
+    <include file="db/changelog/table/1.00.01-user_group.xml"/>
+    <include file="db/changelog/table/1.00.01-employer.xml"/>
+    <include file="db/changelog/table/1.00.01-user_group_user.xml"/>
+    <include file="db/changelog/table/1.00.01-project.xml"/>
+    <include file="db/changelog/table/1.00.01-role.xml"/>
+    <include file="db/changelog/table/1.00.01-payment_category.xml"/>
+    <include file="db/changelog/table/1.00.01-payment.xml"/>
+    <include file="db/changelog/table/1.00.01-project_role.xml"/>
+    <include file="db/changelog/table/1.00.01-project_role_skill.xml"/>
+    <include  file="db/changelog/changelog-1.001.xml"/>
+    <includeAll path="db/changelog/data"/>
+    <include file="db/changelog/initial-data.xml"/>
+    <include file="db/changelog/add_indexes.xml"/>
+
+</databaseChangeLog>

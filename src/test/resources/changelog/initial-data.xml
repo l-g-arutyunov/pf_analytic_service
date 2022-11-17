@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet author="RoSeV" id="101">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/users.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_user"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sthoomy" id="102">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/role_types.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_role_type"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+            <column header="description"
+                    name="description"
+                    type="varchar(255)"/>
+
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="103">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/project_types.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_project_type"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="104">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/user_groups.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_user_group"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+            <column header="description"
+                    name="description"
+                    type="varchar(255)"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="105">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/employers.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_employer"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+            <column header="user_group_id"
+                    name="user_group_id"
+                    type="bigint"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="106">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/user_group_users.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_user_group_user"
+                  usePreparedStatements="true">
+            <column header="user_id"
+                    name="user_id"
+                    type="bigint"/>
+            <column header="user_group_id"
+                    name="user_group_id"
+                    type="bigint"/>
+            <column header="is_owner"
+                    name="is_owner"
+                    type="bool"/>
+            <column header="is_active"
+                    name="is_active"
+                    type="bool"/>
+            <column header="date"
+                    name="date"
+                    type="date"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="107">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/projects.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_project"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+            <column header="description"
+                    name="description"
+                    type="varchar(255)"/>
+            <column header="start_date"
+                    name="start_date"
+                    type="date"/>
+            <column header="end_date"
+                    name="end_date"
+                    type="date"/>
+            <column header="employer_id"
+                    name="employer_id"
+                    type="bigint"/>
+            <column header="user_group_id"
+                    name="user_group_id"
+                    type="bigint"/>
+            <column header="project_type_id"
+                    name="project_type_id"
+                    type="bigint"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="108">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/roles.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_role"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+            <column header="description"
+                    name="description"
+                    type="varchar(255)"/>
+            <column header="user_group_id"
+                    name="user_group_id"
+                    type="bigint"/>
+            <column header="role_type_id"
+                    name="role_type_id"
+                    type="bigint"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="109">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/payment_categories.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_payment_category"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="110">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/payments.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_payment"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="project_id"
+                    name="project_id"
+                    type="bigint"/>
+            <column header="date"
+                    name="date"
+                    type="date"/>
+            <column header="user_id"
+                    name="user_id"
+                    type="bigint"/>
+            <column header="payment_category_id"
+                    name="payment_category_id"
+                    type="bigint"/>
+            <column header="description"
+                    name="description"
+                    type="varchar(255)"/>
+            <column header="qty"
+                    name="qty"
+                    type="decimal"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="RoSeV" id="111">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/project_roles.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_project_role"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="user_id"
+                    name="user_id"
+                    type="bigint"/>
+            <column header="role_id"
+                    name="role_id"
+                    type="bigint"/>
+            <column header="project_id"
+                    name="project_id"
+                    type="bigint"/>
+            <column header="start_date"
+                    name="start_date"
+                    type="date"/>
+            <column header="end_date"
+                    name="end_date"
+                    type="date"/>
+            <column header="role_level"
+                    name="role_level"
+                    type="varchar(30)"/>
+
+        </loadData>
+    </changeSet>
+    <changeSet author="sthoomy" id="112">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/skills.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_skill"
+                  usePreparedStatements="true">
+            <column header="id"
+                    name="id"
+                    type="bigint"/>
+            <column header="name"
+                    name="name"
+                    type="varchar(30)"/>
+            <column header="description"
+                    name="description"
+                    type="varchar(255)"/>
+            <column header="external_id"
+                    name="external_id"
+                    type="bigint"/>
+        </loadData>
+    </changeSet>
+    <changeSet author="sthoomy" id="113">
+        <loadData catalogName="data"
+                  commentLineStartsWith="#"
+                  encoding="UTF-8"
+                  file="data/project_role_skills.csv"
+                  quotchar="'"
+                  relativeToChangelogFile="true"
+                  schemaName="pf"
+                  separator=";"
+                  tableName="pf_project_role_skill"
+                  usePreparedStatements="true">
+            <column header="skill_id"
+                    name="skill_id"
+                    type="bigint"/>
+            <column header="project_role_id"
+                    name="project_role_id"
+                    type="bigint"/>
+
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

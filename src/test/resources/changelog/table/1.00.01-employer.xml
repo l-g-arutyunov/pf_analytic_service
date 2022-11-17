@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <property dbms="postgresql,mssql,oracle" value="false" name="autoIncrement"/>
+    <property dbms="h2" value="true" name="autoIncrement"/>
+
+    <changeSet id="1.00.01-employer-0001" author="sthoomy" runInTransaction="false">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="employer_id_seq" schemaName="pf"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="employer_id_seq" schemaName="pf" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="1.00.01-employer-0002" author="sthoomy" failOnError="true" >
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="pf_employer" schemaName="pf"/>
+            </not>
+        </preConditions>
+        <createTable tableName="pf_employer" schemaName="pf">
+            <column name="id" type="bigint"
+                    defaultValueSequenceNext="employer_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_group_id" type="bigint">
+                <constraints foreignKeyName="fk_employer_user_group_id" referencedTableName="pf_user_group" referencedTableSchemaName="pf" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="sthoomy" id="1.00.01-employer-0003">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="pf_employer" schemaName="pf"/>
+                <not>
+                    <indexExists indexName="employer_index_0" schemaName="pf"/>
+                </not>
+            </and>
+        </preConditions>
+        <createIndex indexName="employer_index_0" tableName="pf_employer" schemaName="pf" clustered="true">
+            <column name="id"/>
+            <column name="name"/>
+            <column name="user_group_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

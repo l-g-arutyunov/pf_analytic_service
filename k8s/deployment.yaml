@@ -16,18 +16,18 @@ spec:
     spec:
       containers:
       - name: pf-analytic-service
-        image: devlifestartup/pf_analytic_service:1.0.0
+        image: devlifestartup/ENV_JOB_BASE_NAME:ENV_VERSION.ENV_BUILD_NUMBER
         ports:
         - containerPort: 8088
         env:
-        - name: DATASOURCE_HOST
-          value: db.bromen.fun
-        - name: DATASOURCE_PORT
-          value: "5432"
-        - name: SERVICE_NAME
-          value: projects
-        - name: SERVICE_PORT
-          value: "8088"
+          - name: DATASOURCE_HOST
+            value: ENV_DATASOURCE_HOST
+          - name: DATASOURCE_PORT
+            value: ENV_DATASOURCE_PORT
+          - name: SERVICE_NAME
+            value: ENV_SERVICE_NAME
+          - name: SERVICE_PORT
+            value: ENV_SERVICE_PORT
 ---
 apiVersion: v1
 kind: Service

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <changeSet id="1.00.01-user_group_user-0001" author="larutyunov" failOnError="true">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="pf_user_group_user" schemaName="pf"/>
+            </not>
+        </preConditions>
+        <createTable tableName="pf_user_group_user" schemaName="pf">
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_user_group_user_user_id" referencedTableName="pf_user" referencedTableSchemaName="pf" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+            <column name="user_group_id" type="bigint">
+                <constraints foreignKeyName="fk_user_group_user_group_user_id" referencedTableName="pf_user_group" referencedTableSchemaName="pf" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+            <column name="is_owner" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="bool">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="RoSeV" id="1.00.01-user_group_user-0002">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="pf_user_group_user" schemaName="pf"/>
+                <not>
+                    <indexExists indexName="user_group_user_index_0" schemaName="pf"/>
+                </not>
+            </and>
+        </preConditions>
+        <createIndex indexName="user_group_user_index_0" tableName="pf_user_group_user" schemaName="pf" clustered="true">
+            <column name="user_id"/>
+            <column name="user_group_id"/>
+            <column name="is_active"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

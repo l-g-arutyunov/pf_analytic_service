@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <property dbms="postgresql,mssql,oracle" value="false" name="autoIncrement"/>
+    <property dbms="h2" value="true" name="autoIncrement"/>
+
+    <changeSet id="1.00.01-role-0001" author="sthoomy" runInTransaction="false">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <sequenceExists sequenceName="role_id_seq" schemaName="pf"/>
+            </not>
+        </preConditions>
+        <createSequence sequenceName="role_id_seq" schemaName="pf" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="1.00.01-role-0002" author="larutyunov" failOnError="true">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="pf_role" schemaName="pf"/>
+            </not>
+        </preConditions>
+        <createTable tableName="pf_role" schemaName="pf">
+            <column name="id" type="bigint" defaultValueSequenceNext="role_id_seq">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+            <column name="user_group_id" type="bigint">
+                <constraints foreignKeyName="fk_role_group_id" referencedTableName="pf_user_group" referencedTableSchemaName="pf" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+            <column name="role_type_id" type="bigint">
+                <constraints foreignKeyName="fk_role_type_id" referencedTableName="pf_role_type" referencedTableSchemaName="pf" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="RoSeV" id="1.00.01-role-0003">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <tableExists tableName="pf_role" schemaName="pf"/>
+                <not>
+                    <indexExists indexName="role_index_0" schemaName="pf"/>
+                </not>
+            </and>
+        </preConditions>
+        <createIndex indexName="role_index_0" tableName="pf_role" schemaName="pf" clustered="true">
+            <column name="id"/>
+            <column name="user_group_id"/>
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

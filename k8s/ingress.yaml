@@ -13,10 +13,3 @@ spec:
             name: pf-analytic-service
             port:
               number: 80
-      - pathType: Prefix
-        path: /skills
-        backend:
-          service:
-            name: skill-analytic-service
-            port:
-              number: 80
