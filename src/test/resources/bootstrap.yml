@@ -1,6 +1,0 @@
-spring:
-  application:
-    name: ${SERVICE_NAME:pf_analytic_service}
-
-mdp.discovery:
-  discoveryClientName: ${DISCOVERY_CLIENT_NAME:disable}
