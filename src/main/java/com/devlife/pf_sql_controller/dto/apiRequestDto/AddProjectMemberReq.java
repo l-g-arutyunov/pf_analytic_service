@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +15,7 @@ public class AddProjectMemberReq {
     Long userExternalId;
     LocalDate startDate;
     LocalDate endDate;
-    Set<Long> projectRoleId;
+    Long roleId;
+    String roleLevel;
     String description;
 }

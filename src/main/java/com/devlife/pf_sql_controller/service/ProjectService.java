@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.function.UnaryOperator;
@@ -35,6 +34,7 @@ public class ProjectService {
     private final UserGroupRepository userGroupRepository;
     private final ProjectMapper mapper;
     private final UserGroupUserService userGroupUserService;
+    private final ProjectRoleService projectRoleService;
 
     @Transactional
     public ProjectDto addProject(ProjectDto projectDto, Long userExternalId) {
@@ -93,7 +93,7 @@ public class ProjectService {
         );
         final Set<Long> notFoundUsersId = new HashSet<>();
 
-        Map<User, AddProjectMemberReq> filteredUsersInputDataMap = helpMapOfExternalId.entrySet().stream()
+        Map<User, Set<AddProjectMemberReq>> filteredUsersInputDataMap = helpMapOfExternalId.entrySet().stream()
                 .filter(entry -> {
                     if (users.stream().noneMatch(user -> user.getExternalId().equals(entry.getKey()))) {
                         notFoundUsersId.add(entry.getKey());
@@ -101,35 +101,37 @@ public class ProjectService {
                     }
                     return true;
                 })
-                .collect(Collectors.toMap(
+                .collect(Collectors.groupingBy(
                         entry -> users.stream().filter(user -> user.getExternalId().equals(entry.getKey()))
                                 .findAny().orElseThrow(() -> {
                                     throw new BusinessLogicException("impossible event");
                                 }),
-                        Map.Entry::getValue)
+                        Collectors.mapping(Map.Entry::getValue, Collectors.toSet()))
                 );
 
         if (!notFoundUsersId.isEmpty()) {
-            throw new UserNotFoundException(notFoundUsersId.stream()
-                    .toArray(String[]::new));
+            throw new UserNotFoundException(notFoundUsersId.toArray(String[]::new));
         }
 
         Project project = projectRepository.getById(projectId);
         checkDatesOfUsersAddToProject(project, filteredUsersInputDataMap);
-
+        projectRoleService.addUserToProject(project, filteredUsersInputDataMap);
 
     }
 
-    private void checkDatesOfUsersAddToProject(Project project, Map<User, AddProjectMemberReq> filteredUsersInputDataMap) {
+    private void checkDatesOfUsersAddToProject(Project project, Map<User, Set<AddProjectMemberReq>> filteredUsersInputDataMap) {
         LocalDate startDate = project.getStartDate();
         LocalDate endDate = project.getEndDate();
 
         final Map<User, AddProjectMemberReq> dataForException = new HashMap<>();
-        for (Map.Entry<User, AddProjectMemberReq> entry : filteredUsersInputDataMap.entrySet()) {
-            if (entry.getValue().getEndDate().isAfter(endDate)
-            || entry.getValue().getStartDate().isBefore(startDate)) {
-                dataForException.put(entry.getKey(), entry.getValue());
-            }
+        for (Map.Entry<User, Set<AddProjectMemberReq>> entry : filteredUsersInputDataMap.entrySet()) {
+            entry.getValue().forEach(i -> {
+                if (i.getEndDate().isAfter(endDate)
+                        || i.getStartDate().isBefore(startDate)) {
+                    dataForException.put(entry.getKey(), i);
+                }
+            });
+
         }
         if (!dataForException.isEmpty()) {
             throw new BusinessLogicException(String.format(PARTICIPATION_DATES_NOT_IN_PROJECT_DATES, dataForException));

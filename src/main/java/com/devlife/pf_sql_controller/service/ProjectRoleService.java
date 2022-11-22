@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +44,8 @@ public class ProjectRoleService {
         return !projectRoleRepository.existsById(id);
     }
 
-    public void addUserToProject(Project project, Map<User, AddProjectMemberReq> data) {
-
+    public void addUserToProject(Project project, Map<User, Set<AddProjectMemberReq>> data) {
+        Set<ProjectRole> projectRoles = mapper.convertAddProjectMemberReqToEntity(project, data);
+        projectRoleRepository.saveAll(projectRoles);
     }
 }
