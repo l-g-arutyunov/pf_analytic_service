@@ -26,7 +26,6 @@ class UserGroupMapperTest {
         referenceUserGroup.setId(1L);
         referenceUserGroup.setName("name");
         referenceUserGroup.setDescription("description");
-        referenceUserGroup.setRoles(null);
         UserGroupDto userGroupDto = UserGroupDto.builder()
                 .id(1L)
                 .name("name")
@@ -49,7 +48,6 @@ class UserGroupMapperTest {
         userGroup.setId(1L);
         userGroup.setName("name");
         userGroup.setDescription("description");
-        userGroup.setRoles(null);
 
         UserGroupDto userGroupDto = mapper.convertToDto(userGroup);
         assertEquals(referenceUserGroupDto,userGroupDto);
