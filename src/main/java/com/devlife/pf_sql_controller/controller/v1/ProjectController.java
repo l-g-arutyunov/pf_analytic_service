@@ -69,8 +69,7 @@ public class ProjectController {
             @Parameter(description = "userId and projectRoleId to set", required = true, name = "addProjectMemberReqList")
             @RequestBody Set<AddProjectMemberReq> addProjectMemberReqSet
     ) {
-        service.addUserToProject(projectId, addProjectMemberReqSet);
-        return null;
+        return ResponseEntity.ok(service.addUserToProject(projectId, addProjectMemberReqSet));
     }
 
     @PreAuthorize("hasAuthority('ROOT')")

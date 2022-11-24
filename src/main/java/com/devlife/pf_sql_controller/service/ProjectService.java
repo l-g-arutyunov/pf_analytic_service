@@ -1,13 +1,16 @@
 package com.devlife.pf_sql_controller.service;
 
 import com.devlife.pf_sql_controller.dto.ProjectDto;
+import com.devlife.pf_sql_controller.dto.ProjectRoleDto;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.User;
 import com.devlife.pf_sql_controller.entity.UserGroup;
 import com.devlife.pf_sql_controller.exception.BusinessLogicException;
 import com.devlife.pf_sql_controller.exception.UserNotFoundException;
 import com.devlife.pf_sql_controller.mapper.ProjectMapper;
+import com.devlife.pf_sql_controller.mapper.ProjectRoleMapper;
 import com.devlife.pf_sql_controller.repository.ProjectRepository;
 import com.devlife.pf_sql_controller.repository.UserGroupRepository;
 import com.devlife.pf_sql_controller.repository.UserRepository;
@@ -32,7 +35,7 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final UserGroupRepository userGroupRepository;
-    private final ProjectMapper mapper;
+    private final ProjectMapper projectMapper;
     private final UserGroupUserService userGroupUserService;
     private final ProjectRoleService projectRoleService;
 
@@ -41,7 +44,7 @@ public class ProjectService {
         final User user = userRepository.getByExternalId(userExternalId).orElseThrow(() -> {
             throw new UserNotFoundException(String.format("Id is %d0", userExternalId));
         });
-        final Project project = mapper.convertToEntity(projectDto);
+        final Project project = projectMapper.convertToEntity(projectDto);
         if (project.getUserGroup() != null && !userGroupUserService.userExistInUserGroup(user.getId(), project.getUserGroup().getId())) {
             throw new IllegalArgumentException("User not exist in the user group");
         }
@@ -55,13 +58,13 @@ public class ProjectService {
             project.setUserGroup(userGroup);
         }
         final Project saveProject = projectRepository.save(project);
-        return mapper.convertToDto(saveProject);
+        return projectMapper.convertToDto(saveProject);
     }
 
     public Page<ProjectDto> getProjectsByUser(Long userExternalId, Pageable pageable) {
         final User user = userRepository.getByExternalId(userExternalId).orElseThrow(UserNotFoundException::new);
         final Page<Project> projects = projectRepository.getProjectsByUserId(user.getId(), pageable);
-        final List<ProjectDto> projectDtoList = projects.getContent().stream().map(mapper::convertToDto).collect(Collectors.toList());
+        final List<ProjectDto> projectDtoList = projects.getContent().stream().map(projectMapper::convertToDto).collect(Collectors.toList());
         final Long countProjects = projectRepository.getCountByUserId(user.getId());
         return new PageImpl<>(
                 projectDtoList, pageable, countProjects
@@ -71,7 +74,7 @@ public class ProjectService {
     public List<ProjectDto> getAllProjects() {
         List<Project> projectsList = projectRepository.findAll();
         return projectsList.stream()
-                .map(mapper::convertToDto)
+                .map(projectMapper::convertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -81,7 +84,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public void addUserToProject(Long projectId, Set<AddProjectMemberReq> addProjectMemberReqSet) {
+    public Set<AddProjectMemberRes> addUserToProject(Long projectId, Set<AddProjectMemberReq> addProjectMemberReqSet) {
         final Map<Long, AddProjectMemberReq> helpMapOfExternalId = addProjectMemberReqSet.stream().collect(
                 Collectors.toMap(AddProjectMemberReq::getUserExternalId, UnaryOperator.identity())
         );
@@ -115,13 +118,15 @@ public class ProjectService {
 
         Project project = projectRepository.getById(projectId);
         checkDatesOfUsersAddToProject(project, filteredUsersInputDataMap);
-        projectRoleService.addUserToProject(project, filteredUsersInputDataMap);
-
+        Set<ProjectRoleDto> projectRoleDtoSet = projectRoleService.addUserToProject(project, filteredUsersInputDataMap);
+        return projectRoleDtoSet.stream()
+                .map(i -> AddProjectMemberRes.builder().projectRole(i).build())
+                .collect(Collectors.toSet());
     }
 
     private void checkDatesOfUsersAddToProject(Project project, Map<User, Set<AddProjectMemberReq>> filteredUsersInputDataMap) {
         LocalDate startDate = project.getStartDate();
-        LocalDate endDate = project.getEndDate();
+        LocalDate endDate = project.getEndDate() == null ? LocalDate.MAX : project.getEndDate();
 
         final Map<User, AddProjectMemberReq> dataForException = new HashMap<>();
         for (Map.Entry<User, Set<AddProjectMemberReq>> entry : filteredUsersInputDataMap.entrySet()) {
