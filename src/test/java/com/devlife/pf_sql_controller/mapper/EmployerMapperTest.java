@@ -31,7 +31,6 @@ class EmployerMapperTest {
         referenceEmployerEntity.setUserGroup(UserGroup.builder()
                 .id(1L)
                 .name("name")
-                .roles(null)
                 .description("description")
                 .build());
         EmployerDto employerDto = EmployerDto.builder()
@@ -67,7 +66,6 @@ class EmployerMapperTest {
         employerEntity.setUserGroup(UserGroup.builder()
                 .id(1L)
                 .name("name")
-                .roles(null)
                 .description("description")
                 .build());
         EmployerDto employerDto = mapper.convertToDto(employerEntity);

@@ -2,10 +2,14 @@ package com.devlife.pf_sql_controller.service;
 
 import com.devlife.pf_sql_controller.config.MainConfig;
 import com.devlife.pf_sql_controller.dto.ProjectDto;
+import com.devlife.pf_sql_controller.dto.ProjectRoleDto;
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.User;
 import com.devlife.pf_sql_controller.entity.UserGroup;
+import com.devlife.pf_sql_controller.exception.BusinessLogicException;
 import com.devlife.pf_sql_controller.mapper.ProjectMapper;
 import com.devlife.pf_sql_controller.repository.ProjectRepository;
 import com.devlife.pf_sql_controller.repository.UserGroupRepository;
@@ -25,11 +29,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @DisplayName("Test of project service")
@@ -47,6 +49,8 @@ class ProjectServiceTest {
     private UserGroupRepository userGroupRepository;
     @Mock
     private UserGroupUserService userGroupUserService;
+    @Mock
+    private ProjectRoleService projectRoleService;
     @InjectMocks
     private ProjectService projectService;
 
@@ -191,6 +195,70 @@ class ProjectServiceTest {
         verify(userRepository, times(1)).getByExternalId(userExternalId);
         verify(projectRepository, times(1)).getProjectsByUserId(any(), any(Pageable.class));
         verify(projectRepository, times(1)).getCountByUserId(any());
+    }
+
+    @Test
+    @DisplayName("Add to project test")
+    void addUserToProject_OK() {
+        final Long projectId = 1L;
+        final User user = User.builder().id(2L).externalId(3L).build();
+        Set<AddProjectMemberReq> addProjectMemberReqSet = Collections.singleton(AddProjectMemberReq.builder()
+                .startDate(LocalDate.of(2022, 1, 1))
+                .endDate(LocalDate.of(2022, 1, 31))
+                .roleId(3L)
+                .roleLevel("test")
+                .userExternalId(3L)
+                .description("description1")
+                .build());
+        Map<User, Set<AddProjectMemberReq>> filteredUsersInputDataMap = Collections.singletonMap(user, addProjectMemberReqSet);
+        final Project project1 = Project.builder()
+                .id(1L)
+                .name("testProject1")
+                .description("testDescription1")
+                .userGroup(null)
+                .startDate(LocalDate.EPOCH)
+                .build();
+        final ProjectRoleDto projectRoleDto = ProjectRoleDto.builder().id(10L).build();
+
+        doReturn(Collections.singleton(user)).when(userRepository).getUsersByExternalIdIn(Collections.singleton(3L));
+        doReturn(project1).when(projectRepository).getById(projectId);
+        doReturn(Collections.singleton(projectRoleDto)).when(projectRoleService).addUserToProject(project1, filteredUsersInputDataMap);
+
+        Set<AddProjectMemberRes> answer = projectService.addUserToProject(projectId, addProjectMemberReqSet);
+
+        assertNotNull(answer);
+        assertTrue(answer.size() > 0);
+
+        verify(userRepository, times(1)).getUsersByExternalIdIn(any());
+        verify(projectRepository, times(1)).getById(any());
+        verify(projectRoleService, times(1)).addUserToProject(any(), any());
+    }
+
+    @Test
+    @DisplayName("Add to project test")
+    void addUserToProject_ExceptionWithDatesProject() {
+        final Long projectId = 1L;
+        final User user = User.builder().id(2L).externalId(3L).build();
+        Set<AddProjectMemberReq> addProjectMemberReqSet = Collections.singleton(AddProjectMemberReq.builder()
+                .startDate(LocalDate.of(2022, 1, 1))
+                .endDate(LocalDate.of(2022, 1, 31))
+                .roleId(3L)
+                .roleLevel("test")
+                .userExternalId(3L)
+                .description("description1")
+                .build());
+        final Project project1 = Project.builder()
+                .id(1L)
+                .name("testProject1")
+                .description("testDescription1")
+                .userGroup(null)
+                .startDate(LocalDate.of(2022, 1, 2))
+                .build();
+
+        doReturn(Collections.singleton(user)).when(userRepository).getUsersByExternalIdIn(Collections.singleton(3L));
+        doReturn(project1).when(projectRepository).getById(projectId);
+
+        assertThrowsExactly(BusinessLogicException.class, () -> projectService.addUserToProject(projectId, addProjectMemberReqSet));
     }
 }
 

@@ -33,7 +33,6 @@ class UserMapperTest {
         referenceUserEntity.setUserGroups(Set.of(UserGroup.builder()
                 .id(1L)
                 .name("name")
-                .roles(null)
                 .description("description")
                 .build()));
         UserDto userDto = UserDto.builder()
@@ -69,7 +68,6 @@ class UserMapperTest {
         userEntity.setUserGroups(Set.of(UserGroup.builder()
                         .id(1L)
                         .name("name")
-                        .roles(null)
                         .description("description")
                         .build()));
         UserDto userDto = mapper.convertToDto(userEntity);

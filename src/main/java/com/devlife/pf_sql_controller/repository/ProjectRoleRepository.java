@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface ProjectRoleRepository extends JpaRepository<ProjectRole, Long> {
@@ -58,4 +59,15 @@ public interface ProjectRoleRepository extends JpaRepository<ProjectRole, Long> 
             @Param("userId") Long userId,
             @Param("employerId") Long employerId
     );
+
+    @Query("select pr from ProjectRole pr " +
+            "where pr.project.id = :projectId " +
+            "and pr.role.id = :roleId " +
+            "and pr.user.id = :userId ")
+    Set<ProjectRole> userAndRoleAlreadyExistInProject(
+            @Param("projectId") Long projectId,
+            @Param("roleId") Long roleId,
+            @Param("userId") Long userId
+    );
+
 }

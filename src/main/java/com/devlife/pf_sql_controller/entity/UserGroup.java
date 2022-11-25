@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Entity
 @Table(name = "pf_user_group")
@@ -26,6 +25,4 @@ public class UserGroup {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(targetEntity = Role.class, mappedBy = "userGroupId")
-    private Set<Role> roles;
 }
