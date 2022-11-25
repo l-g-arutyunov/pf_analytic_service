@@ -45,7 +45,7 @@
     </changeSet>
 
     <changeSet id="1.00.01-user-0004" author="larutyunov" failOnError="true" runInTransaction="false">
-        <preConditions>
+        <preConditions onFail ="MARK_RAN">
             <tableExists tableName="pf_user" schemaName="pf"/>
             <not>
                 <columnExists tableName="pf_user" columnName="external_id"/>
