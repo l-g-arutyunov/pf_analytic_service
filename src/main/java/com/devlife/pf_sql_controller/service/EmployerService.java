@@ -2,12 +2,15 @@ package com.devlife.pf_sql_controller.service;
 
 import com.devlife.pf_sql_controller.dto.EmployerDto;
 import com.devlife.pf_sql_controller.entity.Employer;
+import com.devlife.pf_sql_controller.entity.UserGroup;
+import com.devlife.pf_sql_controller.exception.EmployerNotFoundException;
 import com.devlife.pf_sql_controller.mapper.EmployerMapper;
 import com.devlife.pf_sql_controller.repository.EmployerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +40,14 @@ public class EmployerService {
     public Boolean deleteEmployerById(Long id) {
         employerRepository.deleteById(id);
         return !employerRepository.existsById(id);
+    }
+
+
+    public Boolean checkUserGroupEmployer(Long employerId, UserGroup userGroup) {
+        Optional<Employer> employerUpdateOpt = Optional.ofNullable(employerRepository.getById(employerId));
+        if (employerUpdateOpt.isEmpty()) {
+            throw new EmployerNotFoundException("id: " + employerId);
+        }
+        return employerUpdateOpt.get().getUserGroup().equals(userGroup);
     }
 }

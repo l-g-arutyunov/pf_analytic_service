@@ -2,6 +2,7 @@ package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.UpdateProjectByProjectIdReq;
 import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.service.ProjectService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,7 +28,8 @@ import java.util.Set;
 public class ProjectController {
     private final ProjectService service;
 
-    @PutMapping("project/{externalUserId}")
+
+    @PostMapping("project/{externalUserId}")
     @Operation(summary = "Add projects by userId", tags = {"project"})
     ResponseEntity<ProjectDto> addProject(
             @PathVariable Long externalUserId,
@@ -61,12 +63,23 @@ public class ProjectController {
         return ResponseEntity.ok(service.getProjectsByUser(externalUserId, pageable));
     }
 
-    @PutMapping("project/{projectId}/members")
-    @Operation(summary = "Add members to the project", tags = {"project", "member"})
-    ResponseEntity<Set<AddProjectMemberRes>> addProjectMember(
-            @Parameter(description = "external user id", required = true, name = "projectId")
+    @PutMapping("project/{projectId}")
+    @Operation(summary = "Update projects by projectId", tags = {"project"})
+    ResponseEntity<ProjectDto> updateProject(
+            @Parameter(description = "project id", required = true, name = "projectId")
             @PathVariable Long projectId,
-            @Parameter(description = "userId and projectRoleId to set", required = true, name = "addProjectMemberReqList")
+            @Parameter(description = "update data", required = true, name = "updateProjectByProjectIdReq")
+            @RequestBody UpdateProjectByProjectIdReq updateProjectByProjectIdReq
+    ) {
+        return ResponseEntity.ok(service.updateProjectByProjectId(projectId, updateProjectByProjectIdReq));
+    }
+
+    @PostMapping("project/{projectId}/members")
+    @Operation(summary = "Add members to the project", tags = {"project"})
+    ResponseEntity<Set<AddProjectMemberRes>> addProjectMember(
+            @Parameter(description = "project id", required = true, name = "projectId")
+            @PathVariable Long projectId,
+            @Parameter(description = "userId and projectRoleId to set", required = true, name = "addProjectMemberReqSet")
             @RequestBody Set<AddProjectMemberReq> addProjectMemberReqSet
     ) {
         return ResponseEntity.ok(service.addUserToProject(projectId, addProjectMemberReqSet));
