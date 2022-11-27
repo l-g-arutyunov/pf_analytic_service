@@ -47,6 +47,7 @@ public class WebSecurityConfig {
                     .authorizeRequests()
                     .antMatchers("/swagger-ui/**").permitAll()
                     .antMatchers("/v3/api-docs/**").permitAll()
+                    .antMatchers("/health/**", "/info", "/error/**").permitAll()
                     .anyRequest().authenticated();
         } else {
             http
