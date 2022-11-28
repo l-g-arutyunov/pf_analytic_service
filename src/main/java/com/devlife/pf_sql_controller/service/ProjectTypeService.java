@@ -2,12 +2,14 @@ package com.devlife.pf_sql_controller.service;
 
 import com.devlife.pf_sql_controller.dto.ProjectTypeDto;
 import com.devlife.pf_sql_controller.entity.ProjectType;
+import com.devlife.pf_sql_controller.exception.ProjectTypeNotFoundException;
 import com.devlife.pf_sql_controller.mapper.ProjectTypeMapper;
 import com.devlife.pf_sql_controller.repository.ProjectTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,26 +18,25 @@ public class ProjectTypeService {
     private final ProjectTypeRepository projectTypeRepository;
     private final ProjectTypeMapper mapper;
 
-    public Long addProjectType(ProjectTypeDto projectType) {
+    public ProjectTypeDto addProjectType(ProjectTypeDto projectType) {
         ProjectType saveProjectType = projectTypeRepository.save(mapper.convertToEntity(projectType));
-        if (saveProjectType != null) {
-            return saveProjectType.getId();
-        }
-        return null;
+        return mapper.convertToDto(saveProjectType);
     }
 
     public ProjectTypeDto getProjectType(Long id) {
-        ProjectType projectType = projectTypeRepository.getById(id);
+        final Optional<ProjectType> projectTypeOpt = projectTypeRepository.findById(id);
+        final ProjectType projectType = projectTypeOpt.orElseThrow(() -> new ProjectTypeNotFoundException("id : " + id));
         return mapper.convertToDto(projectType);
     }
 
     public List<ProjectTypeDto> getAllProjectTypes() {
-        List<ProjectType> projectTypesList = projectTypeRepository.findAll();
+        final List<ProjectType> projectTypesList = projectTypeRepository.findAll();
         return projectTypesList.stream().map(mapper::convertToDto).collect(Collectors.toList());
     }
 
-    public Boolean deleteProjectTypeById(Long id) {
-        projectTypeRepository.deleteById(id);
-        return !projectTypeRepository.existsById(id);
+    public void deleteProjectTypeById(Long id) {
+        final Optional<ProjectType> projectTypeOpt = projectTypeRepository.findById(id);
+        final ProjectType projectType = projectTypeOpt.orElseThrow(() -> new ProjectTypeNotFoundException("id : " + id));
+        projectTypeRepository.delete(projectType);
     }
 }
