@@ -44,7 +44,7 @@ public class ProjectService {
 
     @Transactional
     public ProjectDto addProject(ProjectDto projectDto, Long userExternalId) {
-        final User user = userRepository.getByExternalId(userExternalId).orElseThrow(() -> {
+        final User user = userRepository.findByExternalId(userExternalId).orElseThrow(() -> {
             throw new UserNotFoundException(String.format("Id is %d0", userExternalId));
         });
         final Project project = projectMapper.convertToEntity(projectDto);
@@ -65,7 +65,7 @@ public class ProjectService {
     }
 
     public Page<ProjectDto> getProjectsByUser(Long userExternalId, Pageable pageable) {
-        final User user = userRepository.getByExternalId(userExternalId).orElseThrow(UserNotFoundException::new);
+        final User user = userRepository.findByExternalId(userExternalId).orElseThrow(UserNotFoundException::new);
         final Page<Project> projects = projectRepository.getProjectsByUserId(user.getId(), pageable);
         final List<ProjectDto> projectDtoList = projects.getContent().stream().map(projectMapper::convertToDto).collect(Collectors.toList());
         final Long countProjects = projectRepository.getCountByUserId(user.getId());
@@ -148,14 +148,14 @@ public class ProjectService {
 
     @Transactional
     public ProjectDto updateProjectByProjectId(Long projectId, UpdateProjectByProjectIdReq updateProjectByProjectIdReq) {
-        final Optional<Project> projectOpt = Optional.ofNullable(projectRepository.getById(projectId));
+        final Optional<Project> projectOpt = projectRepository.findById(projectId);
         if (projectOpt.isEmpty()) {
             throw new ProjectNotFoundException("id: " + projectId);
         }
         Project project = projectOpt.get();
         if (updateProjectByProjectIdReq.getEmployerId() != null
                 && !employerService.checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project.getUserGroup())) {
-                    throw new BusinessLogicException(String.format(USER_GROUP_IN_PROJECT_NOT_EQUALS_USER_GROUP_IN_EMPLOYER, project.getUserGroup()));
+                    throw new BusinessLogicException(String.format(USER_GROUP_IN_PROJECT_NOT_EQUALS_USER_GROUP_IN_EMPLOYER, project.getUserGroup().getId()));
         }
 
         Project projectUpdate = projectMapper.convertUpdateProjectByProjectIdReqToEntity(updateProjectByProjectIdReq, project.getId(), project.getUserGroup());

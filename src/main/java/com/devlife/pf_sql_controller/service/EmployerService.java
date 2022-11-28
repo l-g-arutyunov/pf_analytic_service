@@ -44,7 +44,7 @@ public class EmployerService {
 
 
     public Boolean checkUserGroupEmployer(Long employerId, UserGroup userGroup) {
-        Optional<Employer> employerUpdateOpt = Optional.ofNullable(employerRepository.getById(employerId));
+        Optional<Employer> employerUpdateOpt = employerRepository.findById(employerId);
         if (employerUpdateOpt.isEmpty()) {
             throw new EmployerNotFoundException("id: " + employerId);
         }
