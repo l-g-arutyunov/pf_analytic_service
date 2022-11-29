@@ -3,14 +3,15 @@ package com.devlife.pf_sql_controller.service;
 import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.dto.ProjectRoleDto;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.UpdateProjectByProjectIdReq;
 import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.User;
 import com.devlife.pf_sql_controller.entity.UserGroup;
 import com.devlife.pf_sql_controller.exception.BusinessLogicException;
+import com.devlife.pf_sql_controller.exception.ProjectNotFoundException;
 import com.devlife.pf_sql_controller.exception.UserNotFoundException;
 import com.devlife.pf_sql_controller.mapper.ProjectMapper;
-import com.devlife.pf_sql_controller.mapper.ProjectRoleMapper;
 import com.devlife.pf_sql_controller.repository.ProjectRepository;
 import com.devlife.pf_sql_controller.repository.UserGroupRepository;
 import com.devlife.pf_sql_controller.repository.UserRepository;
@@ -31,9 +32,11 @@ import java.util.stream.Collectors;
 public class ProjectService {
     public static final String USER_GROUP_OF = "User group of %s1";
     public static final String PARTICIPATION_DATES_NOT_IN_PROJECT_DATES = "Participation dates are not in the project dates for %s1";
+    public static final String USER_GROUP_IN_PROJECT_NOT_EQUALS_USER_GROUP_IN_EMPLOYER = "User group in project (userGroupId: %d1), isn't equals user group in employer";
     public static final boolean USER_IS_OWNER = true;
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final EmployerService employerService;
     private final UserGroupRepository userGroupRepository;
     private final ProjectMapper projectMapper;
     private final UserGroupUserService userGroupUserService;
@@ -41,7 +44,7 @@ public class ProjectService {
 
     @Transactional
     public ProjectDto addProject(ProjectDto projectDto, Long userExternalId) {
-        final User user = userRepository.getByExternalId(userExternalId).orElseThrow(() -> {
+        final User user = userRepository.findByExternalId(userExternalId).orElseThrow(() -> {
             throw new UserNotFoundException(String.format("Id is %d0", userExternalId));
         });
         final Project project = projectMapper.convertToEntity(projectDto);
@@ -62,7 +65,7 @@ public class ProjectService {
     }
 
     public Page<ProjectDto> getProjectsByUser(Long userExternalId, Pageable pageable) {
-        final User user = userRepository.getByExternalId(userExternalId).orElseThrow(UserNotFoundException::new);
+        final User user = userRepository.findByExternalId(userExternalId).orElseThrow(UserNotFoundException::new);
         final Page<Project> projects = projectRepository.getProjectsByUserId(user.getId(), pageable);
         final List<ProjectDto> projectDtoList = projects.getContent().stream().map(projectMapper::convertToDto).collect(Collectors.toList());
         final Long countProjects = projectRepository.getCountByUserId(user.getId());
@@ -131,7 +134,7 @@ public class ProjectService {
         final Map<User, AddProjectMemberReq> dataForException = new HashMap<>();
         for (Map.Entry<User, Set<AddProjectMemberReq>> entry : filteredUsersInputDataMap.entrySet()) {
             entry.getValue().forEach(i -> {
-                if (i.getEndDate().isAfter(endDate)
+                if ((i.getEndDate() != null && i.getEndDate().isAfter(endDate))
                         || i.getStartDate().isBefore(startDate)) {
                     dataForException.put(entry.getKey(), i);
                 }
@@ -141,5 +144,29 @@ public class ProjectService {
         if (!dataForException.isEmpty()) {
             throw new BusinessLogicException(String.format(PARTICIPATION_DATES_NOT_IN_PROJECT_DATES, dataForException));
         }
+    }
+
+    @Transactional
+    public ProjectDto updateProjectByProjectId(Long projectId, UpdateProjectByProjectIdReq updateProjectByProjectIdReq) {
+        final Optional<Project> projectOpt = projectRepository.findById(projectId);
+        if (projectOpt.isEmpty()) {
+            throw new ProjectNotFoundException("id: " + projectId);
+        }
+        Project project = projectOpt.get();
+        if (updateProjectByProjectIdReq.getEmployerId() != null
+                && !employerService.checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project.getUserGroup())) {
+                    throw new BusinessLogicException(String.format(USER_GROUP_IN_PROJECT_NOT_EQUALS_USER_GROUP_IN_EMPLOYER, project.getUserGroup().getId()));
+        }
+
+        Project projectUpdate = projectMapper.convertUpdateProjectByProjectIdReqToEntity(updateProjectByProjectIdReq, project.getId(), project.getUserGroup());
+
+        if (projectUpdate.getProjectType() == null)  projectUpdate.setProjectType(project.getProjectType());
+        if (projectUpdate.getName() == null)  projectUpdate.setName(project.getName());
+        if (projectUpdate.getEmployer() == null) projectUpdate.setEmployer(project.getEmployer());
+        if (projectUpdate.getDescription() == null) projectUpdate.setDescription(project.getDescription());
+        if (projectUpdate.getStartDate() == null) projectUpdate.setStartDate(project.getStartDate());
+        if (projectUpdate.getEndDate() == null) projectUpdate.setEndDate(project.getEndDate());
+
+        return projectMapper.convertToDto(projectRepository.save(projectUpdate));
     }
 }

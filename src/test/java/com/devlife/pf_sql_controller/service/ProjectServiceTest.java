@@ -5,10 +5,9 @@ import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.dto.ProjectRoleDto;
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.UpdateProjectByProjectIdReq;
 import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
-import com.devlife.pf_sql_controller.entity.Project;
-import com.devlife.pf_sql_controller.entity.User;
-import com.devlife.pf_sql_controller.entity.UserGroup;
+import com.devlife.pf_sql_controller.entity.*;
 import com.devlife.pf_sql_controller.exception.BusinessLogicException;
 import com.devlife.pf_sql_controller.mapper.ProjectMapper;
 import com.devlife.pf_sql_controller.repository.ProjectRepository;
@@ -41,10 +40,15 @@ class ProjectServiceTest {
     final ModelMapper modelMapper = new MainConfig().modelMapper();
     @Spy
     private ProjectMapper projectMapper = new ProjectMapper(modelMapper);
+    {
+        projectMapper.setupMapper();
+    }
     @Mock
     private ProjectRepository projectRepository;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private EmployerService employerService;
     @Mock
     private UserGroupRepository userGroupRepository;
     @Mock
@@ -259,6 +263,58 @@ class ProjectServiceTest {
         doReturn(project1).when(projectRepository).getById(projectId);
 
         assertThrowsExactly(BusinessLogicException.class, () -> projectService.addUserToProject(projectId, addProjectMemberReqSet));
+    }
+
+    @Test
+    void updateProjectByProjectId_OK() {
+        UpdateProjectByProjectIdReq updateProjectByProjectIdReq = UpdateProjectByProjectIdReq.builder()
+                .projectTypeId(3L)
+                .employerId(4L)
+                .startDate(LocalDate.MIN)
+                .endDate(LocalDate.MAX)
+                .description("testDescr")
+                .name("testName")
+                .build();
+
+        final Project project1 = Project.builder()
+                .id(1L)
+                .name("testProject1")
+                .description("testDescription1")
+                .userGroup(UserGroup.builder().id(2L).build())
+                .startDate(LocalDate.of(2022, 1, 2))
+                .build();
+
+        final Project projectUpdate = Project.builder()
+                .id(1L)
+                .name("testName")
+                .description("testDescr")
+                .userGroup(UserGroup.builder().id(2L).build())
+                .startDate(LocalDate.MIN)
+                .endDate(LocalDate.MAX)
+                .projectType(ProjectType.builder().id(3L).build())
+                .employer(Employer.builder().id(4L).build())
+                .build();
+
+        doReturn(project1).when(projectRepository).getById(1L);
+        doReturn(true).when(employerService).checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project1.getUserGroup());
+        doReturn(projectUpdate).when(projectRepository).save(any());
+
+        projectService.updateProjectByProjectId(1L, updateProjectByProjectIdReq);
+
+        Project projectRef = Project.builder()
+                .projectType(ProjectType.builder().id(3L).build())
+                .employer(Employer.builder().id(4L).build())
+                .startDate(LocalDate.MIN)
+                .endDate(LocalDate.MAX)
+                .userGroup(UserGroup.builder().id(2L).build())
+                .description("testDescr")
+                .name("testName")
+                .id(1L)
+                .build();
+
+        verify(projectRepository, times(1)).getById(1L);
+        verify(employerService, times(1)).checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project1.getUserGroup());
+        verify(projectRepository, times(1)).save(projectRef);
     }
 }
 

@@ -29,4 +29,5 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             "inner join UserGroupUser ugu on project.userGroup.id = ugu.userGroupUserId.userGroupId " +
             "where ugu.userGroupUserId.userId = :userId")
     Long getCountByUserId(@Param("userId") Long userId);
+
 }
