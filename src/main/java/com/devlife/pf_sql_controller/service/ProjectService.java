@@ -119,7 +119,7 @@ public class ProjectService {
             throw new UserNotFoundException(notFoundUsersId.toArray(String[]::new));
         }
 
-        Project project = projectRepository.getById(projectId);
+        Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException("id: " + projectId));
         checkDatesOfUsersAddToProject(project, filteredUsersInputDataMap);
         Set<ProjectRoleDto> projectRoleDtoSet = projectRoleService.addUserToProject(project, filteredUsersInputDataMap);
         return projectRoleDtoSet.stream()
@@ -148,11 +148,7 @@ public class ProjectService {
 
     @Transactional
     public ProjectDto updateProjectByProjectId(Long projectId, UpdateProjectByProjectIdReq updateProjectByProjectIdReq) {
-        final Optional<Project> projectOpt = projectRepository.findById(projectId);
-        if (projectOpt.isEmpty()) {
-            throw new ProjectNotFoundException("id: " + projectId);
-        }
-        Project project = projectOpt.get();
+        final Project project = projectRepository.findById(projectId).orElseThrow(() ->  new ProjectNotFoundException("id: " + projectId));
         if (updateProjectByProjectIdReq.getEmployerId() != null
                 && !employerService.checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project.getUserGroup())) {
                     throw new BusinessLogicException(String.format(USER_GROUP_IN_PROJECT_NOT_EQUALS_USER_GROUP_IN_EMPLOYER, project.getUserGroup().getId()));

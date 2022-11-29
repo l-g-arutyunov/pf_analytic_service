@@ -90,7 +90,7 @@ class ProjectServiceTest {
                 .startDate(LocalDate.EPOCH)
                 .build();
 
-        doReturn(Optional.of(user)).when(userRepository).getByExternalId(userExternalId);
+        doReturn(Optional.of(user)).when(userRepository).findByExternalId(userExternalId);
         //when(userRepository.getByExternalId(userExternalId)).thenReturn(Optional.of(user)); TODO Примера ради
         doReturn(true).when(userGroupUserService).userExistInUserGroup(1L, 1L);
         doReturn(project).when(projectRepository).save(project);
@@ -98,7 +98,7 @@ class ProjectServiceTest {
         final ProjectDto projectDtoResponse = projectService.addProject(projectDto, 1L);
 
         assertEquals(projectDto, projectDtoResponse);
-        verify(userRepository, times(1)).getByExternalId(userExternalId);
+        verify(userRepository, times(1)).findByExternalId(userExternalId);
         verify(projectMapper, times(1)).convertToDto(project);
         verify(projectMapper, times(1)).convertToEntity(projectDto);
         verify(projectRepository, times(1)).save(project);
@@ -133,14 +133,14 @@ class ProjectServiceTest {
                 .startDate(LocalDate.EPOCH)
                 .build();
 
-        doReturn(Optional.of(user)).when(userRepository).getByExternalId(userExternalId);
+        doReturn(Optional.of(user)).when(userRepository).findByExternalId(userExternalId);
         doReturn(userGroup).when(userGroupRepository).save(any(UserGroup.class));
         doReturn(project).when(projectRepository).save(project);
 
         final ProjectDto projectDtoResponse = projectService.addProject(inputProjectDto, 1L);
 
         assertEquals(refProjectDto, projectDtoResponse);
-        verify(userRepository, times(1)).getByExternalId(userExternalId);
+        verify(userRepository, times(1)).findByExternalId(userExternalId);
         verify(projectMapper, times(1)).convertToDto(project);
         verify(projectMapper, times(1)).convertToEntity(inputProjectDto);
         verify(userGroupRepository, times(1)).save(any(UserGroup.class));
@@ -170,7 +170,7 @@ class ProjectServiceTest {
                 .build();
         final Page<Project> projects = new PageImpl<>(List.of(project1, project2), pageable, 100);
 
-        doReturn(Optional.of(user)).when(userRepository).getByExternalId(userExternalId);
+        doReturn(Optional.of(user)).when(userRepository).findByExternalId(userExternalId);
         doReturn(projects).when(projectRepository).getProjectsByUserId(user.getId(), pageable);
         doReturn(100L).when(projectRepository).getCountByUserId(user.getId());
 
@@ -196,7 +196,7 @@ class ProjectServiceTest {
         assertEquals("testDescription2", actualItem2.getDescription());
         assertEquals(LocalDate.EPOCH, actualItem2.getStartDate());
 
-        verify(userRepository, times(1)).getByExternalId(userExternalId);
+        verify(userRepository, times(1)).findByExternalId(userExternalId);
         verify(projectRepository, times(1)).getProjectsByUserId(any(), any(Pageable.class));
         verify(projectRepository, times(1)).getCountByUserId(any());
     }
@@ -225,7 +225,7 @@ class ProjectServiceTest {
         final ProjectRoleDto projectRoleDto = ProjectRoleDto.builder().id(10L).build();
 
         doReturn(Collections.singleton(user)).when(userRepository).getUsersByExternalIdIn(Collections.singleton(3L));
-        doReturn(project1).when(projectRepository).getById(projectId);
+        doReturn(Optional.of(project1)).when(projectRepository).findById(projectId);
         doReturn(Collections.singleton(projectRoleDto)).when(projectRoleService).addUserToProject(project1, filteredUsersInputDataMap);
 
         Set<AddProjectMemberRes> answer = projectService.addUserToProject(projectId, addProjectMemberReqSet);
@@ -234,7 +234,7 @@ class ProjectServiceTest {
         assertTrue(answer.size() > 0);
 
         verify(userRepository, times(1)).getUsersByExternalIdIn(any());
-        verify(projectRepository, times(1)).getById(any());
+        verify(projectRepository, times(1)).findById(any());
         verify(projectRoleService, times(1)).addUserToProject(any(), any());
     }
 
@@ -260,7 +260,7 @@ class ProjectServiceTest {
                 .build();
 
         doReturn(Collections.singleton(user)).when(userRepository).getUsersByExternalIdIn(Collections.singleton(3L));
-        doReturn(project1).when(projectRepository).getById(projectId);
+        doReturn(Optional.of(project1)).when(projectRepository).findById(projectId);
 
         assertThrowsExactly(BusinessLogicException.class, () -> projectService.addUserToProject(projectId, addProjectMemberReqSet));
     }
@@ -295,7 +295,7 @@ class ProjectServiceTest {
                 .employer(Employer.builder().id(4L).build())
                 .build();
 
-        doReturn(project1).when(projectRepository).getById(1L);
+        doReturn(Optional.of(project1)).when(projectRepository).findById(1L);
         doReturn(true).when(employerService).checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project1.getUserGroup());
         doReturn(projectUpdate).when(projectRepository).save(any());
 
@@ -312,7 +312,7 @@ class ProjectServiceTest {
                 .id(1L)
                 .build();
 
-        verify(projectRepository, times(1)).getById(1L);
+        verify(projectRepository, times(1)).findById(1L);
         verify(employerService, times(1)).checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project1.getUserGroup());
         verify(projectRepository, times(1)).save(projectRef);
     }
