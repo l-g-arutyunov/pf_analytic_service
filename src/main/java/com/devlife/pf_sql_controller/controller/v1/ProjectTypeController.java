@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/projectType")
 public class ProjectTypeController {
-
     private final ProjectTypeService service;
 
     @PutMapping

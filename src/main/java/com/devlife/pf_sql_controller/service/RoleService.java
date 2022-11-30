@@ -2,12 +2,15 @@ package com.devlife.pf_sql_controller.service;
 
 import com.devlife.pf_sql_controller.dto.RoleDto;
 import com.devlife.pf_sql_controller.entity.Role;
+import com.devlife.pf_sql_controller.exception.RoleNotFoundException;
 import com.devlife.pf_sql_controller.mapper.RoleMapper;
 import com.devlife.pf_sql_controller.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,26 +19,26 @@ public class RoleService {
     private final RoleRepository roleRepository;
     private final RoleMapper mapper;
 
-    public Long addRole(RoleDto role) {
+    public RoleDto addRole(RoleDto role) {
         Role saveRole = roleRepository.save(mapper.convertToEntity(role));
-        if (saveRole != null) {
-            return saveRole.getId();
-        }
-        return null;
+        return mapper.convertToDto(saveRole);
     }
 
     public RoleDto getRole(Long id) {
-        Role role = roleRepository.getById(id);
+        Optional<Role> RoleOpt = roleRepository.findById(id);
+        Role role = RoleOpt.orElseThrow(() -> new RoleNotFoundException("id : " + id));
         return mapper.convertToDto(role);
     }
 
-    public List<RoleDto> getAllRoles() {
-        List<Role> rolesList = roleRepository.findAll();
+    public List<RoleDto> getRolesByUserGroupId(Long userGroupId) {
+        Set<Role> rolesList = roleRepository.findByUserGroupId(userGroupId);
         return rolesList.stream().map(mapper::convertToDto).collect(Collectors.toList());
     }
 
-    public Boolean deleteRoleById(Long id) {
-        roleRepository.deleteById(id);
-        return !roleRepository.existsById(id);
+    public void deleteRoleById(Long id) {
+        final Optional<Role> projectTypeOpt = roleRepository.findById(id);
+        final Role projectType = projectTypeOpt.orElseThrow(() -> new RoleNotFoundException("id : " + id));
+        roleRepository.delete(projectType);
     }
+
 }

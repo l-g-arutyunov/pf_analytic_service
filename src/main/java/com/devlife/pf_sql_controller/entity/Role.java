@@ -24,9 +24,8 @@ public class Role {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "user_group_id")
-    private UserGroup userGroupId;
+    @Column(name = "user_group_id")
+    private Long userGroupId;
 
     @ManyToOne
     @JoinColumn(name = "role_type_id")

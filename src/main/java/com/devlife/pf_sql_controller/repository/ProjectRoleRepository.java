@@ -1,6 +1,7 @@
 package com.devlife.pf_sql_controller.repository;
 
 import com.devlife.pf_sql_controller.dto.analyticFormDto.bdModel.ExpFormBd;
+import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.ProjectRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -70,4 +71,5 @@ public interface ProjectRoleRepository extends JpaRepository<ProjectRole, Long> 
             @Param("userId") Long userId
     );
 
+    List<ProjectRole> getByProject(Project project);
 }
