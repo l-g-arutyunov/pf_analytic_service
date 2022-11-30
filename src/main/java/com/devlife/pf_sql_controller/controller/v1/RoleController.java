@@ -2,7 +2,11 @@ package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.RoleDto;
 import com.devlife.pf_sql_controller.service.RoleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,29 +14,36 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/")
+@RequestMapping("api/v1/role")
 public class RoleController {
 
     private final RoleService service;
 
-    @PutMapping("role")
-    Long addRole(@RequestBody RoleDto roleDto) {
-        return service.addRole((roleDto));
+    @PutMapping
+    @Operation(summary = "Add or update role", tags = {"role"})
+    ResponseEntity<RoleDto> addRole(@RequestBody RoleDto roleDto) {
+        return  ResponseEntity.ok(service.addRole(roleDto));
     }
 
-    @GetMapping("role/{id}")
-    RoleDto getRole(@PathVariable("id") Long id) {
-        return service.getRole(id);
+    @GetMapping("/{id}")
+    @Operation(summary = "Get role by id", tags = {"role"})
+    ResponseEntity<RoleDto> getRole(@PathVariable("id") Long id) {
+        return  ResponseEntity.ok(service.getRole(id));
     }
 
-    @GetMapping("role")
-    List<RoleDto> getAllRoles() {
-        return service.getAllRoles();
+    @GetMapping
+    @Operation(summary = "Get all role by userGroupId", tags = {"role"})
+    ResponseEntity<List<RoleDto>> getAllRoles(
+            @Parameter(description = "user group id", required = true, name = "userGroupId")
+            @RequestParam(name = "userGroupId") Long userGroupId) {
+        return  ResponseEntity.ok(service.getRolesByUserGroupId(userGroupId));
     }
 
-    @DeleteMapping("role/{id}")
-    Boolean deleteRoleById(@PathVariable("id") Long id) {
-        return service.deleteRoleById(id);
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete role by id", tags = {"role"})
+    HttpStatus deleteRoleById(@PathVariable("id") Long id) {
+        service.deleteRoleById(id);
+        return HttpStatus.OK;
     }
 
 }

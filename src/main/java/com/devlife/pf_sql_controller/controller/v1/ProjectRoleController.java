@@ -26,21 +26,21 @@ public class ProjectRoleController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get project role by id", tags = {"projectRole"})
-    ResponseEntity<ProjectRoleDto> getProjectType(@PathVariable("id") Long id) {
+    ResponseEntity<ProjectRoleDto> getProjectRole(@PathVariable("id") Long id) {
         return ResponseEntity.ok(service.getProjectRole(id));
     }
 
     @GetMapping
     @Operation(summary = "Get all project role by userGroupId", tags = {"projectRole"})
-    ResponseEntity<List<ProjectRoleDto>> getAllProjectType(
-            @Parameter(description = "user group id", required = true, name = "userGroupId")
-            @RequestParam(name = "userGroupId") Long userGroupId) {
-        return ResponseEntity.ok(service.getProjectRolesByProjectId(userGroupId));
+    ResponseEntity<List<ProjectRoleDto>> getAllProjectRole(
+            @Parameter(description = "project id", required = true, name = "projectId")
+            @RequestParam(name = "projectId") Long projectId) {
+        return ResponseEntity.ok(service.getProjectRolesByProjectId(projectId));
     }
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete project role by id", tags = {"projectRole"})
-    HttpStatus deleteProjectTypeById(@PathVariable("id") Long id) {
+    HttpStatus deleteProjectRoleById(@PathVariable("id") Long id) {
         service.deleteProjectRoleById(id);
         return HttpStatus.OK;
     }
