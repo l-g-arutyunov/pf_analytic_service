@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class ProjectRoleController {
     private final ProjectRoleService service;
 
     @PutMapping
+    @PreAuthorize("hasAuthority('ROOT')")
     @Operation(summary = "Add or update project role", tags = {"projectRole"})
     ResponseEntity<ProjectRoleDto> addProjectRole(@RequestBody ProjectRoleDto projectRoleDto) {
         return ResponseEntity.ok(service.addProjectRole(projectRoleDto));
@@ -39,6 +41,7 @@ public class ProjectRoleController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROOT')")
     @Operation(summary = "Delete project role by id", tags = {"projectRole"})
     HttpStatus deleteProjectRoleById(@PathVariable("id") Long id) {
         service.deleteProjectRoleById(id);
