@@ -59,4 +59,5 @@ public class ProjectRoleService {
         projectRoleRepository.saveAll(projectRoles);
         return projectRoles.stream().map(mapper::convertToDto).collect(Collectors.toSet());
     }
+
 }

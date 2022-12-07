@@ -20,18 +20,18 @@ public class RoleService {
     private final RoleMapper mapper;
 
     public RoleDto addRole(RoleDto role) {
-        Role saveRole = roleRepository.save(mapper.convertToEntity(role));
+        final Role saveRole = roleRepository.save(mapper.convertToEntity(role));
         return mapper.convertToDto(saveRole);
     }
 
     public RoleDto getRole(Long id) {
-        Optional<Role> RoleOpt = roleRepository.findById(id);
-        Role role = RoleOpt.orElseThrow(() -> new RoleNotFoundException("id : " + id));
+        final Optional<Role> roleOpt = roleRepository.findById(id);
+        final Role role = roleOpt.orElseThrow(() -> new RoleNotFoundException("id : " + id));
         return mapper.convertToDto(role);
     }
 
     public List<RoleDto> getRolesByUserGroupId(Long userGroupId) {
-        Set<Role> rolesList = roleRepository.findByUserGroupId(userGroupId);
+        final Set<Role> rolesList = roleRepository.findByUserGroupId(userGroupId);
         return rolesList.stream().map(mapper::convertToDto).collect(Collectors.toList());
     }
 
