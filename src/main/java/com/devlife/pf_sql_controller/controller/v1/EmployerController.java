@@ -1,6 +1,7 @@
 package com.devlife.pf_sql_controller.controller.v1;
 
 import com.devlife.pf_sql_controller.dto.EmployerDto;
+import com.devlife.pf_sql_controller.entity.Employer;
 import com.devlife.pf_sql_controller.service.EmployerService;
 import com.querydsl.core.types.Predicate;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -56,16 +58,15 @@ public class EmployerController {
                     , content = @Content(schema = @Schema(type = "string"))),
             @Parameter(in = ParameterIn.QUERY
                     , description = "user group id"
-                    , name = "userGroupId"
+                    , name = "userGroup"
                     , content = @Content(schema = @Schema(type = "integer")))
     })
     @GetMapping
     @Operation(summary = "Get all employer by userGroupId", tags = {"employer"})
     ResponseEntity<Page<EmployerDto>> getAllEmployers(
-            @RequestParam
             @Parameter(hidden = true, description = "Параметры предиката определены в блоке @Parameters")
+            @QuerydslPredicate(root = Employer.class)
             Predicate predicate,
-            @RequestParam
             @Parameter(hidden = true, description = "Параметры сортировки определены в блоке @Parameters")
             Pageable pageable
     ) {

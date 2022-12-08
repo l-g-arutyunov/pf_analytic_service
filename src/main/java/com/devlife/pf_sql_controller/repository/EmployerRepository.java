@@ -20,13 +20,14 @@ public interface EmployerRepository extends
         QuerydslBinderCustomizer<QEmployer> {
     @Override
     default void customize(QuerydslBindings bindings, QEmployer root) {
-        bindings.bind(root.name).
-                all((path, values) -> ExpressionProviderFactory.getPredicate(path, values));
-        //bindings.bind(root.userGroup.id)
+        bindings.bind(root.name)
+                .all(ExpressionProviderFactory::getPredicate);
+        bindings.bind(root.userGroup.id)
+                .all(ExpressionProviderFactory::getPredicate);
     }
 
     @Query("select count(employer) from Employer employer " +
             "where employer.userGroup.id in :userGroupIdSet")
-    Long countAllByUserGroupId(@Param("userId") Set<Long> userGroupIdSet);
+    Long countAllByUserGroupId(@Param("userGroupIdSet") Set<Long> userGroupIdSet);
 
 }
