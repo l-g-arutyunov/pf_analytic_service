@@ -14,6 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 @Configuration
@@ -24,6 +30,22 @@ public class WebSecurityConfig {
 
     @Value("${security.enabled:true}")
     private boolean securityEnabled;
+    @Value("${security.cors.enable:true}")
+    boolean enableCors;
+    @Value("${security.cors.allowall:true}")
+    boolean allowAllCors;
+
+    @Value("${security.cors.allowedorigin:null}")
+    String allowedOrigin;
+
+    @Value("${security.cors.allowedheader:null}")
+    String allowedHeader;
+
+    @Value("${security.cors.allowallmethods:false}")
+    boolean allowAllCorsMethods;
+
+    @Value("${security.cors.allowedmethods:null}")
+    String allowedMethods;
     private final TokenProvider tokenProvider;
 
     @Bean
@@ -41,7 +63,8 @@ public class WebSecurityConfig {
         if (securityEnabled) {
             http
                     .csrf().disable()
-                    .cors().disable()
+                    .cors().configurationSource(corsConfiguration())
+                    .and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authorizeRequests()
@@ -55,5 +78,35 @@ public class WebSecurityConfig {
         }
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
+    }
+
+    public CorsConfigurationSource corsConfiguration() {
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        if (!enableCors) {
+            return source;
+        }
+        final CorsConfiguration config = new CorsConfiguration();
+        if (allowAllCors) {
+            config.applyPermitDefaultValues();
+            config.setAllowedMethods(List.of("*"));
+        } else {
+            if (allowedOrigin != null) {
+                for (String origin : allowedOrigin.split(",")) {
+                    config.addAllowedOrigin(origin);
+                }
+            }
+            if (allowedHeader != null) {
+                config.setAllowedHeaders(Arrays.asList(allowedHeader.split(",")));
+            }
+            if (allowAllCorsMethods) {
+                config.setAllowedMethods(List.of("*"));
+            } else {
+                if (allowedMethods != null) {
+                    config.setAllowedMethods(Arrays.asList(allowedMethods.split(",")));
+                }
+            }
+        }
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
