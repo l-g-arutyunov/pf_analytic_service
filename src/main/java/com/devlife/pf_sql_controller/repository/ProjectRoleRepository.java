@@ -71,5 +71,5 @@ public interface ProjectRoleRepository extends JpaRepository<ProjectRole, Long> 
             @Param("userId") Long userId
     );
 
-    List<ProjectRole> getByProject(Project project);
+    Set<ProjectRole> getByProject(Project project);
 }

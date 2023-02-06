@@ -24,12 +24,12 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("api/v1/")
+@RequestMapping("api/v1/project")
 public class ProjectController {
     private final ProjectService service;
 
 
-    @PostMapping("project/{externalUserId}")
+    @PostMapping("/{externalUserId}")
     @Operation(summary = "Add projects by userId", tags = {"project"})
     ResponseEntity<ProjectDto> addProject(
             @PathVariable Long externalUserId,
@@ -37,7 +37,7 @@ public class ProjectController {
         return ResponseEntity.ok(service.addProject(projectDto, externalUserId));
     }
 
-    @GetMapping("project/{externalUserId}")
+    @GetMapping("/{externalUserId}")
     @Operation(summary = "Get projects by userId", tags = {"project"})
     @Parameters({
             @Parameter(in = ParameterIn.QUERY
@@ -63,7 +63,7 @@ public class ProjectController {
         return ResponseEntity.ok(service.getProjectsByUser(externalUserId, pageable));
     }
 
-    @PutMapping("project/{projectId}")
+    @PutMapping("/{projectId}")
     @Operation(summary = "Update projects by projectId", tags = {"project"})
     ResponseEntity<ProjectDto> updateProject(
             @Parameter(description = "project id", required = true, name = "projectId")
@@ -74,7 +74,7 @@ public class ProjectController {
         return ResponseEntity.ok(service.updateProjectByProjectId(projectId, updateProjectByProjectIdReq));
     }
 
-    @PostMapping("project/{projectId}/members")
+    @PostMapping("/{projectId}/members")
     @Operation(summary = "Add members to the project", tags = {"project"})
     ResponseEntity<Set<AddProjectMemberRes>> addProjectMember(
             @Parameter(description = "project id", required = true, name = "projectId")
@@ -86,16 +86,15 @@ public class ProjectController {
     }
 
     @PreAuthorize("hasAuthority('ROOT')")
-    @GetMapping("project")
+    @GetMapping("/")
     List<ProjectDto> getAllProject() {
         return service.getAllProjects();
     }
 
     @PreAuthorize("hasAuthority('ROOT')")
-    @DeleteMapping("project/{id}")
+    @DeleteMapping("/{id}")
     Boolean deleteProjectById(@PathVariable("id") Long id) {
         return service.deleteProjectById(id);
     }
-
 
 }

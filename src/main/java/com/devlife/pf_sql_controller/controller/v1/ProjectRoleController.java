@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @RestController
@@ -46,6 +47,12 @@ public class ProjectRoleController {
     HttpStatus deleteProjectRoleById(@PathVariable("id") Long id) {
         service.deleteProjectRoleById(id);
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/{id}/members")
+    @Operation(summary = "Get all project members by project id", tags = {"projectRole"})
+    ResponseEntity<Set<ProjectRoleDto>> getProjectMembersByProjectId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(service.getProjectMembersByProjectId(id));
     }
 
 }
