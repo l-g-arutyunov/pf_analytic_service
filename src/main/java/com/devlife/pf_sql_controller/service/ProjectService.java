@@ -8,9 +8,11 @@ import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.User;
 import com.devlife.pf_sql_controller.entity.UserGroup;
+import com.devlife.pf_sql_controller.enums.EventType;
 import com.devlife.pf_sql_controller.exception.BusinessLogicException;
 import com.devlife.pf_sql_controller.exception.ProjectNotFoundException;
 import com.devlife.pf_sql_controller.exception.UserNotFoundException;
+import com.devlife.pf_sql_controller.eventPublisher.ProjectPublisher;
 import com.devlife.pf_sql_controller.mapper.ProjectMapper;
 import com.devlife.pf_sql_controller.repository.ProjectRepository;
 import com.devlife.pf_sql_controller.repository.UserGroupRepository;
@@ -41,6 +43,7 @@ public class ProjectService {
     private final ProjectMapper projectMapper;
     private final UserGroupUserService userGroupUserService;
     private final ProjectRoleService projectRoleService;
+    private final ProjectPublisher projectPublisher;
 
     @Transactional
     public ProjectDto addProject(ProjectDto projectDto, Long userExternalId) {
@@ -60,8 +63,11 @@ public class ProjectService {
             userGroupUserService.addUserToUserGroup(user.getId(), userGroup.getId(), USER_IS_OWNER, LocalDate.now());
             project.setUserGroup(userGroup);
         }
+
         final Project saveProject = projectRepository.save(project);
-        return projectMapper.convertToDto(saveProject);
+        ProjectDto saveProjectDto = projectMapper.convertToDto(saveProject);
+        projectPublisher.sendMessage(saveProjectDto, EventType.CREATE);
+        return saveProjectDto;
     }
 
     public Page<ProjectDto> getProjectsByUser(Long userExternalId, Pageable pageable) {
@@ -83,6 +89,7 @@ public class ProjectService {
 
     public Boolean deleteProjectById(Long id) {
         projectRepository.deleteById(id);
+        projectPublisher.sendMessage(ProjectDto.builder().id(id).build(), EventType.DELETE);
         return !projectRepository.existsById(id);
     }
 
@@ -148,21 +155,24 @@ public class ProjectService {
 
     @Transactional
     public ProjectDto updateProjectByProjectId(Long projectId, UpdateProjectByProjectIdReq updateProjectByProjectIdReq) {
-        final Project project = projectRepository.findById(projectId).orElseThrow(() ->  new ProjectNotFoundException("id: " + projectId));
+        final Project project = projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException("id: " + projectId));
         if (updateProjectByProjectIdReq.getEmployerId() != null
                 && !employerService.checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project.getUserGroup())) {
-                    throw new BusinessLogicException(String.format(USER_GROUP_IN_PROJECT_NOT_EQUALS_USER_GROUP_IN_EMPLOYER, project.getUserGroup().getId()));
+            throw new BusinessLogicException(String.format(USER_GROUP_IN_PROJECT_NOT_EQUALS_USER_GROUP_IN_EMPLOYER, project.getUserGroup().getId()));
         }
 
         Project projectUpdate = projectMapper.convertUpdateProjectByProjectIdReqToEntity(updateProjectByProjectIdReq, project.getId(), project.getUserGroup());
 
-        if (projectUpdate.getProjectType() == null)  projectUpdate.setProjectType(project.getProjectType());
-        if (projectUpdate.getName() == null)  projectUpdate.setName(project.getName());
+        if (projectUpdate.getProjectType() == null) projectUpdate.setProjectType(project.getProjectType());
+        if (projectUpdate.getName() == null) projectUpdate.setName(project.getName());
         if (projectUpdate.getEmployer() == null) projectUpdate.setEmployer(project.getEmployer());
         if (projectUpdate.getDescription() == null) projectUpdate.setDescription(project.getDescription());
         if (projectUpdate.getStartDate() == null) projectUpdate.setStartDate(project.getStartDate());
         if (projectUpdate.getEndDate() == null) projectUpdate.setEndDate(project.getEndDate());
 
-        return projectMapper.convertToDto(projectRepository.save(projectUpdate));
+        ProjectDto projectDto = projectMapper.convertToDto(projectRepository.save(projectUpdate));
+        projectPublisher.sendMessage(projectDto, EventType.UPDATE);
+
+        return projectDto;
     }
 }

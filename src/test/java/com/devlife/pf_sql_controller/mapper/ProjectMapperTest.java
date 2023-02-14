@@ -47,7 +47,7 @@ class ProjectMapperTest {
                 .userGroup(UserGroupDto.builder().id(1L).build())
                 .build();
         Project project = mapper.convertToEntity(projectDto);
-        assertEquals(referenceProject,project);
+        assertEquals(referenceProject, project);
     }
 
     @Test
@@ -60,8 +60,8 @@ class ProjectMapperTest {
                 .userGroup(UserGroupDto.builder().id(1L).build())
                 .build();
         Project projectEntity = new Project(1L,"name","description",LocalDate.EPOCH,LocalDate.EPOCH,
-                Employer.builder().id(1L).build(),ProjectType.builder().id(1L).build(),UserGroup.builder().id(1L).build());
+                Employer.builder().id(1L).build(),ProjectType.builder().id(1L).build(),UserGroup.builder().id(1L).build(), null);
         ProjectDto projectDto = mapper.convertToDto(projectEntity);
-        assertEquals(referenceProjectDto,projectDto);
+        assertEquals(referenceProjectDto, projectDto);
     }
 }

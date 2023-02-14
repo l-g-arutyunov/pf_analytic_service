@@ -8,6 +8,7 @@ import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.UpdateProjectByProjectIdReq;
 import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.entity.*;
+import com.devlife.pf_sql_controller.eventPublisher.ProjectPublisher;
 import com.devlife.pf_sql_controller.exception.BusinessLogicException;
 import com.devlife.pf_sql_controller.mapper.ProjectMapper;
 import com.devlife.pf_sql_controller.repository.ProjectRepository;
@@ -55,6 +56,8 @@ class ProjectServiceTest {
     private UserGroupUserService userGroupUserService;
     @Mock
     private ProjectRoleService projectRoleService;
+    @Mock
+    private ProjectPublisher projectPublisher;
     @InjectMocks
     private ProjectService projectService;
 
@@ -94,6 +97,7 @@ class ProjectServiceTest {
         //when(userRepository.getByExternalId(userExternalId)).thenReturn(Optional.of(user)); TODO Примера ради
         doReturn(true).when(userGroupUserService).userExistInUserGroup(1L, 1L);
         doReturn(project).when(projectRepository).save(project);
+        doNothing().when(projectPublisher).sendMessage(any(), any());
 
         final ProjectDto projectDtoResponse = projectService.addProject(projectDto, 1L);
 
@@ -136,6 +140,7 @@ class ProjectServiceTest {
         doReturn(Optional.of(user)).when(userRepository).findByExternalId(userExternalId);
         doReturn(userGroup).when(userGroupRepository).save(any(UserGroup.class));
         doReturn(project).when(projectRepository).save(project);
+        doNothing().when(projectPublisher).sendMessage(any(), any());
 
         final ProjectDto projectDtoResponse = projectService.addProject(inputProjectDto, 1L);
 
@@ -298,6 +303,7 @@ class ProjectServiceTest {
         doReturn(Optional.of(project1)).when(projectRepository).findById(1L);
         doReturn(true).when(employerService).checkUserGroupEmployer(updateProjectByProjectIdReq.getEmployerId(), project1.getUserGroup());
         doReturn(projectUpdate).when(projectRepository).save(any());
+        doNothing().when(projectPublisher).sendMessage(any(), any());
 
         projectService.updateProjectByProjectId(1L, updateProjectByProjectIdReq);
 

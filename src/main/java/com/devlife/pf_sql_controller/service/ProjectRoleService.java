@@ -2,9 +2,12 @@ package com.devlife.pf_sql_controller.service;
 
 import com.devlife.pf_sql_controller.dto.ProjectRoleDto;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.asyncMessageModel.ProjectUserLinkAsyncModel;
 import com.devlife.pf_sql_controller.entity.Project;
 import com.devlife.pf_sql_controller.entity.ProjectRole;
 import com.devlife.pf_sql_controller.entity.User;
+import com.devlife.pf_sql_controller.enums.EventType;
+import com.devlife.pf_sql_controller.eventPublisher.ProjectUserLinkPublisher;
 import com.devlife.pf_sql_controller.exception.BusinessLogicException;
 import com.devlife.pf_sql_controller.exception.ProjectNotFoundException;
 import com.devlife.pf_sql_controller.exception.ProjectRoleNotFoundException;
@@ -22,22 +25,23 @@ import java.util.stream.Collectors;
 public class ProjectRoleService {
     private final ProjectRoleRepository projectRoleRepository;
     private final ProjectRepository projectRepository;
-    private final ProjectRoleMapper mapper;
+    private final ProjectRoleMapper projectRoleMapper;
+    private final ProjectUserLinkPublisher projectUserLinkPublisher;
 
     public ProjectRoleDto addProjectRole(ProjectRoleDto projectRole) {
-        ProjectRole saveProjectRole = projectRoleRepository.save(mapper.convertToEntity(projectRole));
-        return mapper.convertToDto(saveProjectRole);
+        ProjectRole saveProjectRole = projectRoleRepository.save(projectRoleMapper.convertToEntity(projectRole));
+        return projectRoleMapper.convertToDto(saveProjectRole);
     }
 
     public ProjectRoleDto getProjectRole(Long id) {
         Optional<ProjectRole> projectRoleOpt = projectRoleRepository.findById(id);
         ProjectRole projectRole = projectRoleOpt.orElseThrow(() -> new ProjectRoleNotFoundException("id : " + id));
-        return mapper.convertToDto(projectRole);
+        return projectRoleMapper.convertToDto(projectRole);
     }
 
     public List<ProjectRoleDto> getProjectRolesByProjectId(Long projectId) {
         Set<ProjectRole> projectRolesList = projectRoleRepository.getByProject(Project.builder().id(projectId).build());
-        return projectRolesList.stream().map(mapper::convertToDto).collect(Collectors.toList());
+        return projectRolesList.stream().map(projectRoleMapper::convertToDto).collect(Collectors.toList());
     }
 
     public void deleteProjectRoleById(Long id) {
@@ -47,7 +51,7 @@ public class ProjectRoleService {
     }
 
     public Set<ProjectRoleDto> addUserToProject(Project project, Map<User, Set<AddProjectMemberReq>> data) {
-        Set<ProjectRole> projectRoles = mapper.convertAddProjectMemberReqToEntity(project, data);
+        Set<ProjectRole> projectRoles = projectRoleMapper.convertAddProjectMemberReqToEntity(project, data);
 
         Set<ProjectRole> existsProjectRole = projectRoles.stream()
                 .flatMap(i -> projectRoleRepository.userAndRoleAlreadyExistInProject(i.getProject().getId(),
@@ -57,7 +61,13 @@ public class ProjectRoleService {
             throw new BusinessLogicException("ProjectRole already exists: " +  existsProjectRole);
         }
         projectRoleRepository.saveAll(projectRoles);
-        return projectRoles.stream().map(mapper::convertToDto).collect(Collectors.toSet());
+
+        Set<ProjectRoleDto> projectRoleDtoSet = projectRoles.stream().map(projectRoleMapper::convertToDto).collect(Collectors.toSet());
+
+        projectRoleDtoSet.forEach(pr -> projectUserLinkPublisher.sendMessage(
+                ProjectUserLinkAsyncModel.builder().project(pr.getProject()).user(pr.getUser()).build(), EventType.CREATE)
+        );
+        return projectRoleDtoSet;
     }
 
     public Set<ProjectRoleDto> getProjectMembersByProjectId(Long id) {
@@ -65,6 +75,6 @@ public class ProjectRoleService {
             throw new ProjectNotFoundException(Objects.toString(id));
         }
         return projectRoleRepository.getByProject(Project.builder().id(id).build()).stream()
-                .map(mapper::convertToDto).collect(Collectors.toSet());
+                .map(projectRoleMapper::convertToDto).collect(Collectors.toSet());
     }
 }

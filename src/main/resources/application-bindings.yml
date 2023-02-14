@@ -1,0 +1,9 @@
+# bindings property file
+spring:
+  cloud:
+    stream:
+      bindings:
+        project-out-0:
+          destination: ${PROJECT_TOPIC:project-info}
+        projectUserLink-out-0:
+          destination: ${PROJECT_USER_LINK_TOPIC:project-user-link}
