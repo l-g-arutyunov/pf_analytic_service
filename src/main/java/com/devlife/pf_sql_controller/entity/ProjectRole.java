@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class ProjectRole {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_role_id_seq")

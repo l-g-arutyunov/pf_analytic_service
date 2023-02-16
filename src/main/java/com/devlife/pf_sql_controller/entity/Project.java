@@ -53,7 +53,7 @@ public class Project {
     @EqualsAndHashCode.Include
     private UserGroup userGroup;
 
-    @OneToMany(targetEntity = ProjectRole.class, mappedBy = "project", cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = ProjectRole.class, mappedBy = "project", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     @JsonIgnore
     @EqualsAndHashCode.Exclude
     private Set<ProjectRole> projectRoles;
