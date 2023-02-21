@@ -5,6 +5,7 @@ import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.dto.ProjectRoleDto;
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectReq;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.UpdateProjectByProjectIdReq;
 import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.entity.*;
@@ -70,20 +71,24 @@ class ProjectServiceTest {
     @Test
     @DisplayName("Add project test with userGroup")
     void addProject_withUserGroup() {
-        final UserGroupDto userGroupDto = UserGroupDto.builder()
-                .name("testGroup")
+        final UserGroupDto userGroupDtoRef = UserGroupDto.builder()
                 .id(1L)
                 .build();
-        final ProjectDto projectDto = ProjectDto.builder()
+        final ProjectDto projectDtoRef = ProjectDto.builder()
                 .name("testProject")
                 .description("testDescription")
-                .userGroup(userGroupDto)
+                .userGroup(userGroupDtoRef)
+                .startDate(LocalDate.EPOCH)
+                .build();
+        final AddProjectReq addProjectReq = AddProjectReq.builder()
+                .name("testProject")
+                .description("testDescription")
+                .userGroupId(1L)
                 .startDate(LocalDate.EPOCH)
                 .build();
         final Long userExternalId = 1L;
         final User user = User.builder().id(1L).build();
         final UserGroup userGroup = UserGroup.builder()
-                .name("testGroup")
                 .id(1L)
                 .build();
         final Project project = Project.builder()
@@ -99,12 +104,12 @@ class ProjectServiceTest {
         doReturn(project).when(projectRepository).save(project);
         doNothing().when(projectPublisher).sendMessage(any(), any());
 
-        final ProjectDto projectDtoResponse = projectService.addProject(projectDto, 1L);
+        final ProjectDto projectDtoResponse = projectService.addProject(addProjectReq, 1L);
 
-        assertEquals(projectDto, projectDtoResponse);
+        assertEquals(projectDtoRef, projectDtoResponse);
         verify(userRepository, times(1)).findByExternalId(userExternalId);
         verify(projectMapper, times(1)).convertToDto(project);
-        verify(projectMapper, times(1)).convertToEntity(projectDto);
+        verify(projectMapper, times(1)).convertToEntity(addProjectReq);
         verify(projectRepository, times(1)).save(project);
         verify(userGroupUserService, times(1)).userExistInUserGroup(any(), any());
     }
@@ -112,10 +117,10 @@ class ProjectServiceTest {
     @Test
     @DisplayName("Add project test without userGroup")
     void addProject_withoutUserGroup() {
-        final ProjectDto inputProjectDto = ProjectDto.builder()
+
+        final AddProjectReq addProjectReq = AddProjectReq.builder()
                 .name("testProject")
                 .description("testDescription")
-                .userGroup(null)
                 .startDate(LocalDate.EPOCH)
                 .build();
 
@@ -142,12 +147,12 @@ class ProjectServiceTest {
         doReturn(project).when(projectRepository).save(project);
         doNothing().when(projectPublisher).sendMessage(any(), any());
 
-        final ProjectDto projectDtoResponse = projectService.addProject(inputProjectDto, 1L);
+        final ProjectDto projectDtoResponse = projectService.addProject(addProjectReq, 1L);
 
         assertEquals(refProjectDto, projectDtoResponse);
         verify(userRepository, times(1)).findByExternalId(userExternalId);
         verify(projectMapper, times(1)).convertToDto(project);
-        verify(projectMapper, times(1)).convertToEntity(inputProjectDto);
+        verify(projectMapper, times(1)).convertToEntity(addProjectReq);
         verify(userGroupRepository, times(1)).save(any(UserGroup.class));
         verify(projectRepository, times(1)).save(project);
     }
