@@ -1,6 +1,7 @@
 package com.devlife.pf_sql_controller.mapper;
 
 import com.devlife.pf_sql_controller.dto.ProjectDto;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectReq;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.UpdateProjectByProjectIdReq;
 import com.devlife.pf_sql_controller.entity.Employer;
 import com.devlife.pf_sql_controller.entity.Project;
@@ -32,6 +33,10 @@ public class ProjectMapper {
         return project;
     }
 
+    public Project convertToEntity(AddProjectReq addProjectReq) {
+        return mapper.map(addProjectReq, Project.class);
+    }
+
     @PostConstruct
     public void setupMapper() {
         mapper.createTypeMap(UpdateProjectByProjectIdReq.class, Project.class)
@@ -42,6 +47,19 @@ public class ProjectMapper {
                     Project destination = mappingContext.getDestination();
                     destination.setEmployer(source.getEmployerId() != null ? Employer.builder().id(source.getEmployerId()).build() : null);
                     destination.setProjectType(source.getProjectTypeId() != null ? ProjectType.builder().id(source.getProjectTypeId()).build() : null);
+                    return destination;
+                });
+
+        mapper.createTypeMap(AddProjectReq.class, Project.class)
+                .addMappings(m -> m.skip(Project::setEmployer))
+                .addMappings(m -> m.skip(Project::setProjectType))
+                .addMappings(m -> m.skip(Project::setUserGroup))
+                .setPostConverter(mappingContext -> {
+                    AddProjectReq source = mappingContext.getSource();
+                    Project destination = mappingContext.getDestination();
+                    destination.setEmployer(source.getEmployerId() != null ? Employer.builder().id(source.getEmployerId()).build() : null);
+                    destination.setProjectType(source.getProjectTypeId() != null ? ProjectType.builder().id(source.getProjectTypeId()).build() : null);
+                    destination.setUserGroup(source.getUserGroupId() != null ? UserGroup.builder().id(source.getUserGroupId()).build() : null);
                     return destination;
                 });
     }

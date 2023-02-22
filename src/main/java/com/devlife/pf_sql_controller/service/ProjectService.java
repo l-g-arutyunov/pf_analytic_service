@@ -3,6 +3,7 @@ package com.devlife.pf_sql_controller.service;
 import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.dto.ProjectRoleDto;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectReq;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.UpdateProjectByProjectIdReq;
 import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.entity.Project;
@@ -46,11 +47,11 @@ public class ProjectService {
     private final ProjectPublisher projectPublisher;
 
     @Transactional
-    public ProjectDto addProject(ProjectDto projectDto, Long userExternalId) {
+    public ProjectDto addProject(AddProjectReq addProjectReq, Long userExternalId) {
         final User user = userRepository.findByExternalId(userExternalId).orElseThrow(() -> {
             throw new UserNotFoundException(String.format("Id is %d0", userExternalId));
         });
-        final Project project = projectMapper.convertToEntity(projectDto);
+        final Project project = projectMapper.convertToEntity(addProjectReq);
         if (project.getUserGroup() != null && !userGroupUserService.userExistInUserGroup(user.getId(), project.getUserGroup().getId())) {
             throw new IllegalArgumentException("User not exist in the user group");
         }
@@ -175,4 +176,9 @@ public class ProjectService {
 
         return projectDto;
     }
+
+    public ProjectDto getProjectById(Long projectId) {
+        return projectMapper.convertToDto(projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException("id " + projectId)));
+    }
+
 }

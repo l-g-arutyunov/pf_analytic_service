@@ -14,6 +14,7 @@ import java.util.Set;
 @Builder
 public class UserDto implements Serializable {
     private Long id;
+    private Long externalId;
     private String name;
     private Set<UserGroupDto> userGroups;
 }
