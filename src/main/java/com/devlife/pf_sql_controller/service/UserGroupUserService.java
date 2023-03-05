@@ -7,6 +7,7 @@ import com.devlife.pf_sql_controller.mapper.UserGroupUserMapper;
 import com.devlife.pf_sql_controller.repository.UserGroupUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -37,6 +38,7 @@ public class UserGroupUserService {
         return !userGroupUserRepository.existsById(id);
     }
 
+    @Transactional
     public void addUserToUserGroup(Long userId, Long userGroupId, Boolean isOwner, LocalDate changeDate) {
         //TODO В группе может быть только 1 владелец группы? Возможно добавить проверку что он уже задан.
         UserGroupUser relationship = new UserGroupUser();
@@ -49,7 +51,7 @@ public class UserGroupUserService {
         relationship.setIsActive(true);
         relationship.setDate(changeDate == null ? LocalDate.now() : changeDate);
         relationship.setIsOwner(isOwner);
-        userGroupUserRepository.save(relationship);
+        userGroupUserRepository.saveAndFlush(relationship);
     }
 
     public Boolean userExistInUserGroup(Long userId, Long userGroupId) {

@@ -2,8 +2,21 @@
 spring:
   cloud:
     stream:
+      kafka:
+        bindings:
+          userConsumer-in-0:
+            consumer:
+              enableDlq: ${TOPIC_DLQ_ENABLE:true}
+              dlqName: ${USER_TOPIC:user-event}-${PF_GROUP_ID:pf}-dlq
+              autoCommitOnError: true
+              autoCommitOffset: true
       bindings:
+        #publishers
         project-out-0:
-          destination: ${PROJECT_TOPIC:project-info}
+          destination: ${PROJECT_TOPIC:project-event}
         projectUserLink-out-0:
-          destination: ${PROJECT_USER_LINK_TOPIC:project-user-link}
+          destination: ${PROJECT_USER_LINK_TOPIC:project-user-link-event}
+        #consumers
+        userConsumer-in-0:
+          destination: ${USER_TOPIC:user-event}
+          group: ${PF_GROUP_ID:pf}

@@ -39,7 +39,6 @@ class EmployerMapperTest {
                 .userGroup(UserGroupDto.builder()
                         .id(1L)
                         .name("name")
-                        .roles(null)
                         .description("description")
                         .build())
                 .build();
@@ -56,7 +55,6 @@ class EmployerMapperTest {
                 .userGroup(UserGroupDto.builder()
                         .id(1L)
                         .name("name")
-                        .roles(null)
                         .description("description")
                         .build())
                 .build();

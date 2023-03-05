@@ -1,6 +1,5 @@
 package com.devlife.pf_sql_controller.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -54,7 +53,6 @@ public class Project {
     private UserGroup userGroup;
 
     @OneToMany(targetEntity = ProjectRole.class, mappedBy = "project", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-    @JsonIgnore
     @EqualsAndHashCode.Exclude
     private Set<ProjectRole> projectRoles;
 }

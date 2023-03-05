@@ -19,6 +19,8 @@ import com.devlife.pf_sql_controller.repository.ProjectRepository;
 import com.devlife.pf_sql_controller.repository.UserGroupRepository;
 import com.devlife.pf_sql_controller.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -46,8 +48,26 @@ public class ProjectService {
     private final ProjectRoleService projectRoleService;
     private final ProjectPublisher projectPublisher;
 
-    @Transactional
+    @Autowired
+    @Lazy
+    private ProjectService self;
+
     public ProjectDto addProject(AddProjectReq addProjectReq, Long userExternalId) {
+        Long projectId= self.addProjectTransactional(addProjectReq, userExternalId);
+        Project saveProject = projectRepository.findById(projectId).orElseThrow(() -> new BusinessLogicException("unreal"));
+        ProjectDto savedProjectDto = projectMapper.convertToDto(saveProject); //TODO что бы работало без этого, нужно переделать со связи ManyToMany с промежуточной UserGroupUser, на отдельные связи с ней же, но как сущностью
+        projectPublisher.sendMessage(savedProjectDto, EventType.CREATE);
+        return savedProjectDto;
+    }
+
+    /**
+     * Method for saving a new project, and creating a userGroup if it doesn't exist
+     * @param addProjectReq input request
+     * @param userExternalId external id of user
+     * @return saved project id
+     */
+    @Transactional
+    public Long addProjectTransactional(AddProjectReq addProjectReq, Long userExternalId) {
         final User user = userRepository.findByExternalId(userExternalId).orElseThrow(() -> {
             throw new UserNotFoundException(String.format("Id is %d0", userExternalId));
         });
@@ -56,7 +76,7 @@ public class ProjectService {
             throw new IllegalArgumentException("User not exist in the user group");
         }
         if (project.getUserGroup() == null) {
-            final UserGroup userGroup = userGroupRepository.save(
+            final UserGroup userGroup = userGroupRepository.saveAndFlush(
                     UserGroup.builder()
                             .name(String.format(USER_GROUP_OF, project.getName()))
                             .build()
@@ -65,10 +85,8 @@ public class ProjectService {
             project.setUserGroup(userGroup);
         }
 
-        final Project saveProject = projectRepository.save(project);
-        ProjectDto saveProjectDto = projectMapper.convertToDto(saveProject);
-        projectPublisher.sendMessage(saveProjectDto, EventType.CREATE);
-        return saveProjectDto;
+        final Project saveProject = projectRepository.saveAndFlush(project);
+        return saveProject.getId();
     }
 
     public Page<ProjectDto> getProjectsByUser(Long userExternalId, Pageable pageable) {
@@ -177,6 +195,7 @@ public class ProjectService {
         return projectDto;
     }
 
+    @Transactional
     public ProjectDto getProjectById(Long projectId) {
         return projectMapper.convertToDto(projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException("id " + projectId)));
     }

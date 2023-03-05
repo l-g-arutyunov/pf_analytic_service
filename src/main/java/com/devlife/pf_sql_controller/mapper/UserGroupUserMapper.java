@@ -12,7 +12,7 @@ public class UserGroupUserMapper {
 
     public UserGroupUserMapper(ModelMapper mapper) {
         this.mapper = mapper;
-        mapper.addMappings(new PropertyMap<UserGroupUserDto, UserGroupUser>() {
+        this.mapper.addMappings(new PropertyMap<UserGroupUserDto, UserGroupUser>() {
             @Override
             protected void configure() {
                 map().getUserGroupUserId().setUserGroupId(source.getGroupId());

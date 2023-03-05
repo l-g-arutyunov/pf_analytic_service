@@ -1,10 +1,6 @@
 package com.devlife.pf_sql_controller.dto;
 
-import com.devlife.pf_sql_controller.entity.Employer;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -17,5 +13,6 @@ public class UserGroupDto implements Serializable {
     private Long id;
     private String name;
     private String description;
-    private Set<RoleDto> roles;
+    @EqualsAndHashCode.Exclude
+    private Set<UserDto> users;
 }

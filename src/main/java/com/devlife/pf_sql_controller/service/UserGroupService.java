@@ -6,12 +6,14 @@ import com.devlife.pf_sql_controller.mapper.UserGroupMapper;
 import com.devlife.pf_sql_controller.repository.UserGroupRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserGroupService {
     private final UserGroupRepository userGroupRepository;
     private final UserGroupMapper mapper;
