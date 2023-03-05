@@ -69,7 +69,7 @@ public class ProjectController {
         return ResponseEntity.ok(service.getProjectsByUser(externalUserId, pageable));
     }
 
-    @GetMapping("/project/{projectId}")
+    @GetMapping("/{projectId}")
     @Operation(summary = "Get project by projectId", tags = {"project"})
     ResponseEntity<ProjectDto> getProjectById(
             @Parameter(name = "projectId", description = "project id", required = true)

@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -15,6 +14,7 @@ import java.util.Set;
 public class UserDto implements Serializable {
     private Long id;
     private Long externalId;
-    private String name;
-    private Set<UserGroupDto> userGroups;
+    private String nickName;
+    private String firstName;
+    private String lastName;
 }

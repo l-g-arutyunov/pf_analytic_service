@@ -62,5 +62,6 @@ public class ProjectMapper {
                     destination.setUserGroup(source.getUserGroupId() != null ? UserGroup.builder().id(source.getUserGroupId()).build() : null);
                     return destination;
                 });
+
     }
 }

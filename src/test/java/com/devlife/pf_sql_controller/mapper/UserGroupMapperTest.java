@@ -30,7 +30,7 @@ class UserGroupMapperTest {
                 .id(1L)
                 .name("name")
                 .description("description")
-                .roles(null)
+//                .roles(null)
                 .build();
         UserGroup userGroup = mapper.convertToEntity(userGroupDto);
         assertEquals(referenceUserGroup,userGroup);

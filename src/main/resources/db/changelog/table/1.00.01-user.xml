@@ -58,4 +58,40 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="1.00.01-user-0005" author="leo" failOnError="true">
+        <preConditions onFail ="MARK_RAN">
+            <tableExists tableName="pf_user" schemaName="pf"/>
+            <not>
+                <columnExists tableName="pf_user" columnName="first_name"/>
+                <columnExists tableName="pf_user" columnName="last_name"/>
+                <columnExists tableName="pf_user" columnName="nick_name"/>
+            </not>
+        </preConditions>
+        <comment>Add column: first_name, last_name, nick_name</comment>
+        <addColumn tableName="pf_user">
+            <column name="first_name" type="varchar(30)" remarks="First name">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="pf_user">
+            <column name="last_name" type="varchar(30)" remarks="Last name">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="pf_user">
+            <column name="nickname" type="varchar(36)" remarks="Nickname">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="1.00.01-user-0006" author="leo" failOnError="true" runInTransaction="false">
+        <preConditions onFail ="MARK_RAN">
+            <tableExists tableName="pf_user" schemaName="pf"/>
+            <columnExists tableName="pf_user" columnName="name"/>
+        </preConditions>
+        <comment>delete column: name</comment>
+        <dropColumn tableName="pf_user" columnName="name"/>
+    </changeSet>
+
 </databaseChangeLog>
