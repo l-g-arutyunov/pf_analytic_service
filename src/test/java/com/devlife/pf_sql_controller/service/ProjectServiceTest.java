@@ -5,6 +5,7 @@ import com.devlife.pf_sql_controller.dto.ProjectDto;
 import com.devlife.pf_sql_controller.dto.ProjectRoleDto;
 import com.devlife.pf_sql_controller.dto.UserGroupDto;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectMemberReq;
+import com.devlife.pf_sql_controller.dto.apiRequestDto.AddProjectReq;
 import com.devlife.pf_sql_controller.dto.apiRequestDto.UpdateProjectByProjectIdReq;
 import com.devlife.pf_sql_controller.dto.apiResponseDto.AddProjectMemberRes;
 import com.devlife.pf_sql_controller.entity.*;
@@ -65,6 +66,12 @@ class ProjectServiceTest {
     @AfterEach
     void afterEach() {
         verifyNoMoreInteractions(projectRepository);
+        verifyNoMoreInteractions(userRepository);
+        verifyNoMoreInteractions(employerService);
+        verifyNoMoreInteractions(userGroupRepository);
+        verifyNoMoreInteractions(userGroupUserService);
+        verifyNoMoreInteractions(projectRoleService);
+        verifyNoMoreInteractions(projectPublisher);
     }
 
     @Test
@@ -80,13 +87,27 @@ class ProjectServiceTest {
                 .userGroup(userGroupDto)
                 .startDate(LocalDate.EPOCH)
                 .build();
+        final AddProjectReq addProjectReq = AddProjectReq.builder()
+                .name("testProject")
+                .description("testDescription")
+                .userGroupId(1L)
+                .startDate(LocalDate.EPOCH)
+                .build();
         final Long userExternalId = 1L;
         final User user = User.builder().id(1L).build();
         final UserGroup userGroup = UserGroup.builder()
                 .name("testGroup")
                 .id(1L)
                 .build();
-        final Project project = Project.builder()
+        final Project projectBeforeSave = Project.builder()
+                .name("testProject")
+                .description("testDescription")
+                .userGroup(userGroup)
+                .startDate(LocalDate.EPOCH)
+                .build();
+
+        final Project projectAfterSave = Project.builder()
+                .id(123L)
                 .name("testProject")
                 .description("testDescription")
                 .userGroup(userGroup)
@@ -95,16 +116,13 @@ class ProjectServiceTest {
 
         doReturn(Optional.of(user)).when(userRepository).findByExternalId(userExternalId);
         doReturn(true).when(userGroupUserService).userExistInUserGroup(1L, 1L);
-        doReturn(project).when(projectRepository).save(project);
-        doNothing().when(projectPublisher).sendMessage(any(), any());
+        doReturn(projectAfterSave).when(projectRepository).saveAndFlush(projectBeforeSave);
 
-        final ProjectDto projectDtoResponse = projectService.addProject(projectDto, 1L);
+        Long projectId = projectService.addProjectTransactional(addProjectReq, 1L);
 
-        assertEquals(projectDto, projectDtoResponse);
+        assertEquals(123L, projectId);
         verify(userRepository, times(1)).findByExternalId(userExternalId);
-        verify(projectMapper, times(1)).convertToDto(project);
-        verify(projectMapper, times(1)).convertToEntity(projectDto);
-        verify(projectRepository, times(1)).save(project);
+        verify(projectRepository, times(1)).saveAndFlush(projectBeforeSave);
         verify(userGroupUserService, times(1)).userExistInUserGroup(any(), any());
     }
 
@@ -122,33 +140,38 @@ class ProjectServiceTest {
         final User user = User.builder().id(1L).build();
 
         final UserGroup userGroup = UserGroup.builder().id(11L).name("testGroup").build();
-        final Project project = Project.builder()
+
+        final AddProjectReq addProjectReq = AddProjectReq.builder()
+                .name("testProject")
+                .description("testDescription")
+                .startDate(LocalDate.EPOCH)
+                .build();
+
+        final Project projectBeforeSave = Project.builder()
                 .name("testProject")
                 .description("testDescription")
                 .userGroup(userGroup)
                 .startDate(LocalDate.EPOCH)
                 .build();
 
-        final ProjectDto refProjectDto = ProjectDto.builder()
+        final Project projectAfterSave = Project.builder()
+                .id(123L)
                 .name("testProject")
                 .description("testDescription")
-                .userGroup(UserGroupDto.builder().id(11L).name("testGroup").build())
+                .userGroup(userGroup)
                 .startDate(LocalDate.EPOCH)
                 .build();
 
         doReturn(Optional.of(user)).when(userRepository).findByExternalId(userExternalId);
-        doReturn(userGroup).when(userGroupRepository).save(any(UserGroup.class));
-        doReturn(project).when(projectRepository).save(project);
-        doNothing().when(projectPublisher).sendMessage(any(), any());
+        doReturn(userGroup).when(userGroupRepository).saveAndFlush(any(UserGroup.class));
+        doReturn(projectAfterSave).when(projectRepository).saveAndFlush(projectBeforeSave);
 
-        final ProjectDto projectDtoResponse = projectService.addProject(inputProjectDto, 1L);
+        Long projectId = projectService.addProjectTransactional(addProjectReq, 1L);
 
-        assertEquals(refProjectDto, projectDtoResponse);
+        assertEquals(123L, projectId);
         verify(userRepository, times(1)).findByExternalId(userExternalId);
-        verify(projectMapper, times(1)).convertToDto(project);
-        verify(projectMapper, times(1)).convertToEntity(inputProjectDto);
-        verify(userGroupRepository, times(1)).save(any(UserGroup.class));
-        verify(projectRepository, times(1)).save(project);
+        verify(projectRepository, times(1)).saveAndFlush(projectBeforeSave);
+        verify(userGroupUserService, times(1)).addUserToUserGroup(eq(1L), eq(userGroup.getId()), eq(true), any());
     }
 
     @Test

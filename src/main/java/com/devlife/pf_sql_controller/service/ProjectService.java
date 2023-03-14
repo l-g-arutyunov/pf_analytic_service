@@ -195,4 +195,8 @@ public class ProjectService {
 
         return projectDto;
     }
+
+    public ProjectDto getProjectById(Long projectId) {
+        return projectMapper.convertToDto(projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException("id " + projectId)));
+    }
 }

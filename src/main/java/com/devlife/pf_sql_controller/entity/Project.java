@@ -50,7 +50,7 @@ public class Project {
 
     @ManyToOne
     @JoinColumn(name = "user_group_id")
-    @EqualsAndHashCode.Include
+    @EqualsAndHashCode.Exclude
     private UserGroup userGroup;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
