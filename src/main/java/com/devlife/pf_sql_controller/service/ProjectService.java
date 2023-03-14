@@ -21,6 +21,7 @@ import com.devlife.pf_sql_controller.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -194,10 +195,4 @@ public class ProjectService {
 
         return projectDto;
     }
-
-    @Transactional
-    public ProjectDto getProjectById(Long projectId) {
-        return projectMapper.convertToDto(projectRepository.findById(projectId).orElseThrow(() -> new ProjectNotFoundException("id " + projectId)));
-    }
-
 }

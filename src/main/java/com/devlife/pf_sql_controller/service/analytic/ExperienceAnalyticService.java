@@ -5,12 +5,14 @@ import com.devlife.pf_sql_controller.dto.analyticFormDto.request.ExpFormRequest;
 import com.devlife.pf_sql_controller.dto.analyticFormDto.response.ExpFormResponse;
 import com.devlife.pf_sql_controller.repository.ProjectRoleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.time.Period;
 import java.util.List;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class ExperienceAnalyticService {
     private final ProjectRoleRepository projectRoleRepository;

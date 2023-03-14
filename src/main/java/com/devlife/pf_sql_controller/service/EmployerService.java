@@ -9,6 +9,7 @@ import com.devlife.pf_sql_controller.mapper.EmployerMapper;
 import com.devlife.pf_sql_controller.repository.EmployerRepository;
 import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class EmployerService {
     private final EmployerRepository employerRepository;

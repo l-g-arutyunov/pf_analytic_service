@@ -6,6 +6,7 @@ import com.devlife.pf_sql_controller.exception.ProjectTypeNotFoundException;
 import com.devlife.pf_sql_controller.mapper.ProjectTypeMapper;
 import com.devlife.pf_sql_controller.repository.ProjectTypeRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class ProjectTypeService {
     private final ProjectTypeRepository projectTypeRepository;

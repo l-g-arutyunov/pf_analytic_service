@@ -16,18 +16,18 @@ public class Payment {
     @SequenceGenerator(name = "payment_id_seq", sequenceName = "payment_id_seq", allocationSize = 1)
     private Long id;
 
-    @ManyToOne(targetEntity = Project.class)
+    @ManyToOne
     @JoinColumn(name = "project_id")
     private Project project;
 
     @Column(name = "date")
     private LocalDate date;
 
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(targetEntity = PaymentCategory.class)
+    @ManyToOne
     @JoinColumn(name = "payment_category_id")
     private PaymentCategory paymentCategory;
 

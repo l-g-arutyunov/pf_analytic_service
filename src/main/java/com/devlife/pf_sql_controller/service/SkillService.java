@@ -5,12 +5,14 @@ import com.devlife.pf_sql_controller.entity.Skill;
 import com.devlife.pf_sql_controller.mapper.SkillMapper;
 import com.devlife.pf_sql_controller.repository.SkillRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class SkillService {
     private final SkillRepository skillRepository;

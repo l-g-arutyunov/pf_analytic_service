@@ -1,5 +1,6 @@
 package com.devlife.pf_sql_controller.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -37,22 +38,23 @@ public class Project {
     @EqualsAndHashCode.Include
     private LocalDate endDate;
 
-    @ManyToOne(targetEntity = Employer.class)
+    @ManyToOne
     @JoinColumn(name = "employer_id")
     @EqualsAndHashCode.Include
     private Employer employer;
 
-    @ManyToOne(targetEntity = ProjectType.class)
+    @ManyToOne
     @JoinColumn(name = "project_type_id")
     @EqualsAndHashCode.Include
     private ProjectType projectType;
 
-    @ManyToOne(targetEntity = UserGroup.class)
+    @ManyToOne
     @JoinColumn(name = "user_group_id")
     @EqualsAndHashCode.Include
     private UserGroup userGroup;
 
-    @OneToMany(targetEntity = ProjectRole.class, mappedBy = "project", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonIgnore
     @EqualsAndHashCode.Exclude
     private Set<ProjectRole> projectRoles;
 }

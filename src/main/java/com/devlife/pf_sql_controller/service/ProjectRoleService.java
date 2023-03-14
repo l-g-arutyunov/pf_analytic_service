@@ -15,12 +15,14 @@ import com.devlife.pf_sql_controller.mapper.ProjectRoleMapper;
 import com.devlife.pf_sql_controller.repository.ProjectRepository;
 import com.devlife.pf_sql_controller.repository.ProjectRoleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class ProjectRoleService {
     private final ProjectRoleRepository projectRoleRepository;

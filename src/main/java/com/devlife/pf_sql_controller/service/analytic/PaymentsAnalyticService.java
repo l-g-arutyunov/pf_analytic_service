@@ -6,6 +6,7 @@ import com.devlife.pf_sql_controller.entity.view.PaymentsReport;
 import com.devlife.pf_sql_controller.mapper.PaymentsReportMapper;
 import com.devlife.pf_sql_controller.repository.PaymentRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@Log4j2
 @RequiredArgsConstructor
 public class PaymentsAnalyticService {
     private final PaymentRepository paymentRepository;
