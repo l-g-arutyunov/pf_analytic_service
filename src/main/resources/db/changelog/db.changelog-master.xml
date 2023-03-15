@@ -18,4 +18,5 @@
     <include file="db/changelog/table/1.00.01-payment.xml"/>
     <include file="db/changelog/table/1.00.01-project_role.xml"/>
     <include file="db/changelog/table/1.00.01-project_role_skill.xml"/>
+    <include file="db/changelog/view/1.00.01-v_payment_report.xml"/>
 </databaseChangeLog>
